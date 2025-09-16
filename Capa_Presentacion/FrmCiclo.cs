@@ -1,20 +1,15 @@
-﻿using Capa_Entidad;
-using Capa_Negocio;
+﻿using Capa_Presentacion.Datos;
+using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Capa_Presentacion
 {
     public partial class FrmCiclo : Form
     {
-        private CN_Ciclo cnCiclo = new CN_Ciclo();
+        //private CN_Ciclo cnCiclo = new CN_Ciclo();
+        D_Ciclo cnCiclo = new D_Ciclo();
         private int paginaActual = 1;
         private const int tamanoPagina = 10;
         private int totalRegistros = 0;
@@ -28,7 +23,7 @@ namespace Capa_Presentacion
         {
             if (string.IsNullOrWhiteSpace(TxtBuscar.Text))
             {
-                List<CE_Ciclo> listaCiclos = cnCiclo.ListarCiclosConPaginado(paginaActual, tamanoPagina, out totalRegistros);
+                List<L_Ciclo> listaCiclos = cnCiclo.ObtenerCiclosConPaginado(paginaActual, tamanoPagina, out totalRegistros);
                 dgvciclo.DataSource = listaCiclos;
 
                 if (dgvciclo.Columns.Contains("Id_ciclo"))
@@ -53,9 +48,9 @@ namespace Capa_Presentacion
                 dgvciclo.Columns["Id_ciclo"].Visible = false;
             }
 
-            
 
-          
+
+
             dgvciclo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             if (dgvciclo.ColumnCount > 0)
             {
@@ -74,7 +69,7 @@ namespace Capa_Presentacion
         {
             if (e.RowIndex >= 0)
             {
-         
+
                 DataGridViewRow fila = dgvciclo.Rows[e.RowIndex];
 
                 TxtCiclo.Text = fila.Cells["descripcion"].Value.ToString();
@@ -131,9 +126,9 @@ namespace Capa_Presentacion
 
         private void BTAgregar_Click(object sender, EventArgs e)
         {
-
-            string descripcion = TxtCiclo.Text;
-            string respuesta = cnCiclo.AgregarCiclo(descripcion);
+            L_Ciclo parametros = new L_Ciclo();
+            parametros.Descripcion = TxtCiclo.Text;
+            string respuesta = cnCiclo.InsertarCiclo(parametros);
 
             if (respuesta.Equals("OK"))
             {
@@ -151,25 +146,25 @@ namespace Capa_Presentacion
         {
             if (dgvciclo.SelectedRows.Count > 0)
             {
-        
-                int idCiclo = Convert.ToInt32(dgvciclo.SelectedRows[0].Cells["Id_ciclo"].Value);
-                string descripcion = TxtCiclo.Text.Trim();
+                L_Ciclo parametros = new L_Ciclo();
+                parametros.Id_ciclo = Convert.ToInt32(dgvciclo.SelectedRows[0].Cells["Id_ciclo"].Value);
+                parametros.Descripcion = TxtCiclo.Text.Trim();
 
-              
-                if (string.IsNullOrWhiteSpace(descripcion))
+
+                if (string.IsNullOrWhiteSpace(parametros.Descripcion))
                 {
                     MessageBox.Show("Ingrese una descripción válida.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-              
-                string respuesta = cnCiclo.ActualizarCiclo(idCiclo, descripcion);
+
+                string respuesta = cnCiclo.ActualizarCiclo(parametros);
 
                 if (respuesta.Equals("OK"))
                 {
                     MessageBox.Show("Ciclo editado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TxtCiclo.Clear();
-                    CargarCiclos(); 
+                    CargarCiclos();
                 }
                 else
                 {
@@ -210,5 +205,5 @@ namespace Capa_Presentacion
             }
         }
     }
-    
+
 }

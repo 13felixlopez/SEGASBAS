@@ -1,20 +1,16 @@
-﻿using Capa_Entidad;
-using Capa_Negocio;
+﻿using Capa_Presentacion.Logica;
+using Datos;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Capa_Presentacion
 {
     public partial class FrmActividad : Form
     {
-        private CN_Actividad cnActividad = new CN_Actividad();
+        //private CN_Actividad cnActividad = new CN_Actividad();
+        D_Actividad cnActividad = new D_Actividad();
+        L_Actividad parametros = new L_Actividad();
         private int paginaActual = 1;
         private const int tamanoPagina = 10;
         private int totalRegistros = 0;
@@ -27,7 +23,7 @@ namespace Capa_Presentacion
         {
             if (string.IsNullOrWhiteSpace(TxtBuscar.Text))
             {
-                List<CE_Actividad> listaActividades = cnActividad.ListarActividadesConPaginado(paginaActual, tamanoPagina, out totalRegistros);
+                List<L_Actividad> listaActividades = cnActividad.ObtenerActividadesConPaginado(paginaActual, tamanoPagina, out totalRegistros);
                 dgvactividad.DataSource = listaActividades;
 
                 if (dgvactividad.Columns.Contains("Id_actividad"))
@@ -50,7 +46,7 @@ namespace Capa_Presentacion
                 dgvactividad.Columns["Id_actividad"].Visible = false;
             }
 
-            
+
             dgvactividad.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             if (dgvactividad.ColumnCount > 0)
             {
@@ -111,8 +107,8 @@ namespace Capa_Presentacion
 
         private void BTAgregar_Click(object sender, EventArgs e)
         {
-            string descripcion = TxtActividad.Text;
-            string respuesta = cnActividad.AgregarActividad(descripcion);
+            parametros.Descripcion = TxtActividad.Text;
+            string respuesta = cnActividad.InsertarActividad(parametros);
 
             if (respuesta.Equals("OK"))
             {
@@ -130,10 +126,10 @@ namespace Capa_Presentacion
         {
             if (dgvactividad.SelectedRows.Count > 0)
             {
-                int idActividad = Convert.ToInt32(dgvactividad.SelectedRows[0].Cells["Id_actividad"].Value);
-                string descripcion = TxtActividad.Text;
+                parametros.Id_actividad = Convert.ToInt32(dgvactividad.SelectedRows[0].Cells["Id_actividad"].Value);
+                parametros.Descripcion = TxtActividad.Text;
 
-                string respuesta = cnActividad.EditarActividad(idActividad, descripcion);
+                string respuesta = cnActividad.ActualizarActividad(parametros);
 
                 if (respuesta.Equals("OK"))
                 {

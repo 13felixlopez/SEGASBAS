@@ -56,6 +56,11 @@
     <Compile Include="Datos\D_Actividad.cs" />
     <Compile Include="Datos\D_Asistencia.cs" />
     <Compile Include="Datos\Conexion.cs" />
+    <Compile Include="Datos\D_Cargo.cs" />
+    <Compile Include="Datos\D_Categoria.cs" />
+    <Compile Include="Datos\D_Ciclo.cs" />
+    <Compile Include="Datos\D_Empleado.cs" />
+    <Compile Include="Datos\D_Lote.cs" />
     <Compile Include="FrmActividad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,7 +121,13 @@
     <Compile Include="FRM_AgregarUser.Designer.cs">
       <DependentUpon>FRM_AgregarUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logica\L_Actividad.cs" />
     <Compile Include="Logica\L_Asistencia.cs" />
+    <Compile Include="Logica\L_Cargo.cs" />
+    <Compile Include="Logica\L_Categoria.cs" />
+    <Compile Include="Logica\L_Ciclo.cs" />
+    <Compile Include="Logica\L_Empleado.cs" />
+    <Compile Include="Logica\L_Lote.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmActividad.resx">

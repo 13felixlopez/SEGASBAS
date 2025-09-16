@@ -1,21 +1,14 @@
-﻿using Capa_Datos;
-using Capa_Entidad;
-using Capa_Negocio;
+﻿using Capa_Presentacion.Datos;
+using Capa_Presentacion.Logica;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Capa_Presentacion
 {
     public partial class FrmEmpleado : Form
     {
-        private CN_Empleado _logica = new CN_Empleado();
+        private D_Empleado _logica = new D_Empleado();
+        //private CN_Empleado _logica = new CN_Empleado();
         private int paginaActual = 1;
         private const int tamanoPagina = 10;
         private int idEmpleadoSeleccionado = 0;
@@ -52,13 +45,13 @@ namespace Capa_Presentacion
         }
         private void AjustarDataGridView()
         {
-           
+
             if (DatagreedEmpleado.Columns.Contains("Id_empleado"))
             {
                 DatagreedEmpleado.Columns["Id_empleado"].Visible = false;
             }
 
-     
+
             DatagreedEmpleado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
         private void CargarEmpleadosPaginados()
@@ -117,7 +110,7 @@ namespace Capa_Presentacion
         }
         private void DatagreedEmpleado_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          
+
         }
 
         private void Txtsalariopordia_TextChanged(object sender, EventArgs e)
@@ -142,10 +135,10 @@ namespace Capa_Presentacion
                 CargarCalculosSalario();
             }
         }
-        private CE_Empleado ObtenerDatosDelFormulario()
+        private L_Empleado ObtenerDatosDelFormulario()
         {
             decimal salarioPorDia = decimal.Parse(Txtsalariopordia.Text);
-            CE_Empleado empleado = new CE_Empleado
+            L_Empleado empleado = new L_Empleado
             {
                 Nombre = TxtNombre.Text,
                 Apellido = TxtApellido.Text,
@@ -204,8 +197,8 @@ namespace Capa_Presentacion
         {
             try
             {
-                CE_Empleado empleado = ObtenerDatosDelFormulario();
-                _logica.AgregarEmpleado(empleado);
+                L_Empleado empleado = ObtenerDatosDelFormulario();
+                _logica.InsertarEmpleado(empleado);
                 MessageBox.Show("Empleado agregado exitosamente.", "Éxito");
                 CargarEmpleadosPaginados();
                 LimpiarCampos();
@@ -226,7 +219,7 @@ namespace Capa_Presentacion
                     MessageBox.Show("Selecciona un empleado para editar.", "Advertencia");
                     return;
                 }
-                CE_Empleado empleado = ObtenerDatosDelFormulario();
+                L_Empleado empleado = ObtenerDatosDelFormulario();
                 empleado.Id_empleado = idEmpleadoSeleccionado;
                 _logica.ActualizarEmpleado(empleado);
                 MessageBox.Show("Empleado actualizado exitosamente.", "Éxito");
@@ -287,7 +280,7 @@ namespace Capa_Presentacion
                 DataGridViewRow row = DatagreedEmpleado.Rows[e.RowIndex];
                 idEmpleadoSeleccionado = Convert.ToInt32(row.Cells["Id_empleado"].Value);
 
-                CE_Empleado empleado = _logica.ObtenerEmpleadoPorId(idEmpleadoSeleccionado);
+                L_Empleado empleado = _logica.ObtenerEmpleadoPorId(idEmpleadoSeleccionado);
                 if (empleado != null)
                 {
                     TxtNombre.Text = empleado.Nombre;
@@ -305,7 +298,7 @@ namespace Capa_Presentacion
                     CB_Cargo.SelectedValue = empleado.Id_cargo;
                 }
 
-              
+
                 BTAgregar.Enabled = false;
                 BTEditar.Enabled = true;
             }

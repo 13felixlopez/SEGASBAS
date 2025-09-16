@@ -1,8 +1,6 @@
-﻿using Capa_Datos;
-using Capa_Entidad;
-using Capa_Negocio;
-using Capa_Presentacion.Datos;
+﻿using Capa_Presentacion.Datos;
 using Capa_Presentacion.Logica;
+using Datos;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +12,7 @@ namespace Capa_Presentacion
     public partial class FrmAsistencia : Form
     {
 
-        private CN_Asistencia objNegocio = new CN_Asistencia();
+        //private CN_Asistencia objNegocio = new CN_Asistencia();
         private L_Asistencia asistenciaSeleccionada;
         private int paginaActual = 1;
         private int tamanoPagina = 10;
@@ -40,7 +38,7 @@ namespace Capa_Presentacion
 
         private void LlenarComboBoxes()
         {
-            CD_Empleado objEmpleado = new CD_Empleado();
+            D_Empleado objEmpleado = new D_Empleado();
             var empleados = objEmpleado.ObtenerEmpleados();
             Cb_Nombre.DataSource = empleados;
             Cb_Nombre.DisplayMember = "Value";
@@ -54,7 +52,7 @@ namespace Capa_Presentacion
             Cb_Nombre.AutoCompleteCustomSource = nombresCollection;
 
             // ------------------- Actividades -------------------
-            CD_Actividad objActividad = new CD_Actividad();
+            D_Actividad objActividad = new D_Actividad();
             var actividades = objActividad.ObtenerActividades();
             cbactividad.DataSource = actividades;
             cbactividad.DisplayMember = "Value";
@@ -68,7 +66,7 @@ namespace Capa_Presentacion
             cbactividad.AutoCompleteCustomSource = actividadesCollection;
 
 
-            CD_Lote objLote = new CD_Lote();
+            D_Lote objLote = new D_Lote();
             var lotes = objLote.ObtenerLotes();
             CMBLote.DataSource = lotes;
             CMBLote.DisplayMember = "NombreLote";
@@ -82,7 +80,7 @@ namespace Capa_Presentacion
             CMBLote.AutoCompleteCustomSource = lotesCollection;
 
 
-            CD_Cargo objCargo = new CD_Cargo();
+            D_Cargo objCargo = new D_Cargo();
             var cargos = objCargo.ObtenerCargos();
             CbCargo.DataSource = cargos;
             CbCargo.DisplayMember = "Nombre";
@@ -216,7 +214,7 @@ namespace Capa_Presentacion
 
             if (asistenciaSeleccionada == null)
             {
-                
+
                 if (funciones.InsertarAsistencia(oAsistencia, out mensaje))
                 {
                     MessageBox.Show("Asistencia guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -257,8 +255,9 @@ namespace Capa_Presentacion
             {
                 if (MessageBox.Show("¿Está seguro de que desea eliminar esta asistencia?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
+                    D_Asistencia funciones = new D_Asistencia();
                     string mensaje = string.Empty;
-                    if (objNegocio.EliminarAsistencia(asistenciaSeleccionada.IDAsistencia, out mensaje))
+                    if (funciones.EliminarAsistencia(asistenciaSeleccionada.IDAsistencia, out mensaje))
                     {
                         MessageBox.Show("Asistencia eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         CargarAsistencias();
@@ -375,7 +374,8 @@ namespace Capa_Presentacion
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                List<CE_Asistencia> resultados = objNegocio.BuscarAsistencias(TxtBuscar.Text);
+                D_Asistencia funciones = new D_Asistencia();
+                List<L_Asistencia> resultados = funciones.BuscarAsistencias(TxtBuscar.Text);
                 DatagreedAsistencia.DataSource = resultados;
 
                 BtnAnterior.Enabled = false;

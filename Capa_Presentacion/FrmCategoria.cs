@@ -1,21 +1,16 @@
-﻿using Capa_Entidad;
-using Capa_Negocio;
+﻿using Capa_Presentacion.Datos;
+using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Capa_Presentacion
 {
     public partial class FrmCategoria : Form
     {
-        private CN_Categoria objNegocio = new CN_Categoria();
-        private CE_Categoria categoriaSeleccionada;
+        //private CN_Categoria funciones = new CN_Categoria();
+        D_Categoria funciones = new D_Categoria();
+        private L_Categoria categoriaSeleccionada;
         private int paginaActual = 1;
         private int tamanoPagina = 10;
         private int totalRegistros = 0;
@@ -38,7 +33,7 @@ namespace Capa_Presentacion
 
             // Columna para el ID de la categoría (oculta)
             dgvcategoria.Columns.Add(new DataGridViewTextBoxColumn() { Name = "id_categoria", HeaderText = "ID", DataPropertyName = "id_categoria", Visible = false });
-            
+
             // Columna para el nombre de la categoría
             dgvcategoria.Columns.Add(new DataGridViewTextBoxColumn() { Name = "nombre", HeaderText = "Categoría", DataPropertyName = "nombre" });
 
@@ -61,7 +56,7 @@ namespace Capa_Presentacion
 
         private void CargarCategoriasPaginadas()
         {
-            List<CE_Categoria> lista = objNegocio.ListarPaginado(paginaActual, tamanoPagina, out totalRegistros);
+            List<L_Categoria> lista = funciones.ListarPaginado(paginaActual, tamanoPagina, out totalRegistros);
             dgvcategoria.DataSource = lista;
             ActualizarEstadoPaginacion();
         }
@@ -92,11 +87,11 @@ namespace Capa_Presentacion
                 return;
             }
 
-            CE_Categoria oCategoria = new CE_Categoria() { nombre = TxtCategoria.Text };
+            L_Categoria oCategoria = new L_Categoria() { nombre = TxtCategoria.Text };
 
             if (categoriaSeleccionada == null)
             {
-                int resultado = objNegocio.Insertar(oCategoria, out mensaje);
+                int resultado = funciones.Insertar(oCategoria, out mensaje);
                 if (resultado > 0)
                 {
                     MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -111,7 +106,7 @@ namespace Capa_Presentacion
             else
             {
                 oCategoria.id_categoria = categoriaSeleccionada.id_categoria;
-                bool resultado = objNegocio.Editar(oCategoria, out mensaje);
+                bool resultado = funciones.Editar(oCategoria, out mensaje);
                 if (resultado)
                 {
                     MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -129,7 +124,7 @@ namespace Capa_Presentacion
         {
             if (e.RowIndex >= 0)
             {
-                categoriaSeleccionada = (CE_Categoria)dgvcategoria.Rows[e.RowIndex].DataBoundItem;
+                categoriaSeleccionada = (L_Categoria)dgvcategoria.Rows[e.RowIndex].DataBoundItem;
                 TxtCategoria.Text = categoriaSeleccionada.nombre;
                 BTAgregar.Text = "Actualizar";
             }
@@ -141,11 +136,11 @@ namespace Capa_Presentacion
             {
                 if (dgvcategoria.Columns[e.ColumnIndex].Name == "btnEliminar")
                 {
-                    categoriaSeleccionada = (CE_Categoria)dgvcategoria.Rows[e.RowIndex].DataBoundItem;
+                    categoriaSeleccionada = (L_Categoria)dgvcategoria.Rows[e.RowIndex].DataBoundItem;
                     if (MessageBox.Show("¿Está seguro de que desea eliminar esta categoría?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         string mensaje = string.Empty;
-                        if (objNegocio.Eliminar(categoriaSeleccionada.id_categoria, out mensaje))
+                        if (funciones.Eliminar(categoriaSeleccionada.id_categoria, out mensaje))
                         {
                             MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             CargarCategoriasPaginadas();
@@ -164,7 +159,7 @@ namespace Capa_Presentacion
         {
             if (!string.IsNullOrEmpty(TxtBuscar.Text))
             {
-                dgvcategoria.DataSource = objNegocio.Buscar(TxtBuscar.Text);
+                dgvcategoria.DataSource = funciones.Buscar(TxtBuscar.Text);
                 BtnAnterior.Enabled = false;
                 BtnSiguiente.Enabled = false;
             }
