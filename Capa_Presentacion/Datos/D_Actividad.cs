@@ -1,5 +1,5 @@
-﻿using Capa_Entidad;
-using Capa_Presentacion.Datos;
+﻿using Capa_Presentacion.Datos;
+using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Datos
 {
-    public class CD_Actividad
+    public class D_Actividad
     {
         public List<KeyValuePair<int, string>> ObtenerActividades()
         {
@@ -42,7 +42,7 @@ namespace Datos
             }
             return lista;
         }
-        public string InsertarActividad(CE_Actividad actividad)
+        public string InsertarActividad(L_Actividad actividad)
         {
             string respuesta = "";
             try
@@ -66,9 +66,9 @@ namespace Datos
             return respuesta;
         }
 
-        public List<CE_Actividad> ObtenerActividadesConPaginado(int pagina, int tamanoPagina, out int totalRegistros)
+        public List<L_Actividad> ObtenerActividadesConPaginado(int pagina, int tamanoPagina, out int totalRegistros)
         {
-            List<CE_Actividad> listaActividades = new List<CE_Actividad>();
+            List<L_Actividad> listaActividades = new List<L_Actividad>();
             totalRegistros = 0;
             try
             {
@@ -88,7 +88,7 @@ namespace Datos
 
                 while (reader.Read())
                 {
-                    listaActividades.Add(new CE_Actividad()
+                    listaActividades.Add(new L_Actividad()
                     {
                         Id_actividad = Convert.ToInt32(reader["id_actividad"]),
                         Descripcion = reader["descripcion"].ToString()
@@ -107,7 +107,7 @@ namespace Datos
             return listaActividades;
         }
 
-        public string ActualizarActividad(CE_Actividad actividad)
+        public string ActualizarActividad(L_Actividad actividad)
         {
             string respuesta = "";
             try
@@ -156,9 +156,9 @@ namespace Datos
             return respuesta;
         }
 
-        public List<CE_Actividad> BuscarActividades(string terminoBusqueda)
+        public List<L_Actividad> BuscarActividades(string terminoBusqueda)
         {
-            List<CE_Actividad> listaActividades = new List<CE_Actividad>();
+            List<L_Actividad> listaActividades = new List<L_Actividad>();
             try
             {
                 Conexion.abrir();
@@ -169,7 +169,7 @@ namespace Datos
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
-                    listaActividades.Add(new CE_Actividad()
+                    listaActividades.Add(new L_Actividad()
                     {
                         Id_actividad = Convert.ToInt32(reader["id_actividad"]),
                         Descripcion = reader["descripcion"].ToString()

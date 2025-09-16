@@ -1,16 +1,9 @@
-﻿using Capa_Datos;
-using Capa_Entidad;
-using Capa_Negocio;
-using FontAwesome.Sharp;
+﻿using Capa_Presentacion.Datos;
+using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Capa_Presentacion
@@ -21,7 +14,7 @@ namespace Capa_Presentacion
         private int totalPaginas = 0;
         private int totalRegistros = 0;
         private const int tamanoPagina = 10;
-        private CE_Lote loteSeleccionado = null;
+        private L_Lote loteSeleccionado = null;
         public FrmLote()
         {
             InitializeComponent();
@@ -49,7 +42,7 @@ namespace Capa_Presentacion
         }
         private void LlenarComboBoxes()
         {
-            CD_Generico objGenerico = new CD_Generico();
+            D_Generico objGenerico = new D_Generico();
 
             CbCiclo.DataSource = objGenerico.ObtenerCiclos();
             CbCiclo.DisplayMember = "Value";
@@ -69,7 +62,7 @@ namespace Capa_Presentacion
 
         private void ConfigurarFiltrosBusqueda()
         {
-          
+
             List<KeyValuePair<string, string>> opciones = new List<KeyValuePair<string, string>>();
             opciones.Add(new KeyValuePair<string, string>("Nombre Lote", "NombreLote"));
             opciones.Add(new KeyValuePair<string, string>("Manzanaje", "Manzanaje"));
@@ -104,7 +97,7 @@ namespace Capa_Presentacion
 
         private void CargarLotes()
         {
-            CN_Lote objNegocio = new CN_Lote();
+            D_Lote objNegocio = new D_Lote();
             DatagreedLote.DataSource = objNegocio.ObtenerLotesPaginados(paginaActual, tamanoPagina, out totalRegistros);
             totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamanoPagina);
             TxtPagina.Text = paginaActual.ToString();
@@ -119,25 +112,25 @@ namespace Capa_Presentacion
                 bool esNinguno = estadoSeleccionado == "Ninguno";
                 bool esCosecha = estadoSeleccionado == "En Cosecha";
 
-        
+
                 LbtipoDeCienmbra.Enabled = !esNinguno;
                 CBTipoSiembra.Enabled = !esNinguno;
                 label1.Enabled = !esNinguno;
                 dateTimePickerSiembra.Enabled = !esNinguno;
 
-     
+
                 label4.Enabled = esCosecha;
                 dateTimePickerCorte.Enabled = esCosecha;
             }
         }
         private void BuscarLotes(string textoBusqueda, string columnaBusqueda)
         {
-          
 
-            CN_Lote objNegocio = new CN_Lote();
+
+            D_Lote objNegocio = new D_Lote();
             int total;
-       
-            List<CE_Lote> listaLotes = objNegocio.ObtenerLotesPaginados(1, totalRegistros, out total);
+
+            List<L_Lote> listaLotes = objNegocio.ObtenerLotesPaginados(1, totalRegistros, out total);
 
             if (string.IsNullOrWhiteSpace(textoBusqueda))
             {
@@ -145,9 +138,9 @@ namespace Capa_Presentacion
                 return;
             }
 
-            List<CE_Lote> listaFiltrada = new List<CE_Lote>();
+            List<L_Lote> listaFiltrada = new List<L_Lote>();
 
-            foreach (CE_Lote lote in listaLotes)
+            foreach (L_Lote lote in listaLotes)
             {
                 if (lote.GetType().GetProperty(columnaBusqueda).GetValue(lote, null).ToString().ToLower().Contains(textoBusqueda.ToLower()))
                 {
@@ -163,19 +156,19 @@ namespace Capa_Presentacion
 
         private void BTAgregar_Click(object sender, EventArgs e)
         {
-       
+
 
             if (CBEstadoCultivo.SelectedIndex == -1)
             {
                 MessageBox.Show("Debe seleccionar un 'Estado del Cultivo'.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; 
+                return;
             }
-        
+
 
             string mensaje = string.Empty;
-            CN_Lote objNegocio = new CN_Lote();
+            D_Lote objNegocio = new D_Lote();
 
-            CE_Lote oLote = new CE_Lote()
+            L_Lote oLote = new L_Lote()
             {
                 IDLote = 0,
                 NombreLote = TxtNombreLote.Text,
@@ -219,9 +212,9 @@ namespace Capa_Presentacion
             }
 
             string mensaje = string.Empty;
-            CN_Lote objNegocio = new CN_Lote();
+            D_Lote objNegocio = new D_Lote();
 
-            CE_Lote oLote = new CE_Lote()
+            L_Lote oLote = new L_Lote()
             {
                 IDLote = loteSeleccionado.IDLote,
                 NombreLote = TxtNombreLote.Text,
@@ -253,7 +246,7 @@ namespace Capa_Presentacion
             }
 
             string mensaje;
-            CN_Lote objNegocio = new CN_Lote();
+            D_Lote objNegocio = new D_Lote();
 
             if (MessageBox.Show("¿Está seguro de eliminar este lote?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -276,32 +269,32 @@ namespace Capa_Presentacion
             string textoBusqueda = TxtBuscar.Text.Trim();
             string columnaBusqueda = string.Empty;
 
-     
+
             if (CmbBuscar.SelectedItem != null)
             {
-                
+
                 var selectedPair = (KeyValuePair<string, string>)CmbBuscar.SelectedItem;
                 columnaBusqueda = selectedPair.Value;
             }
             else
             {
-               
+
                 columnaBusqueda = "NombreLote";
             }
 
-           
+
             if (string.IsNullOrWhiteSpace(textoBusqueda))
             {
                 CargarLotes();
                 return;
             }
 
-       
-            CN_Lote objNegocio = new CN_Lote();
-            int total;
-            List<CE_Lote> listaLotes = objNegocio.ObtenerLotesPaginados(1, totalRegistros, out total);
 
-            List<CE_Lote> listaFiltrada = listaLotes
+            D_Lote objNegocio = new D_Lote();
+            int total;
+            List<L_Lote> listaLotes = objNegocio.ObtenerLotesPaginados(1, totalRegistros, out total);
+
+            List<L_Lote> listaFiltrada = listaLotes
                 .Where(lote =>
                 {
                     var propiedad = lote.GetType().GetProperty(columnaBusqueda);
@@ -408,7 +401,7 @@ namespace Capa_Presentacion
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = DatagreedLote.Rows[e.RowIndex];
-                loteSeleccionado = new CE_Lote()
+                loteSeleccionado = new L_Lote()
                 {
                     IDLote = Convert.ToInt32(row.Cells["IDLote"].Value),
                     NombreLote = row.Cells["NombreLote"].Value.ToString(),
@@ -434,10 +427,10 @@ namespace Capa_Presentacion
                 if (loteSeleccionado.FechaCorte.HasValue)
                     dateTimePickerCorte.Value = loteSeleccionado.FechaCorte.Value;
 
-          
+
                 BTAgregar.Enabled = false;
 
-              
+
                 BTEditar.Enabled = true;
                 BTEliminar.Enabled = true;
             }

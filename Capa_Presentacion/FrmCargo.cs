@@ -1,22 +1,17 @@
-﻿using Capa_Entidad;
-using Capa_Negocio;
+﻿using Capa_Presentacion.Datos;
+using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Capa_Presentacion
 {
     public partial class FrmCargo : Form
     {
-        private CN_Cargo cnCargo = new CN_Cargo();
+        //private CN_Cargo cnCargo = new CN_Cargo();
+        D_Cargo funciones = new D_Cargo();
         private int paginaActual = 1;
-        private const int tamanoPagina = 10; 
+        private const int tamanoPagina = 10;
         private int totalRegistros = 0;
         public FrmCargo()
         {
@@ -29,10 +24,10 @@ namespace Capa_Presentacion
         {
             if (string.IsNullOrWhiteSpace(TxtBuscar.Text))
             {
-                List<CE_Cargo> listaCargos = cnCargo.ListarCargosConPaginado(paginaActual, tamanoPagina, out totalRegistros);
+                List<L_Cargo> listaCargos = funciones.ObtenerCargosConPaginado(paginaActual, tamanoPagina, out totalRegistros);
                 dgvcargo.DataSource = listaCargos;
 
-              
+
                 if (dgvcargo.Columns.Contains("Id_cargo"))
                 {
                     dgvcargo.Columns["Id_cargo"].Visible = false;
@@ -40,7 +35,7 @@ namespace Capa_Presentacion
 
                 int totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamanoPagina);
 
-             
+
                 TxtPagina.Text = paginaActual.ToString();
                 TxtTotalPagina.Text = totalPaginas.ToString();
 
@@ -60,7 +55,7 @@ namespace Capa_Presentacion
             {
                 dgvcargo.Columns["Id_actividad"].Visible = false;
             }
-     
+
 
             dgvcargo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             if (dgvcargo.ColumnCount > 0)
@@ -98,15 +93,16 @@ namespace Capa_Presentacion
             }
             else
             {
-                
-                dgvcargo.DataSource = cnCargo.BuscarCargos(TxtBuscar.Text);
+
+                dgvcargo.DataSource = funciones.BuscarCargos(TxtBuscar.Text);
             }
         }
 
         private void BTAgregar_Click(object sender, EventArgs e)
         {
-            string nombre = TxtCargo.Text;
-            string respuesta = cnCargo.AgregarCargo(nombre);
+            L_Cargo parametros = new L_Cargo();
+            parametros.Nombre = TxtCargo.Text;
+            string respuesta = funciones.InsertarCargo(parametros);
 
             if (respuesta.Equals("OK"))
             {
@@ -124,11 +120,11 @@ namespace Capa_Presentacion
         {
             if (dgvcargo.SelectedRows.Count > 0)
             {
-            
-                int idCargo = Convert.ToInt32(dgvcargo.SelectedRows[0].Cells["Id_cargo"].Value);
-                string nombre = TxtCargo.Text;
+                L_Cargo parametros = new L_Cargo();
+                parametros.Id_cargo = Convert.ToInt32(dgvcargo.SelectedRows[0].Cells["Id_cargo"].Value);
+                parametros.Nombre = TxtCargo.Text;
 
-                string respuesta = cnCargo.EditarCargo(idCargo, nombre);
+                string respuesta = funciones.ActualizarCargo(parametros);
 
                 if (respuesta.Equals("OK"))
                 {
@@ -156,7 +152,7 @@ namespace Capa_Presentacion
                 if (dialogResult == DialogResult.Yes)
                 {
                     int idCargo = Convert.ToInt32(dgvcargo.SelectedRows[0].Cells["Id_cargo"].Value);
-                    string respuesta = cnCargo.EliminarCargo(idCargo);
+                    string respuesta = funciones.EliminarCargo(idCargo);
 
                     if (respuesta.Equals("OK"))
                     {
@@ -180,11 +176,11 @@ namespace Capa_Presentacion
             if (!string.IsNullOrWhiteSpace(TxtPagina.Text))
             {
                 int nuevaPagina;
-               
+
                 if (int.TryParse(TxtPagina.Text, out nuevaPagina))
                 {
                     int totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamanoPagina);
-                    
+
                     if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas)
                     {
                         paginaActual = nuevaPagina;
