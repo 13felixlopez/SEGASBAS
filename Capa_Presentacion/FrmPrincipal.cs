@@ -100,5 +100,10 @@ namespace Capa_Presentacion
             AbrirFormularioEnPanel(new FrmCategoria());
 
         }
+
+        private void BtUsuario_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new FRM_AgregarUser());
+        }
     }
 }

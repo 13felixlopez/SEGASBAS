@@ -103,6 +103,7 @@
             this.BtUsuario.TabIndex = 32;
             this.BtUsuario.Text = "Usuarios";
             this.BtUsuario.UseVisualStyleBackColor = true;
+            this.BtUsuario.Click += new System.EventHandler(this.BtUsuario_Click);
             // 
             // BtReporte
             // 
