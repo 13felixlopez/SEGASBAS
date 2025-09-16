@@ -1,8 +1,10 @@
 ﻿using Capa_Entidad;
+using Capa_Presentacion.Datos;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace Datos
 {
@@ -13,28 +15,30 @@ namespace Datos
             List<KeyValuePair<int, string>> lista = new List<KeyValuePair<int, string>>();
             try
             {
-                using (SqlConnection oConexion = oConexion.ObtenerConexion())
+                Conexion.abrir();
+                SqlCommand cmd = new SqlCommand("SELECT id_actividad, descripcion FROM Actividad ORDER BY descripcion ASC", Conexion.conectar);
+                cmd.CommandType = CommandType.Text;
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    SqlCommand cmd = new SqlCommand("SELECT id_actividad, descripcion FROM Actividad ORDER BY descripcion ASC", oConexion);
-                    cmd.CommandType = CommandType.Text;
-                    oConexion.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    while (dr.Read())
                     {
-                        while (dr.Read())
-                        {
 
-                            lista.Add(new KeyValuePair<int, string>(
-                                Convert.ToInt32(dr["id_actividad"]),
-                                dr["descripcion"].ToString()
-                            ));
-                        }
+                        lista.Add(new KeyValuePair<int, string>(
+                            Convert.ToInt32(dr["id_actividad"]),
+                            dr["descripcion"].ToString()
+                        ));
                     }
                 }
+
             }
             catch (Exception)
             {
                 lista = new List<KeyValuePair<int, string>>();
+            }
+            finally
+            {
+                Conexion.cerrar();
             }
             return lista;
         }
@@ -43,19 +47,21 @@ namespace Datos
             string respuesta = "";
             try
             {
-                using (SqlConnection conexion = CD_Conexion.ObtenerConexion())
-                {
-                    SqlCommand comando = new SqlCommand("sp_InsertarActividad", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.AddWithValue("@descripcion", actividad.Descripcion);
-                    conexion.Open();
-                    comando.ExecuteNonQuery();
-                    respuesta = "OK";
-                }
+                Conexion.abrir();
+                SqlCommand comando = new SqlCommand("sp_InsertarActividad", Conexion.conectar);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@descripcion", actividad.Descripcion);
+                comando.ExecuteNonQuery();
+                respuesta = "OK";
+
             }
             catch (Exception ex)
             {
                 respuesta = ex.Message;
+            }
+            finally
+            {
+                Conexion.cerrar();
             }
             return respuesta;
         }
@@ -66,33 +72,38 @@ namespace Datos
             totalRegistros = 0;
             try
             {
-                using (SqlConnection conexion = CD_Conexion.ObtenerConexion())
+                Conexion.abrir();
+                SqlCommand comando = new SqlCommand("sp_ObtenerActividadesConPaginado", Conexion.conectar);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@pagina", pagina);
+                comando.Parameters.AddWithValue("@tamanoPagina", tamanoPagina);
+
+                SqlDataReader reader = comando.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    SqlCommand comando = new SqlCommand("sp_ObtenerActividadesConPaginado", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.AddWithValue("@pagina", pagina);
-                    comando.Parameters.AddWithValue("@tamanoPagina", tamanoPagina);
-                    conexion.Open();
-
-                    SqlDataReader reader = comando.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        totalRegistros = Convert.ToInt32(reader["TotalRegistros"]);
-                    }
-                    reader.NextResult();
-
-                    while (reader.Read())
-                    {
-                        listaActividades.Add(new CE_Actividad()
-                        {
-                            Id_actividad = Convert.ToInt32(reader["id_actividad"]),
-                            Descripcion = reader["descripcion"].ToString()
-                        });
-                    }
+                    totalRegistros = Convert.ToInt32(reader["TotalRegistros"]);
                 }
+                reader.NextResult();
+
+                while (reader.Read())
+                {
+                    listaActividades.Add(new CE_Actividad()
+                    {
+                        Id_actividad = Convert.ToInt32(reader["id_actividad"]),
+                        Descripcion = reader["descripcion"].ToString()
+                    });
+                }
+
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al Obtener Actividades " + ex.Message, "Error al cargar datos", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
             return listaActividades;
         }
 
@@ -101,20 +112,21 @@ namespace Datos
             string respuesta = "";
             try
             {
-                using (SqlConnection conexion = CD_Conexion.ObtenerConexion())
-                {
-                    SqlCommand comando = new SqlCommand("sp_ActualizarActividad", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.AddWithValue("@id_actividad", actividad.Id_actividad);
-                    comando.Parameters.AddWithValue("@descripcion", actividad.Descripcion);
-                    conexion.Open();
-                    comando.ExecuteNonQuery();
-                    respuesta = "OK";
-                }
+                Conexion.abrir();
+                SqlCommand comando = new SqlCommand("sp_ActualizarActividad", Conexion.conectar);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@id_actividad", actividad.Id_actividad);
+                comando.Parameters.AddWithValue("@descripcion", actividad.Descripcion);
+                comando.ExecuteNonQuery();
+                respuesta = "OK";
             }
             catch (Exception ex)
             {
                 respuesta = ex.Message;
+            }
+            finally
+            {
+                Conexion.cerrar();
             }
             return respuesta;
         }
@@ -124,19 +136,22 @@ namespace Datos
             string respuesta = "";
             try
             {
-                using (SqlConnection conexion = CD_Conexion.ObtenerConexion())
-                {
-                    SqlCommand comando = new SqlCommand("sp_EliminarActividad", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.AddWithValue("@id_actividad", idActividad);
-                    conexion.Open();
-                    comando.ExecuteNonQuery();
-                    respuesta = "OK";
-                }
+                Conexion.abrir();
+                SqlCommand comando = new SqlCommand("sp_EliminarActividad", Conexion.conectar);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@id_actividad", idActividad);
+
+                comando.ExecuteNonQuery();
+                respuesta = "OK";
+
             }
             catch (Exception ex)
             {
                 respuesta = ex.Message;
+            }
+            finally
+            {
+                Conexion.cerrar();
             }
             return respuesta;
         }
@@ -146,24 +161,30 @@ namespace Datos
             List<CE_Actividad> listaActividades = new List<CE_Actividad>();
             try
             {
-                using (SqlConnection conexion = CD_Conexion.ObtenerConexion())
+                Conexion.abrir();
+                SqlCommand comando = new SqlCommand("sp_BuscarActividades", Conexion.conectar);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.AddWithValue("@terminoBusqueda", terminoBusqueda);
+
+                SqlDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
                 {
-                    SqlCommand comando = new SqlCommand("sp_BuscarActividades", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.AddWithValue("@terminoBusqueda", terminoBusqueda);
-                    conexion.Open();
-                    SqlDataReader reader = comando.ExecuteReader();
-                    while (reader.Read())
+                    listaActividades.Add(new CE_Actividad()
                     {
-                        listaActividades.Add(new CE_Actividad()
-                        {
-                            Id_actividad = Convert.ToInt32(reader["id_actividad"]),
-                            Descripcion = reader["descripcion"].ToString()
-                        });
-                    }
+                        Id_actividad = Convert.ToInt32(reader["id_actividad"]),
+                        Descripcion = reader["descripcion"].ToString()
+                    });
                 }
+
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al Buscar Actividades " + ex.Message, "Error en Buscar Actividades", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
             return listaActividades;
         }
     }
