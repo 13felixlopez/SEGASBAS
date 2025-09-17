@@ -117,26 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Atras" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Atras.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <metadata name="Marcar.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Marcar.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnGuardar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAlhJREFUWEft
+        l01r1EAYx/sBPPlyFkHBi29fwLeLNplJnnSJL6tWvQh+hVVL1UO7oigePBcqCkvNk6wItV2kiCcVEbzr
+        QVsFBS+7bi3YkSeYsHkyu01CIVD8ww+WyTP//8xkmJ0MDf1XAbkNd5Ocqew2AusgQb+pjdetq8RMZZfp
+        29dNhDcCYVUgKMYfgfBaIIxbgbWT9y8sx3O2SIT7EmFFE9qP3xLh7rGGu5n75ZL0nKMC4YcmICvfzcA6
+        wn0zSSKcEAjLGtN8+HbX9ByX+w+UQDicc8kHQl7Scw7xHK2GG+42ibDETdaBRdpPPC8lifBA0zk3lu8o
+        p1lJtNFm5nkJyabcQTuYm+UFghH16OuYav68qdxnbu+zZePJyHaeG0si3OBmeaGZT32uqbfqXsj04hVe
+        M85zYwmED9wwD9HMo/C59oSqzp7kde95bij5VG7lhnnIGE6sag8oA2G/pjgTOcJDrMDay/Pp/Q/zwojL
+        L0fD92oHTuoZf+cvftXV6NzpVF0vhucc5/l9B3Bp4Zx6tXInNH+4dDUxiCLhfQcgPGcfLyTIkIyjkMff
+        xsIl58s+355UZ2ZPpfrrMHx7D88fuAkvtqpqoXsrDpv6UkvOvFtX5+fXnvk/9JuQJBDeaTqE8JWIaHUm
+        Ms+coPsEz41lIlzjHXrhg2h1JtXZ59nDCdO3azw3VpajOBpEkfA1j2KSRLit6ZiA9sSFVjXVnoE6z0up
+        9L9jkhVYBwRCR2NSlDadtDxnoEq9kkWiw8lE+JQyzc5H7bmfR6Vey3tV2oeJTqV8mm1Y/QWvfXTNqG3x
+        qgAAAABJRU5ErkJggg==
+</value>
   </data>
-  <data name="edit_property_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\edit_property_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btnActualizar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAlhJREFUWEft
+        l01r1EAYx/sBPPlyFkHBi29fwLeLNplJnnSJL6tWvQh+hVVL1UO7oigePBcqCkvNk6wItV2kiCcVEbzr
+        QVsFBS+7bi3YkSeYsHkyu01CIVD8ww+WyTP//8xkmJ0MDf1XAbkNd5Ocqew2AusgQb+pjdetq8RMZZfp
+        29dNhDcCYVUgKMYfgfBaIIxbgbWT9y8sx3O2SIT7EmFFE9qP3xLh7rGGu5n75ZL0nKMC4YcmICvfzcA6
+        wn0zSSKcEAjLGtN8+HbX9ByX+w+UQDicc8kHQl7Scw7xHK2GG+42ibDETdaBRdpPPC8lifBA0zk3lu8o
+        p1lJtNFm5nkJyabcQTuYm+UFghH16OuYav68qdxnbu+zZePJyHaeG0si3OBmeaGZT32uqbfqXsj04hVe
+        M85zYwmED9wwD9HMo/C59oSqzp7kde95bij5VG7lhnnIGE6sag8oA2G/pjgTOcJDrMDay/Pp/Q/zwojL
+        L0fD92oHTuoZf+cvftXV6NzpVF0vhucc5/l9B3Bp4Zx6tXInNH+4dDUxiCLhfQcgPGcfLyTIkIyjkMff
+        xsIl58s+355UZ2ZPpfrrMHx7D88fuAkvtqpqoXsrDpv6UkvOvFtX5+fXnvk/9JuQJBDeaTqE8JWIaHUm
+        Ms+coPsEz41lIlzjHXrhg2h1JtXZ59nDCdO3azw3VpajOBpEkfA1j2KSRLit6ZiA9sSFVjXVnoE6z0up
+        9L9jkhVYBwRCR2NSlDadtDxnoEq9kkWiw8lE+JQyzc5H7bmfR6Vey3tV2oeJTqV8mm1Y/QWvfXTNqG3x
+        qgAAAABJRU5ErkJggg==
+</value>
   </data>
-  <data name="add_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8_ok_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8_ok_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-búsqueda" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-búsqueda.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="send_30px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\send_30px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  <metadata name="Eliminar.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Editar.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Msj.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

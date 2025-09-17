@@ -33,6 +33,7 @@ namespace Capa_Presentacion
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
             PanelCatalogo.Visible = false;
+            LblUser.Text = FrmLogin.NombreA;
         }
 
         private void BT_Catalogo_Click(object sender, EventArgs e)
@@ -96,7 +97,7 @@ namespace Capa_Presentacion
 
         private void BtUsuario_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnPanel(new FRM_AgregarUser());
+            AbrirFormularioEnPanel(new FrmUsuario());
         }
     }
 }
