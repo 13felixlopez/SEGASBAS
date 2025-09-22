@@ -224,9 +224,9 @@
             this.label1.Location = new System.Drawing.Point(19, 36);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(148, 25);
+            this.label1.Size = new System.Drawing.Size(178, 25);
             this.label1.TabIndex = 88;
-            this.label1.Text = "Nombre Cargo";
+            this.label1.Text = "Nombre Actividad";
             // 
             // TxtActividad
             // 

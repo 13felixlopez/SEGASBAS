@@ -1,6 +1,7 @@
 ﻿using Capa_Presentacion.Datos;
 using Capa_Presentacion.Logica;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Capa_Presentacion
@@ -12,11 +13,13 @@ namespace Capa_Presentacion
         private int paginaActual = 1;
         private const int tamanoPagina = 10;
         private int idEmpleadoSeleccionado = 0;
+        
         public FrmEmpleado()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.Load += FrmEmpleado_Load;
+            CBSexo.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void FrmEmpleado_Load(object sender, EventArgs e)
@@ -24,10 +27,12 @@ namespace Capa_Presentacion
             CargarCargos();
             LlenarComboSexo();
             CargarEmpleadosPaginados();
+            CargarCriteriosBusqueda();
+           
         }
         private void CargarCargos()
         {
-            // Aquí se usa el método que llama a tu SP existente
+          
             CB_Cargo.DataSource = _logica.ObtenerCargos();
             CB_Cargo.DisplayMember = "Nombre";
             CB_Cargo.ValueMember = "Id_cargo";
@@ -61,7 +66,7 @@ namespace Capa_Presentacion
                 int totalPaginas;
                 DatagreedEmpleado.DataSource = _logica.ObtenerEmpleadosPaginados(paginaActual, tamanoPagina, out totalPaginas);
 
-                // ¡Aquí llamamos al nuevo método!
+              
                 AjustarDataGridView();
 
                 TxtPagina.Text = paginaActual.ToString();
@@ -197,15 +202,63 @@ namespace Capa_Presentacion
         {
             try
             {
+               
+                if (string.IsNullOrWhiteSpace(TxtNombre.Text) || string.IsNullOrWhiteSpace(TxtApellido.Text))
+                {
+                    MessageBox.Show("Los campos 'Nombre' y 'Apellido' son obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string telefonoSinGuiones = new string(TxtTelefono.Text.Where(char.IsDigit).ToArray());
+                if (!string.IsNullOrWhiteSpace(TxtTelefono.Text) && telefonoSinGuiones.Length != 8)
+                {
+                    MessageBox.Show("El número de teléfono debe tener exactamente 8 dígitos.", "Validación de Teléfono", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+               
+                string cedulaLimpia = new string(TxtCedula.Text.Where(c => char.IsDigit(c) || char.IsLetter(c)).ToArray());
+
+                if (!string.IsNullOrWhiteSpace(TxtCedula.Text))
+                {
+                    if (cedulaLimpia.Length != 14)
+                    {
+                        MessageBox.Show("La cédula debe tener 13 dígitos y una letra.", "Validación de Cédula", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    string digitosCedula = cedulaLimpia.Substring(0, 13);
+                    if (!digitosCedula.All(char.IsDigit))
+                    {
+                        MessageBox.Show("Los primeros 13 caracteres de la cédula deben ser dígitos.", "Validación de Cédula", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    char letraCedula = cedulaLimpia.Last();
+                    if (!char.IsLetter(letraCedula) || !char.IsUpper(letraCedula))
+                    {
+                        MessageBox.Show("El último carácter de la cédula debe ser una letra mayúscula.", "Validación de Cédula", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
+       
                 L_Empleado empleado = ObtenerDatosDelFormulario();
+
+            
+                empleado.Telefono = telefonoSinGuiones;
+                empleado.Cedula = cedulaLimpia;
+
+               
                 _logica.InsertarEmpleado(empleado);
-                MessageBox.Show("Empleado agregado exitosamente.", "Éxito");
+
+                MessageBox.Show("Empleado agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarEmpleadosPaginados();
                 LimpiarCampos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al agregar empleado: " + ex.Message, "Error");
+                MessageBox.Show("Error al agregar empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -275,14 +328,25 @@ namespace Capa_Presentacion
 
         private void DatagreedEmpleado_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+         
+            if (e.RowIndex < 0 || e.RowIndex >= DatagreedEmpleado.Rows.Count)
             {
+                return; 
+            }
+
+            try
+            {
+               
                 DataGridViewRow row = DatagreedEmpleado.Rows[e.RowIndex];
+              
                 idEmpleadoSeleccionado = Convert.ToInt32(row.Cells["Id_empleado"].Value);
 
+               
                 L_Empleado empleado = _logica.ObtenerEmpleadoPorId(idEmpleadoSeleccionado);
+
                 if (empleado != null)
                 {
+                    
                     TxtNombre.Text = empleado.Nombre;
                     TxtApellido.Text = empleado.Apellido;
                     TxtCedula.Text = empleado.Cedula;
@@ -291,17 +355,258 @@ namespace Capa_Presentacion
                     TxtTelefono.Text = empleado.Telefono;
                     Txtsalariopordia.Text = empleado.SalarioPorDia.ToString();
                     dateTimePickerFechaIngres.Value = empleado.FechaIngreso;
+
                     checkPermanente.Checked = (empleado.TipoContrato == "Permanente");
                     checkTemporalVaron.Checked = (empleado.TipoContrato == "Temporal Varon");
+
+                   
                     checkAsegurados.Checked = (empleado.BeneficioSocial == "Asegurados");
                     checkNoAsegurados.Checked = (empleado.BeneficioSocial == "No Asegurados");
+
+                  
                     CB_Cargo.SelectedValue = empleado.Id_cargo;
                 }
-
 
                 BTAgregar.Enabled = false;
                 BTEditar.Enabled = true;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al cargar los datos del empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TxtTelefono_TextChanged(object sender, EventArgs e)
+        {
+            int cursorPosition = TxtTelefono.SelectionStart;
+
+  
+            string digitos = new string(TxtTelefono.Text.Where(char.IsDigit).ToArray());
+
+            
+            if (digitos.Length > 8)
+            {
+                digitos = digitos.Substring(0, 8);
+            }
+
+            string numeroFormateado = "";
+            if (digitos.Length > 0)
+            {
+                numeroFormateado += digitos.Substring(0, Math.Min(4, digitos.Length));
+            }
+            if (digitos.Length > 4)
+            {
+                numeroFormateado += "-" + digitos.Substring(4, Math.Min(4, digitos.Length - 4));
+            }
+
+            if (TxtTelefono.Text != numeroFormateado)
+            {
+                TxtTelefono.Text = numeroFormateado;
+
+                if (cursorPosition > 4)
+                {
+                    TxtTelefono.SelectionStart = Math.Min(cursorPosition + 1, TxtTelefono.Text.Length);
+                }
+                else
+                {
+                    TxtTelefono.SelectionStart = Math.Min(cursorPosition, TxtTelefono.Text.Length);
+                }
+            }
+        }
+
+        private void TxtCedula_TextChanged(object sender, EventArgs e)
+        {
+            int cursorPosition = TxtCedula.SelectionStart;
+
+            string textoLimpio = new string(TxtCedula.Text.Where(c => char.IsLetterOrDigit(c)).ToArray());
+
+            if (textoLimpio.Length > 14)
+            {
+                textoLimpio = textoLimpio.Substring(0, 14);
+            }
+
+            string cedulaFormateada = "";
+            if (textoLimpio.Length > 0)
+            {
+                cedulaFormateada += textoLimpio.Substring(0, Math.Min(3, textoLimpio.Length));
+            }
+            if (textoLimpio.Length > 3)
+            {
+                cedulaFormateada += "-" + textoLimpio.Substring(3, Math.Min(6, textoLimpio.Length - 3));
+            }
+            if (textoLimpio.Length > 9)
+            {
+                cedulaFormateada += "-" + textoLimpio.Substring(9, Math.Min(4, textoLimpio.Length - 9));
+            }
+       
+            if (textoLimpio.Length > 13)
+            {
+                cedulaFormateada += char.ToUpper(textoLimpio[13]);
+            }
+
+         
+            if (TxtCedula.Text != cedulaFormateada)
+            {
+                TxtCedula.Text = cedulaFormateada;
+
+                int guionesAgregados = 0;
+                if (cursorPosition > 3) guionesAgregados++;
+                if (cursorPosition > 10) guionesAgregados++;
+              
+                if (cursorPosition > 14) guionesAgregados++;
+
+                TxtCedula.SelectionStart = Math.Max(0, Math.Min(cursorPosition + guionesAgregados, TxtCedula.Text.Length));
+            }
+        }
+
+        private void TxtCedula_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (TxtCedula.Text.Length >= 16 && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true; 
+            }
+        }
+
+        private void TxtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != (char)Keys.Space)
+            {
+                e.Handled = true; 
+            }
+        }
+
+        private void TxtApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != (char)Keys.Space)
+            {
+                e.Handled = true; 
+            }
+        }
+
+        private void Txtsalariopordia_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+
+                if (e.KeyChar == '.' || e.KeyChar == ',')
+                {
+                   
+                    if (Txtsalariopordia.Text.Contains(",") || Txtsalariopordia.Text.Contains("."))
+                    {
+                        e.Handled = true;
+                    }
+                }
+                else
+                {
+                    e.Handled = true; 
+                }
+            }
+        }
+
+        private void checkPermanente_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkPermanente.Checked)
+            {
+                checkTemporalVaron.Checked = false;
+                checkTemporalMujer.Checked = false; 
+                checkDilleros.Checked = false;       
+                                                     
+            }
+        }
+
+        private void checkTemporalVaron_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkTemporalVaron.Checked)
+            {
+                checkPermanente.Checked = false;
+                checkTemporalMujer.Checked = false; 
+                checkDilleros.Checked = false;
+            }
+        }
+
+        private void checkAsegurados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkAsegurados.Checked)
+            {
+                checkNoAsegurados.Checked = false;
+            }
+        }
+
+        private void checkNoAsegurados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkNoAsegurados.Checked)
+            {
+                checkAsegurados.Checked = false;
+            }
+        }
+
+        private void checkTemporalMujer_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkTemporalMujer.Checked)
+            {
+                checkPermanente.Checked = false;
+                checkTemporalVaron.Checked = false; 
+                checkDilleros.Checked = false;
+
+            }
+        }
+
+        private void checkDilleros_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkDilleros.Checked)
+            {
+                checkPermanente.Checked = false;
+                checkTemporalVaron.Checked = false; 
+                checkTemporalMujer.Checked = false;
+            }
+        }
+        private void CargarCriteriosBusqueda()
+        {
+          
+            CmbBuscar.Items.Clear();
+           
+            CmbBuscar.Items.Add("Nombre");
+            CmbBuscar.Items.Add("Cedula");
+     
+            CmbBuscar.SelectedIndex = 0;
+        }
+        private string terminoBusqueda = "";
+        private void RealizarBusqueda()
+        {
+            try
+            {
+
+                string criterio = CmbBuscar.Text;
+               
+                string termino = TxtBuscar.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(termino))
+                {
+                    CargarEmpleadosPaginados();
+                }
+                else
+                {
+      
+                    DatagreedEmpleado.DataSource = _logica.BuscarEmpleados(termino, criterio);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error en la búsqueda: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TxtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            terminoBusqueda = TxtBuscar.Text.Trim();
+            RealizarBusqueda();
+
+        }
+
+        private void CmbBuscar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RealizarBusqueda();
         }
     }
 }

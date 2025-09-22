@@ -249,6 +249,7 @@
             this.TxtTelefono.Name = "TxtTelefono";
             this.TxtTelefono.Size = new System.Drawing.Size(236, 34);
             this.TxtTelefono.TabIndex = 36;
+            this.TxtTelefono.TextChanged += new System.EventHandler(this.TxtTelefono_TextChanged);
             // 
             // label3
             // 
@@ -376,6 +377,7 @@
             this.Txtsalariopordia.Size = new System.Drawing.Size(287, 34);
             this.Txtsalariopordia.TabIndex = 26;
             this.Txtsalariopordia.TextChanged += new System.EventHandler(this.Txtsalariopordia_TextChanged);
+            this.Txtsalariopordia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txtsalariopordia_KeyPress);
             // 
             // TxtApellido
             // 
@@ -386,6 +388,7 @@
             this.TxtApellido.Name = "TxtApellido";
             this.TxtApellido.Size = new System.Drawing.Size(287, 34);
             this.TxtApellido.TabIndex = 25;
+            this.TxtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtApellido_KeyPress);
             // 
             // TxtCedula
             // 
@@ -396,6 +399,8 @@
             this.TxtCedula.Name = "TxtCedula";
             this.TxtCedula.Size = new System.Drawing.Size(283, 34);
             this.TxtCedula.TabIndex = 22;
+            this.TxtCedula.TextChanged += new System.EventHandler(this.TxtCedula_TextChanged);
+            this.TxtCedula.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCedula_KeyPress);
             // 
             // TxtNombre
             // 
@@ -406,6 +411,7 @@
             this.TxtNombre.Name = "TxtNombre";
             this.TxtNombre.Size = new System.Drawing.Size(283, 34);
             this.TxtNombre.TabIndex = 23;
+            this.TxtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtNombre_KeyPress);
             // 
             // LbObservacion
             // 
@@ -441,6 +447,7 @@
             this.checkNoAsegurados.TabIndex = 2;
             this.checkNoAsegurados.Text = "No Asegurados";
             this.checkNoAsegurados.UseVisualStyleBackColor = true;
+            this.checkNoAsegurados.CheckedChanged += new System.EventHandler(this.checkNoAsegurados_CheckedChanged);
             // 
             // checkAsegurados
             // 
@@ -452,6 +459,7 @@
             this.checkAsegurados.TabIndex = 1;
             this.checkAsegurados.Text = "Asegurados";
             this.checkAsegurados.UseVisualStyleBackColor = true;
+            this.checkAsegurados.CheckedChanged += new System.EventHandler(this.checkAsegurados_CheckedChanged);
             // 
             // GBTipoContrato
             // 
@@ -479,6 +487,7 @@
             this.checkDilleros.TabIndex = 3;
             this.checkDilleros.Text = "Dilleros";
             this.checkDilleros.UseVisualStyleBackColor = true;
+            this.checkDilleros.CheckedChanged += new System.EventHandler(this.checkDilleros_CheckedChanged);
             // 
             // checkTemporalMujer
             // 
@@ -490,6 +499,7 @@
             this.checkTemporalMujer.TabIndex = 2;
             this.checkTemporalMujer.Text = "Temporal Mujeres";
             this.checkTemporalMujer.UseVisualStyleBackColor = true;
+            this.checkTemporalMujer.CheckedChanged += new System.EventHandler(this.checkTemporalMujer_CheckedChanged);
             // 
             // checkTemporalVaron
             // 
@@ -501,6 +511,7 @@
             this.checkTemporalVaron.TabIndex = 1;
             this.checkTemporalVaron.Text = "Temporal Varones";
             this.checkTemporalVaron.UseVisualStyleBackColor = true;
+            this.checkTemporalVaron.CheckedChanged += new System.EventHandler(this.checkTemporalVaron_CheckedChanged);
             // 
             // checkPermanente
             // 
@@ -512,6 +523,7 @@
             this.checkPermanente.TabIndex = 0;
             this.checkPermanente.Text = "Permanente";
             this.checkPermanente.UseVisualStyleBackColor = true;
+            this.checkPermanente.CheckedChanged += new System.EventHandler(this.checkPermanente_CheckedChanged);
             // 
             // panelContenedorEmpleado
             // 
@@ -698,13 +710,14 @@
             // 
             // CmbBuscar
             // 
-            this.CmbBuscar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CmbBuscar.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbBuscar.FormattingEnabled = true;
-            this.CmbBuscar.Location = new System.Drawing.Point(435, 14);
+            this.CmbBuscar.Location = new System.Drawing.Point(434, 12);
             this.CmbBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.CmbBuscar.Name = "CmbBuscar";
-            this.CmbBuscar.Size = new System.Drawing.Size(276, 34);
+            this.CmbBuscar.Size = new System.Drawing.Size(276, 35);
             this.CmbBuscar.TabIndex = 49;
+            this.CmbBuscar.SelectedIndexChanged += new System.EventHandler(this.CmbBuscar_SelectedIndexChanged);
             // 
             // TxtBuscar
             // 
@@ -715,6 +728,7 @@
             this.TxtBuscar.Name = "TxtBuscar";
             this.TxtBuscar.Size = new System.Drawing.Size(288, 34);
             this.TxtBuscar.TabIndex = 50;
+            this.TxtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
             // 
             // label7
             // 

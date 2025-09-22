@@ -39,6 +39,42 @@ namespace Capa_Presentacion.Datos
             }
             return lista;
         }
+        public DataTable BuscarEmpleados(string terminoBusqueda, string criterioBusqueda)
+        {
+            DataTable dt = new DataTable();
+            // Se abre la conexión de manera manual, como lo haces en el resto de tu código
+            Conexion.abrir();
+
+            try
+            {
+                // Se usa el objeto de conexión estático
+                using (SqlCommand cmd = new SqlCommand("sp_BuscarEmpleados", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@terminoBusqueda", terminoBusqueda);
+                    cmd.Parameters.AddWithValue("@criterioBusqueda", criterioBusqueda);
+
+                    // Usamos 'using' con el adaptador para asegurar su liberación
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // La capa de datos no muestra mensajes, lanza la excepción para que
+                // la capa de presentación la maneje
+                throw new Exception("Error al buscar empleados: " + ex.Message, ex);
+            }
+            finally
+            {
+                // Se asegura de que la conexión se cierre SIEMPRE
+                Conexion.cerrar();
+            }
+
+            return dt;
+        }
 
         public DataTable ObtenerCargos()
         {
