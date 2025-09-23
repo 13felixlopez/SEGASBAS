@@ -34,19 +34,15 @@
             this.CbCiclo = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.CBEstadoCultivo = new System.Windows.Forms.ComboBox();
-            this.BTInformacio = new FontAwesome.Sharp.IconButton();
             this.label4 = new System.Windows.Forms.Label();
             this.dateTimePickerCorte = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePickerSiembra = new System.Windows.Forms.DateTimePicker();
-            this.BTAgregar = new FontAwesome.Sharp.IconButton();
-            this.BTCancelar = new FontAwesome.Sharp.IconButton();
             this.LbObservacion = new System.Windows.Forms.Label();
             this.TxtObservacion = new System.Windows.Forms.TextBox();
             this.Manzanaje = new System.Windows.Forms.Label();
             this.CBTipoSiembra = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TxtVariedadeArroz = new System.Windows.Forms.TextBox();
             this.TxtManzanaje = new System.Windows.Forms.TextBox();
             this.LbtipoDeCienmbra = new System.Windows.Forms.Label();
@@ -60,14 +56,18 @@
             this.TxtTotalPagina = new System.Windows.Forms.TextBox();
             this.TxtPagina = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.BtnSiguiente = new FontAwesome.Sharp.IconButton();
             this.label8 = new System.Windows.Forms.Label();
-            this.BtnAnterior = new FontAwesome.Sharp.IconButton();
             this.BTEditar = new FontAwesome.Sharp.IconButton();
             this.BTEliminar = new FontAwesome.Sharp.IconButton();
+            this.BtnSiguiente = new FontAwesome.Sharp.IconButton();
+            this.BtnAnterior = new FontAwesome.Sharp.IconButton();
+            this.BTInformacion = new FontAwesome.Sharp.IconButton();
+            this.BTAgregar = new FontAwesome.Sharp.IconButton();
+            this.BTCancelar = new FontAwesome.Sharp.IconButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.PanelLote.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DatagreedLote)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // PanelLote
@@ -78,7 +78,7 @@
             this.PanelLote.Controls.Add(this.CbCiclo);
             this.PanelLote.Controls.Add(this.label5);
             this.PanelLote.Controls.Add(this.CBEstadoCultivo);
-            this.PanelLote.Controls.Add(this.BTInformacio);
+            this.PanelLote.Controls.Add(this.BTInformacion);
             this.PanelLote.Controls.Add(this.label4);
             this.PanelLote.Controls.Add(this.dateTimePickerCorte);
             this.PanelLote.Controls.Add(this.label1);
@@ -144,22 +144,6 @@
             this.CBEstadoCultivo.Size = new System.Drawing.Size(271, 35);
             this.CBEstadoCultivo.TabIndex = 90;
             // 
-            // BTInformacio
-            // 
-            this.BTInformacio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTInformacio.Font = new System.Drawing.Font("Microsoft YaHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTInformacio.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BTInformacio.IconChar = FontAwesome.Sharp.IconChar.MapLocationDot;
-            this.BTInformacio.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.BTInformacio.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.BTInformacio.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BTInformacio.Location = new System.Drawing.Point(358, -2);
-            this.BTInformacio.Margin = new System.Windows.Forms.Padding(4);
-            this.BTInformacio.Name = "BTInformacio";
-            this.BTInformacio.Size = new System.Drawing.Size(64, 70);
-            this.BTInformacio.TabIndex = 89;
-            this.BTInformacio.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -199,44 +183,6 @@
             this.dateTimePickerSiembra.Name = "dateTimePickerSiembra";
             this.dateTimePickerSiembra.Size = new System.Drawing.Size(399, 34);
             this.dateTimePickerSiembra.TabIndex = 85;
-            // 
-            // BTAgregar
-            // 
-            this.BTAgregar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTAgregar.BackColor = System.Drawing.Color.Green;
-            this.BTAgregar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTAgregar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.BTAgregar.IconChar = FontAwesome.Sharp.IconChar.FileCircleCheck;
-            this.BTAgregar.IconColor = System.Drawing.Color.White;
-            this.BTAgregar.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            this.BTAgregar.IconSize = 30;
-            this.BTAgregar.Location = new System.Drawing.Point(1071, 302);
-            this.BTAgregar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BTAgregar.Name = "BTAgregar";
-            this.BTAgregar.Size = new System.Drawing.Size(153, 47);
-            this.BTAgregar.TabIndex = 71;
-            this.BTAgregar.Text = "Agregar";
-            this.BTAgregar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BTAgregar.UseVisualStyleBackColor = false;
-            // 
-            // BTCancelar
-            // 
-            this.BTCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTCancelar.BackColor = System.Drawing.Color.Orange;
-            this.BTCancelar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTCancelar.ForeColor = System.Drawing.Color.White;
-            this.BTCancelar.IconChar = FontAwesome.Sharp.IconChar.CircleXmark;
-            this.BTCancelar.IconColor = System.Drawing.Color.White;
-            this.BTCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.BTCancelar.IconSize = 30;
-            this.BTCancelar.Location = new System.Drawing.Point(1230, 300);
-            this.BTCancelar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BTCancelar.Name = "BTCancelar";
-            this.BTCancelar.Size = new System.Drawing.Size(156, 47);
-            this.BTCancelar.TabIndex = 73;
-            this.BTCancelar.Text = "Cancelar";
-            this.BTCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BTCancelar.UseVisualStyleBackColor = false;
             // 
             // LbObservacion
             // 
@@ -287,19 +233,6 @@
             this.label3.Size = new System.Drawing.Size(169, 24);
             this.label3.TabIndex = 69;
             this.label3.Text = "Variedad De Arroz";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(-3, -2);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(354, 350);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 56;
-            this.pictureBox1.TabStop = false;
             // 
             // TxtVariedadeArroz
             // 
@@ -447,24 +380,6 @@
             this.label9.Text = "De";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // BtnSiguiente
-            // 
-            this.BtnSiguiente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnSiguiente.BackColor = System.Drawing.Color.Transparent;
-            this.BtnSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnSiguiente.FlatAppearance.BorderSize = 0;
-            this.BtnSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSiguiente.IconChar = FontAwesome.Sharp.IconChar.AngleRight;
-            this.BtnSiguiente.IconColor = System.Drawing.Color.Black;
-            this.BtnSiguiente.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.BtnSiguiente.IconSize = 28;
-            this.BtnSiguiente.Location = new System.Drawing.Point(200, 716);
-            this.BtnSiguiente.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnSiguiente.Name = "BtnSiguiente";
-            this.BtnSiguiente.Size = new System.Drawing.Size(40, 37);
-            this.BtnSiguiente.TabIndex = 100;
-            this.BtnSiguiente.UseVisualStyleBackColor = false;
-            // 
             // label8
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -478,24 +393,6 @@
             this.label8.TabIndex = 104;
             this.label8.Text = "Página";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // BtnAnterior
-            // 
-            this.BtnAnterior.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnAnterior.BackColor = System.Drawing.Color.Transparent;
-            this.BtnAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAnterior.FlatAppearance.BorderSize = 0;
-            this.BtnAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAnterior.IconChar = FontAwesome.Sharp.IconChar.AngleLeft;
-            this.BtnAnterior.IconColor = System.Drawing.Color.Black;
-            this.BtnAnterior.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.BtnAnterior.IconSize = 28;
-            this.BtnAnterior.Location = new System.Drawing.Point(97, 716);
-            this.BtnAnterior.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnAnterior.Name = "BtnAnterior";
-            this.BtnAnterior.Size = new System.Drawing.Size(40, 37);
-            this.BtnAnterior.TabIndex = 99;
-            this.BtnAnterior.UseVisualStyleBackColor = false;
             // 
             // BTEditar
             // 
@@ -535,6 +432,110 @@
             this.BTEliminar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BTEliminar.UseVisualStyleBackColor = false;
             // 
+            // BtnSiguiente
+            // 
+            this.BtnSiguiente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnSiguiente.BackColor = System.Drawing.Color.Transparent;
+            this.BtnSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSiguiente.FlatAppearance.BorderSize = 0;
+            this.BtnSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSiguiente.IconChar = FontAwesome.Sharp.IconChar.AngleRight;
+            this.BtnSiguiente.IconColor = System.Drawing.Color.Black;
+            this.BtnSiguiente.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.BtnSiguiente.IconSize = 28;
+            this.BtnSiguiente.Location = new System.Drawing.Point(200, 716);
+            this.BtnSiguiente.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSiguiente.Name = "BtnSiguiente";
+            this.BtnSiguiente.Size = new System.Drawing.Size(40, 37);
+            this.BtnSiguiente.TabIndex = 100;
+            this.BtnSiguiente.UseVisualStyleBackColor = false;
+            // 
+            // BtnAnterior
+            // 
+            this.BtnAnterior.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnAnterior.BackColor = System.Drawing.Color.Transparent;
+            this.BtnAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnAnterior.FlatAppearance.BorderSize = 0;
+            this.BtnAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnAnterior.IconChar = FontAwesome.Sharp.IconChar.AngleLeft;
+            this.BtnAnterior.IconColor = System.Drawing.Color.Black;
+            this.BtnAnterior.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.BtnAnterior.IconSize = 28;
+            this.BtnAnterior.Location = new System.Drawing.Point(97, 716);
+            this.BtnAnterior.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnAnterior.Name = "BtnAnterior";
+            this.BtnAnterior.Size = new System.Drawing.Size(40, 37);
+            this.BtnAnterior.TabIndex = 99;
+            this.BtnAnterior.UseVisualStyleBackColor = false;
+            // 
+            // BTInformacion
+            // 
+            this.BTInformacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTInformacion.Font = new System.Drawing.Font("Microsoft YaHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTInformacion.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BTInformacion.IconChar = FontAwesome.Sharp.IconChar.MapLocationDot;
+            this.BTInformacion.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.BTInformacion.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.BTInformacion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BTInformacion.Location = new System.Drawing.Point(358, -2);
+            this.BTInformacion.Margin = new System.Windows.Forms.Padding(4);
+            this.BTInformacion.Name = "BTInformacion";
+            this.BTInformacion.Size = new System.Drawing.Size(64, 70);
+            this.BTInformacion.TabIndex = 89;
+            this.BTInformacion.UseVisualStyleBackColor = true;
+            this.BTInformacion.Click += new System.EventHandler(this.BTInformacion_Click);
+            // 
+            // BTAgregar
+            // 
+            this.BTAgregar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTAgregar.BackColor = System.Drawing.Color.Green;
+            this.BTAgregar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTAgregar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BTAgregar.IconChar = FontAwesome.Sharp.IconChar.FileCircleCheck;
+            this.BTAgregar.IconColor = System.Drawing.Color.White;
+            this.BTAgregar.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            this.BTAgregar.IconSize = 30;
+            this.BTAgregar.Location = new System.Drawing.Point(1071, 302);
+            this.BTAgregar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BTAgregar.Name = "BTAgregar";
+            this.BTAgregar.Size = new System.Drawing.Size(153, 47);
+            this.BTAgregar.TabIndex = 71;
+            this.BTAgregar.Text = "Agregar";
+            this.BTAgregar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BTAgregar.UseVisualStyleBackColor = false;
+            // 
+            // BTCancelar
+            // 
+            this.BTCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTCancelar.BackColor = System.Drawing.Color.Orange;
+            this.BTCancelar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTCancelar.ForeColor = System.Drawing.Color.White;
+            this.BTCancelar.IconChar = FontAwesome.Sharp.IconChar.CircleXmark;
+            this.BTCancelar.IconColor = System.Drawing.Color.White;
+            this.BTCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.BTCancelar.IconSize = 30;
+            this.BTCancelar.Location = new System.Drawing.Point(1230, 300);
+            this.BTCancelar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BTCancelar.Name = "BTCancelar";
+            this.BTCancelar.Size = new System.Drawing.Size(156, 47);
+            this.BTCancelar.TabIndex = 73;
+            this.BTCancelar.Text = "Cancelar";
+            this.BTCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BTCancelar.UseVisualStyleBackColor = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(-3, -2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(354, 350);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 56;
+            this.pictureBox1.TabStop = false;
+            // 
             // FrmLote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -559,8 +560,8 @@
             this.Load += new System.EventHandler(this.FrmLote_Load);
             this.PanelLote.ResumeLayout(false);
             this.PanelLote.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DatagreedLote)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -573,7 +574,7 @@
         private System.Windows.Forms.ComboBox CbCiclo;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox CBEstadoCultivo;
-        private FontAwesome.Sharp.IconButton BTInformacio;
+        private FontAwesome.Sharp.IconButton BTInformacion;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dateTimePickerCorte;
         private System.Windows.Forms.Label label1;

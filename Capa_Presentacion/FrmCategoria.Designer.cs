@@ -36,7 +36,6 @@
             this.TxtPagina = new System.Windows.Forms.TextBox();
             this.BtnSiguiente = new FontAwesome.Sharp.IconButton();
             this.BTEliminar = new FontAwesome.Sharp.IconButton();
-            this.BTEditar = new FontAwesome.Sharp.IconButton();
             this.BTAgregar = new FontAwesome.Sharp.IconButton();
             this.dgvcategoria = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
@@ -160,25 +159,7 @@
             this.BTEliminar.Text = "Eliminar";
             this.BTEliminar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BTEliminar.UseVisualStyleBackColor = false;
-            // 
-            // BTEditar
-            // 
-            this.BTEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTEditar.BackColor = System.Drawing.Color.MediumBlue;
-            this.BTEditar.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTEditar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BTEditar.IconChar = FontAwesome.Sharp.IconChar.Pencil;
-            this.BTEditar.IconColor = System.Drawing.Color.White;
-            this.BTEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.BTEditar.IconSize = 25;
-            this.BTEditar.Location = new System.Drawing.Point(554, 367);
-            this.BTEditar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BTEditar.Name = "BTEditar";
-            this.BTEditar.Size = new System.Drawing.Size(132, 38);
-            this.BTEditar.TabIndex = 105;
-            this.BTEditar.Text = "Editar";
-            this.BTEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BTEditar.UseVisualStyleBackColor = false;
+            this.BTEliminar.Click += new System.EventHandler(this.BTEliminar_Click);
             // 
             // BTAgregar
             // 
@@ -190,7 +171,7 @@
             this.BTAgregar.IconColor = System.Drawing.Color.White;
             this.BTAgregar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             this.BTAgregar.IconSize = 25;
-            this.BTAgregar.Location = new System.Drawing.Point(414, 365);
+            this.BTAgregar.Location = new System.Drawing.Point(550, 367);
             this.BTAgregar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTAgregar.Name = "BTAgregar";
             this.BTAgregar.Size = new System.Drawing.Size(135, 39);
@@ -208,7 +189,9 @@
             this.dgvcategoria.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvcategoria.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvcategoria.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dgvcategoria.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvcategoria.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.dgvcategoria.ColumnHeadersHeight = 29;
+            this.dgvcategoria.GridColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgvcategoria.Location = new System.Drawing.Point(67, 112);
             this.dgvcategoria.Margin = new System.Windows.Forms.Padding(4);
             this.dgvcategoria.Name = "dgvcategoria";
@@ -253,7 +236,6 @@
             this.Controls.Add(this.TxtPagina);
             this.Controls.Add(this.BtnSiguiente);
             this.Controls.Add(this.BTEliminar);
-            this.Controls.Add(this.BTEditar);
             this.Controls.Add(this.BTAgregar);
             this.Controls.Add(this.dgvcategoria);
             this.Controls.Add(this.label1);
@@ -277,7 +259,6 @@
         private System.Windows.Forms.TextBox TxtPagina;
         private FontAwesome.Sharp.IconButton BtnSiguiente;
         private FontAwesome.Sharp.IconButton BTEliminar;
-        private FontAwesome.Sharp.IconButton BTEditar;
         private FontAwesome.Sharp.IconButton BTAgregar;
         private System.Windows.Forms.DataGridView dgvcategoria;
         private System.Windows.Forms.Label label1;

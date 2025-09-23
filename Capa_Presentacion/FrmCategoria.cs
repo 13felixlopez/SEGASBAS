@@ -3,6 +3,7 @@ using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Capa_Presentacion
 {
@@ -18,40 +19,49 @@ namespace Capa_Presentacion
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
+            dgvcategoria.AutoGenerateColumns = true;
+
         }
 
         private void FrmCategoria_Load(object sender, EventArgs e)
         {
+            dgvcategoria.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+
+           
+            dgvcategoria.GridColor = Color.DimGray;
             ConfigurarDataGridView();
             CargarCategoriasPaginadas();
             LimpiarControles();
+            
+            if (dgvcategoria.Columns.Contains("id_categoria"))
+            {
+                dgvcategoria.Columns["id_categoria"].Visible = false;
+            }
+
+            dgvcategoria.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+    
+            if (dgvcategoria.ColumnCount > 0)
+            {
+                dgvcategoria.Columns[dgvcategoria.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
         }
         private void ConfigurarDataGridView()
         {
+
+           
             dgvcategoria.Columns.Clear();
+          
             dgvcategoria.AutoGenerateColumns = false;
 
-            // Columna para el ID de la categoría (oculta)
+            
             dgvcategoria.Columns.Add(new DataGridViewTextBoxColumn() { Name = "id_categoria", HeaderText = "ID", DataPropertyName = "id_categoria", Visible = false });
 
-            // Columna para el nombre de la categoría
+       
             dgvcategoria.Columns.Add(new DataGridViewTextBoxColumn() { Name = "nombre", HeaderText = "Categoría", DataPropertyName = "nombre" });
 
-            // Columna para el botón de editar
-            DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
-            btnEditar.HeaderText = "Editar";
-            btnEditar.Text = "Editar";
-            btnEditar.UseColumnTextForButtonValue = true;
-            btnEditar.Name = "btnEditar";
-            dgvcategoria.Columns.Add(btnEditar);
-
-            // Columna para el botón de eliminar
-            DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
-            btnEliminar.HeaderText = "Eliminar";
-            btnEliminar.Text = "Eliminar";
-            btnEliminar.UseColumnTextForButtonValue = true;
-            btnEliminar.Name = "btnEliminar";
-            dgvcategoria.Columns.Add(btnEliminar);
+           
+            dgvcategoria.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
         private void CargarCategoriasPaginadas()
@@ -91,32 +101,18 @@ namespace Capa_Presentacion
 
             if (categoriaSeleccionada == null)
             {
-                int resultado = funciones.Insertar(oCategoria, out mensaje);
-                if (resultado > 0)
-                {
-                    MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarCategoriasPaginadas();
-                    LimpiarControles();
-                }
-                else
-                {
-                    MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                mensaje = funciones.Insertar(oCategoria);
+                MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarCategoriasPaginadas();
+                LimpiarControles();
             }
             else
             {
                 oCategoria.id_categoria = categoriaSeleccionada.id_categoria;
-                bool resultado = funciones.Editar(oCategoria, out mensaje);
-                if (resultado)
-                {
-                    MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarCategoriasPaginadas();
-                    LimpiarControles();
-                }
-                else
-                {
-                    MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                mensaje = funciones.Editar(oCategoria);
+                MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarCategoriasPaginadas();
+                LimpiarControles();
             }
         }
 
@@ -124,9 +120,16 @@ namespace Capa_Presentacion
         {
             if (e.RowIndex >= 0)
             {
+            
                 categoriaSeleccionada = (L_Categoria)dgvcategoria.Rows[e.RowIndex].DataBoundItem;
+
+               
                 TxtCategoria.Text = categoriaSeleccionada.nombre;
+
                 BTAgregar.Text = "Actualizar";
+
+               
+                BTEliminar.Enabled = true;
             }
         }
 
@@ -139,21 +142,15 @@ namespace Capa_Presentacion
                     categoriaSeleccionada = (L_Categoria)dgvcategoria.Rows[e.RowIndex].DataBoundItem;
                     if (MessageBox.Show("¿Está seguro de que desea eliminar esta categoría?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        string mensaje = string.Empty;
-                        if (funciones.Eliminar(categoriaSeleccionada.id_categoria, out mensaje))
-                        {
-                            MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            CargarCategoriasPaginadas();
-                            LimpiarControles();
-                        }
-                        else
-                        {
-                            MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        string mensaje = funciones.Eliminar(categoriaSeleccionada.id_categoria);
+                        MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarCategoriasPaginadas();
+                        LimpiarControles();
                     }
                 }
             }
         }
+        
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
@@ -186,6 +183,25 @@ namespace Capa_Presentacion
             {
                 paginaActual++;
                 CargarCategoriasPaginadas();
+            }
+        }
+
+        private void BTEliminar_Click(object sender, EventArgs e)
+        {
+            string mensaje = string.Empty;
+            if (categoriaSeleccionada == null)
+            {
+                MessageBox.Show("Selecciona una categoría para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult resultado = MessageBox.Show("¿Estás seguro de que deseas eliminar esta categoría?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (resultado == DialogResult.Yes)
+            {
+                mensaje = funciones.Eliminar(categoriaSeleccionada.id_categoria);
+                MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarCategoriasPaginadas();
+                LimpiarControles();
             }
         }
     }

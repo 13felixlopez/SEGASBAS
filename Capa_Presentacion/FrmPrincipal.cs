@@ -99,5 +99,20 @@ namespace Capa_Presentacion
         {
             AbrirFormularioEnPanel(new FrmUsuario());
         }
+
+        private void BtProducto_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new FrmProducto());
+        }
+
+        private void BtMarcas_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new FrmMarca());
+        }
+
+        private void BtUnidaddemedida_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new Frm_Unidadmedida());
+        }
     }
 }

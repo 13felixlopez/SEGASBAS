@@ -175,5 +175,10 @@ namespace Capa_Presentacion
                 MessageBox.Show("Selecciona una fila para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void dgvactividad_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

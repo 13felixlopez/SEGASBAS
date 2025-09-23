@@ -15,7 +15,8 @@ namespace Capa_Presentacion.Datos
             try
             {
                 Conexion.abrir();
-                SqlCommand cmd = new SqlCommand("sp_ListarCategoriasPaginadas", Conexion.conectar);
+                // ¡AQUÍ ESTÁ LA CORRECCIÓN! El nombre del SP ahora coincide con el que me diste.
+                SqlCommand cmd = new SqlCommand("sp_ListarCategorias", Conexion.conectar);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@paginaActual", paginaActual);
                 cmd.Parameters.AddWithValue("@tamanoPagina", tamanoPagina);
@@ -34,10 +35,9 @@ namespace Capa_Presentacion.Datos
                 }
                 totalRegistros = Convert.ToInt32(outParam.Value);
             }
-            catch
+            catch (Exception ex)
             {
-                lista = new List<L_Categoria>();
-                totalRegistros = 0;
+                throw new Exception("Error al obtener las categorías paginadas: " + ex.Message, ex);
             }
             finally
             {
@@ -46,99 +46,102 @@ namespace Capa_Presentacion.Datos
             return lista;
         }
 
-        public int Insertar(L_Categoria obj, out string Mensaje)
+        public string Insertar(L_Categoria obj)
         {
-            int idGenerado = 0;
-            Mensaje = string.Empty;
+            string mensaje = "";
+            Conexion.abrir();
             try
             {
-                Conexion.abrir();
-                SqlCommand cmd = new SqlCommand("sp_InsertarCategoria", Conexion.conectar);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                SqlParameter paramId = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
-                cmd.Parameters.Add(paramId);
-                cmd.Parameters.Add(paramMensaje);
-                cmd.ExecuteNonQuery();
-                idGenerado = Convert.ToInt32(paramId.Value);
-                Mensaje = paramMensaje.Value.ToString();
+                using (SqlCommand cmd = new SqlCommand("sp_InsertarCategoria", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
+                    // Agregamos el parámetro @resultado que faltaba
+                    SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramResultado);
+                    SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramMensaje);
 
+                    cmd.ExecuteNonQuery();
+
+                    mensaje = paramMensaje.Value.ToString();
+                }
             }
             catch (Exception ex)
             {
-                idGenerado = 0;
-                Mensaje = ex.Message;
+                throw new Exception("Error en la base de datos al insertar la categoría: " + ex.Message, ex);
             }
             finally
             {
                 Conexion.cerrar();
             }
-            return idGenerado;
+            return mensaje;
         }
 
-        public bool Editar(L_Categoria obj, out string Mensaje)
+        public string Editar(L_Categoria obj)
         {
-            bool respuesta = false;
-            Mensaje = string.Empty;
+            string mensaje = "";
+            Conexion.abrir();
             try
             {
-                Conexion.abrir();
-                SqlCommand cmd = new SqlCommand("sp_EditarCategoria", Conexion.conectar);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id_categoria", obj.id_categoria);
-                cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                SqlParameter paramRespuesta = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
-                cmd.Parameters.Add(paramRespuesta);
-                cmd.Parameters.Add(paramMensaje);
-                cmd.ExecuteNonQuery();
-                respuesta = Convert.ToInt32(paramRespuesta.Value) == 1;
-                Mensaje = paramMensaje.Value.ToString();
+                using (SqlCommand cmd = new SqlCommand("sp_EditarCategoria", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id_categoria", obj.id_categoria);
+                    cmd.Parameters.AddWithValue("@nombre", obj.nombre);
+                    // Aquí agregamos los parámetros de salida que tu SP espera
+                    SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramResultado);
+                    SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramMensaje);
 
+                    cmd.ExecuteNonQuery();
+
+                    mensaje = paramMensaje.Value.ToString();
+                }
             }
             catch (Exception ex)
             {
-                respuesta = false;
-                Mensaje = ex.Message;
+                throw new Exception("Error en la base de datos al editar la categoría: " + ex.Message, ex);
             }
             finally
             {
                 Conexion.cerrar();
             }
-            return respuesta;
+            return mensaje;
         }
 
-        public bool Eliminar(int id_categoria, out string Mensaje)
+        public string Eliminar(int id_categoria)
         {
-            bool respuesta = false;
-            Mensaje = string.Empty;
+            string mensaje = "";
+            Conexion.abrir();
             try
             {
-                Conexion.abrir();
-                SqlCommand cmd = new SqlCommand("sp_EliminarCategoria", Conexion.conectar);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id_categoria", id_categoria);
-                SqlParameter paramRespuesta = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
-                cmd.Parameters.Add(paramRespuesta);
-                cmd.Parameters.Add(paramMensaje);
-                cmd.ExecuteNonQuery();
-                respuesta = Convert.ToInt32(paramRespuesta.Value) == 1;
-                Mensaje = paramMensaje.Value.ToString();
+                using (SqlCommand cmd = new SqlCommand("sp_EliminarCategoria", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id_categoria", id_categoria);
+                    // Aquí agregamos los parámetros de salida que tu SP espera
+                    SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramResultado);
+                    SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramMensaje);
+
+                    cmd.ExecuteNonQuery();
+
+                    mensaje = paramMensaje.Value.ToString();
+                }
             }
             catch (Exception ex)
             {
-                respuesta = false;
-                Mensaje = ex.Message;
+                throw new Exception("Error en la base de datos al eliminar la categoría: " + ex.Message, ex);
             }
             finally
             {
                 Conexion.cerrar();
             }
-            return respuesta;
+            return mensaje;
         }
-
         public List<L_Categoria> Buscar(string textoBusqueda)
         {
             List<L_Categoria> lista = new List<L_Categoria>();
@@ -160,9 +163,9 @@ namespace Capa_Presentacion.Datos
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                lista = new List<L_Categoria>();
+                throw new Exception("Error al buscar categorías: " + ex.Message, ex);
             }
             finally
             {

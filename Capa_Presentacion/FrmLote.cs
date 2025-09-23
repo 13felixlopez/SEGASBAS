@@ -435,5 +435,13 @@ namespace Capa_Presentacion
                 BTEliminar.Enabled = true;
             }
         }
+
+        private void BTInformacion_Click(object sender, EventArgs e)
+        {
+            FrmMapa frmMapa = new FrmMapa();
+
+            frmMapa.ShowDialog();
+
+        }
     }
 }

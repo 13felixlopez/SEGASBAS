@@ -68,6 +68,9 @@
     <Compile Include="Datos\D_Ciclo.cs" />
     <Compile Include="Datos\D_Empleado.cs" />
     <Compile Include="Datos\D_Lote.cs" />
+    <Compile Include="Datos\D_Marca.cs" />
+    <Compile Include="Datos\D_Producto.cs" />
+    <Compile Include="Datos\D_UnidadMedida.cs" />
     <Compile Include="Datos\NUser.cs" />
     <Compile Include="FrmActividad.cs">
       <SubType>Form</SubType>
@@ -117,11 +120,29 @@
     <Compile Include="FrmLote.Designer.cs">
       <DependentUpon>FrmLote.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmMapa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMapa.Designer.cs">
+      <DependentUpon>FrmMapa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMarca.Designer.cs">
+      <DependentUpon>FrmMarca.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmPrincipal.Designer.cs">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProducto.Designer.cs">
+      <DependentUpon>FrmProducto.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmUsuario.cs">
       <SubType>Form</SubType>
@@ -135,6 +156,12 @@
     <Compile Include="FRM_AgregarUser.Designer.cs">
       <DependentUpon>FRM_AgregarUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_Unidadmedida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Unidadmedida.Designer.cs">
+      <DependentUpon>Frm_Unidadmedida.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logica\Encrip.cs" />
     <Compile Include="Logica\LPermisos.cs" />
     <Compile Include="Logica\LUsuarios.cs" />
@@ -145,6 +172,9 @@
     <Compile Include="Logica\L_Ciclo.cs" />
     <Compile Include="Logica\L_Empleado.cs" />
     <Compile Include="Logica\L_Lote.cs" />
+    <Compile Include="Logica\L_Marca.cs" />
+    <Compile Include="Logica\L_Producto.cs" />
+    <Compile Include="Logica\L_UnidadMedida.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validaciones.cs" />
@@ -172,14 +202,26 @@
     <EmbeddedResource Include="FrmLote.resx">
       <DependentUpon>FrmLote.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmMapa.resx">
+      <DependentUpon>FrmMapa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMarca.resx">
+      <DependentUpon>FrmMarca.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProducto.resx">
+      <DependentUpon>FrmProducto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmUsuario.resx">
       <DependentUpon>FrmUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FRM_AgregarUser.resx">
       <DependentUpon>FRM_AgregarUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Unidadmedida.resx">
+      <DependentUpon>Frm_Unidadmedida.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
