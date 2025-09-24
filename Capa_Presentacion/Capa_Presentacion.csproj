@@ -70,6 +70,7 @@
     <Compile Include="Datos\D_Lote.cs" />
     <Compile Include="Datos\D_Marca.cs" />
     <Compile Include="Datos\D_Producto.cs" />
+    <Compile Include="Datos\D_Proveedores.cs" />
     <Compile Include="Datos\D_UnidadMedida.cs" />
     <Compile Include="Datos\NUser.cs" />
     <Compile Include="FrmActividad.cs">
@@ -156,6 +157,12 @@
     <Compile Include="FRM_AgregarUser.Designer.cs">
       <DependentUpon>FRM_AgregarUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_Proveedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Proveedores.Designer.cs">
+      <DependentUpon>Frm_Proveedores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_Unidadmedida.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +181,7 @@
     <Compile Include="Logica\L_Lote.cs" />
     <Compile Include="Logica\L_Marca.cs" />
     <Compile Include="Logica\L_Producto.cs" />
+    <Compile Include="Logica\L_Proveedor.cs" />
     <Compile Include="Logica\L_UnidadMedida.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -219,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FRM_AgregarUser.resx">
       <DependentUpon>FRM_AgregarUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Proveedores.resx">
+      <DependentUpon>Frm_Proveedores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Unidadmedida.resx">
       <DependentUpon>Frm_Unidadmedida.cs</DependentUpon>

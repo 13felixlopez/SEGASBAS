@@ -114,5 +114,10 @@ namespace Capa_Presentacion
         {
             AbrirFormularioEnPanel(new Frm_Unidadmedida());
         }
+
+        private void BtProveedor_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new Frm_Proveedores());
+        }
     }
 }

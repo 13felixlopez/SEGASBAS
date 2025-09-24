@@ -28,13 +28,23 @@ namespace Capa_Presentacion
         }
         private void ConfigurarDataGridView()
         {
-            dgvUnidad.Columns.Clear();
-            dgvUnidad.AutoGenerateColumns = false;
+            // Oculta la columna del ID para el usuario si existe
+            if (dgvUnidad.Columns.Contains("id_unidad"))
+            {
+                dgvUnidad.Columns["id_unidad"].Visible = false;
+            }
 
-            dgvUnidad.Columns.Add(new DataGridViewTextBoxColumn() { Name = "id_unidad", HeaderText = "ID", DataPropertyName = "id_unidad", Visible = false });
-            dgvUnidad.Columns.Add(new DataGridViewTextBoxColumn() { Name = "nombre", HeaderText = "Unidad de Medida", DataPropertyName = "nombre" });
-
+    
             dgvUnidad.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+       
+            if (dgvUnidad.Columns.Contains("abreviatura"))
+            {
+                dgvUnidad.Columns["abreviatura"].Visible = true;
+                dgvUnidad.Columns["abreviatura"].HeaderText = "Abreviatura";
+            }
+
+  
             dgvUnidad.CellBorderStyle = DataGridViewCellBorderStyle.Single;
             dgvUnidad.GridColor = Color.DimGray;
 
@@ -56,6 +66,7 @@ namespace Capa_Presentacion
                 MessageBox.Show("Error al cargar las unidades de medida: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void ActualizarEstadoPaginacion()
         {
             int totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamanoPagina);
@@ -75,7 +86,9 @@ namespace Capa_Presentacion
         }
         private void Frm_Unidadmedida_Load(object sender, EventArgs e)
         {
-
+            ConfigurarDataGridView();
+            CargarUnidadesPaginadas();
+            LimpiarControles();
         }
 
         private void BTAgregar_Click(object sender, EventArgs e)
@@ -87,7 +100,90 @@ namespace Capa_Presentacion
                 return;
             }
 
-            L_UnidadMedida oUnidad = new L_UnidadMedida() { nombre = TxtUnidadMedida.Text };
+            string nombreUnidad = TxtUnidadMedida.Text;
+            string abreviaturaUnidad = "";
+
+
+            switch (nombreUnidad.ToLower())
+            {
+                case "litro":
+                case "litros":
+                    abreviaturaUnidad = "lts";
+                    break;
+                case "mililitro":
+                case "mililitros":
+                    abreviaturaUnidad = "ml";
+                    break;
+                case "miligramo":
+                case "miligramos":
+                    abreviaturaUnidad = "mg";
+                    break;
+                case "gramo":
+                case "gramos":
+                    abreviaturaUnidad = "gr";
+                    break;
+                case "kilogramo":
+                case "kilogramos":
+                    abreviaturaUnidad = "kg";
+                    break;
+                case "quintal":
+                case "quintales":
+                    abreviaturaUnidad = "qq";
+                    break;
+                case "libra":
+                case "libras":
+                    abreviaturaUnidad = "lb";
+                    break;
+                case "galon":
+                case "galones":
+                    abreviaturaUnidad = "gal";
+                    break;
+                case "onza":
+                case "onzas":
+                    abreviaturaUnidad = "oz";
+                    break;
+                case "metro":
+                case "metros":
+                    abreviaturaUnidad = "m";
+                    break;
+                case "centimetro":
+                case "centimetros":
+                    abreviaturaUnidad = "cm";
+                    break;
+                case "centimetro cubico":
+                case "centimetros cubicos":
+                    abreviaturaUnidad = "cm3";
+                    break;
+                case "yarda":
+                case "yardas":
+                    abreviaturaUnidad = "yd";
+                    break;
+                case "pulgada":
+                case "pulgadas":
+                    abreviaturaUnidad = "in";
+                    break;
+                case "unidad":
+                case "unidades":
+                    abreviaturaUnidad = "ud";
+                    break;
+                case "pieza":
+                case "piezas":
+                    abreviaturaUnidad = "pz";
+                    break;
+                case "docena":
+                case "docenas":
+                    abreviaturaUnidad = "doc";
+                    break;
+                default:
+        
+                    if (nombreUnidad.Length > 0)
+                    {
+                        abreviaturaUnidad = nombreUnidad.Substring(0, Math.Min(3, nombreUnidad.Length)).ToUpper();
+                    }
+                    break;
+            }
+
+            L_UnidadMedida oUnidad = new L_UnidadMedida() { nombre = nombreUnidad, abreviatura = abreviaturaUnidad };
 
             if (unidadSeleccionada == null)
             {
@@ -111,6 +207,7 @@ namespace Capa_Presentacion
                 MessageBox.Show("Selecciona una unidad de medida para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             string mensaje = string.Empty;
             if (string.IsNullOrWhiteSpace(TxtUnidadMedida.Text))
             {
@@ -118,10 +215,23 @@ namespace Capa_Presentacion
                 return;
             }
 
+            string nombreUnidad = TxtUnidadMedida.Text;
+            string abreviaturaUnidad = string.Empty;
+            string[] palabras = nombreUnidad.Split(' ');
+            foreach (string palabra in palabras)
+            {
+                if (!string.IsNullOrWhiteSpace(palabra))
+                {
+                    abreviaturaUnidad += palabra[0];
+                }
+            }
+            abreviaturaUnidad = abreviaturaUnidad.ToUpper();
+
             L_UnidadMedida oUnidad = new L_UnidadMedida()
             {
                 id_unidad = unidadSeleccionada.id_unidad,
-                nombre = TxtUnidadMedida.Text
+                nombre = nombreUnidad,
+                abreviatura = abreviaturaUnidad
             };
 
             mensaje = funciones.Editar(oUnidad);
@@ -137,6 +247,7 @@ namespace Capa_Presentacion
                 MessageBox.Show("Selecciona una unidad de medida para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             DialogResult resultado = MessageBox.Show("¿Estás seguro de que deseas eliminar esta unidad de medida?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (resultado == DialogResult.Yes)
             {
@@ -178,6 +289,7 @@ namespace Capa_Presentacion
             {
                 unidadSeleccionada = (L_UnidadMedida)dgvUnidad.Rows[e.RowIndex].DataBoundItem;
                 TxtUnidadMedida.Text = unidadSeleccionada.nombre;
+
                 BTEditar.Enabled = true;
                 BTEliminar.Enabled = true;
             }

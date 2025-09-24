@@ -10,5 +10,6 @@ namespace Capa_Presentacion.Logica
     {
         public int id_unidad { get; set; }
         public string nombre { get; set; }
+        public string abreviatura { get; set; }
     }
 }

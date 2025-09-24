@@ -28,7 +28,9 @@ namespace Capa_Presentacion.Datos
                         lista.Add(new L_UnidadMedida()
                         {
                             id_unidad = Convert.ToInt32(dr["id_unidad"]),
-                            nombre = dr["nombre"].ToString()
+                            nombre = dr["nombre"].ToString(),
+                            // Línea corregida para leer la abreviatura
+                            abreviatura = dr["abreviatura"].ToString()
                         });
                     }
                 }
@@ -37,6 +39,40 @@ namespace Capa_Presentacion.Datos
             catch (Exception ex)
             {
                 throw new Exception("Error al obtener las unidades paginadas: " + ex.Message, ex);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+            return lista;
+        }
+
+        public List<L_UnidadMedida> Buscar(string textoBusqueda)
+        {
+            List<L_UnidadMedida> lista = new List<L_UnidadMedida>();
+            try
+            {
+                Conexion.abrir();
+                SqlCommand cmd = new SqlCommand("sp_BuscarUnidades", Conexion.conectar);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@textoBusqueda", textoBusqueda);
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        lista.Add(new L_UnidadMedida()
+                        {
+                            id_unidad = Convert.ToInt32(dr["id_unidad"]),
+                            nombre = dr["nombre"].ToString(),
+                          
+                            abreviatura = dr["abreviatura"].ToString()
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar unidades de medida: " + ex.Message, ex);
             }
             finally
             {
@@ -55,13 +91,15 @@ namespace Capa_Presentacion.Datos
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
+                 
+                    cmd.Parameters.AddWithValue("@abreviatura", obj.abreviatura);
                     SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                    cmd.Parameters.Add(paramMensaje);
                     cmd.Parameters.Add(paramResultado);
+                    SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramMensaje);
+
                     cmd.ExecuteNonQuery();
                     mensaje = paramMensaje.Value.ToString();
-                    mensaje = paramResultado.Value.ToString();
                 }
             }
             catch (Exception ex)
@@ -86,6 +124,12 @@ namespace Capa_Presentacion.Datos
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id_unidad", obj.id_unidad);
                     cmd.Parameters.AddWithValue("@nombre", obj.nombre);
+
+     
+                    cmd.Parameters.AddWithValue("@abreviatura", obj.abreviatura);
+
+                    SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramResultado);
                     SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
                     cmd.Parameters.Add(paramMensaje);
                     cmd.ExecuteNonQuery();
@@ -113,6 +157,8 @@ namespace Capa_Presentacion.Datos
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id_unidad", id_unidad);
+                    SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    cmd.Parameters.Add(paramResultado);
                     SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
                     cmd.Parameters.Add(paramMensaje);
                     cmd.ExecuteNonQuery();
@@ -130,36 +176,5 @@ namespace Capa_Presentacion.Datos
             return mensaje;
         }
 
-        public List<L_UnidadMedida> Buscar(string textoBusqueda)
-        {
-            List<L_UnidadMedida> lista = new List<L_UnidadMedida>();
-            try
-            {
-                Conexion.abrir();
-                SqlCommand cmd = new SqlCommand("sp_BuscarUnidades", Conexion.conectar);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@textoBusqueda", textoBusqueda);
-                using (SqlDataReader dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        lista.Add(new L_UnidadMedida()
-                        {
-                            id_unidad = Convert.ToInt32(dr["id_unidad"]),
-                            nombre = dr["nombre"].ToString()
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al buscar unidades de medida: " + ex.Message, ex);
-            }
-            finally
-            {
-                Conexion.cerrar();
-            }
-            return lista;
-        }
     }
 }
