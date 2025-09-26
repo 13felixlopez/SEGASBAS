@@ -129,6 +129,7 @@
             this.TxtVisitador.Name = "TxtVisitador";
             this.TxtVisitador.Size = new System.Drawing.Size(287, 34);
             this.TxtVisitador.TabIndex = 25;
+            this.TxtVisitador.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtVisitador_KeyPress);
             // 
             // TxtNumeroRegistro
             // 
@@ -150,6 +151,7 @@
             this.TxtRazonSocial.Name = "TxtRazonSocial";
             this.TxtRazonSocial.Size = new System.Drawing.Size(283, 34);
             this.TxtRazonSocial.TabIndex = 23;
+            this.TxtRazonSocial.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtRazonSocial_KeyPress);
             // 
             // panel1
             // 
@@ -192,6 +194,8 @@
             this.TxtTelefono.Name = "TxtTelefono";
             this.TxtTelefono.Size = new System.Drawing.Size(236, 34);
             this.TxtTelefono.TabIndex = 46;
+            this.TxtTelefono.TextChanged += new System.EventHandler(this.TxtTelefono_TextChanged);
+            this.TxtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtTelefono_KeyPress);
             // 
             // pictureBox1
             // 
@@ -224,6 +228,7 @@
             this.BTCancelar.Text = "Cancelar";
             this.BTCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BTCancelar.UseVisualStyleBackColor = false;
+            this.BTCancelar.Click += new System.EventHandler(this.BTCancelar_Click);
             // 
             // TxtObservacion
             // 
@@ -350,6 +355,7 @@
             this.CheckServicio.TabIndex = 1;
             this.CheckServicio.Text = "Servivcios";
             this.CheckServicio.UseVisualStyleBackColor = true;
+            this.CheckServicio.CheckedChanged += new System.EventHandler(this.CheckServicio_CheckedChanged);
             // 
             // checkProducto
             // 
@@ -361,6 +367,7 @@
             this.checkProducto.TabIndex = 0;
             this.checkProducto.Text = "Productos";
             this.checkProducto.UseVisualStyleBackColor = true;
+            this.checkProducto.CheckedChanged += new System.EventHandler(this.checkProducto_CheckedChanged);
             // 
             // CmbBuscar
             // 

@@ -119,5 +119,10 @@ namespace Capa_Presentacion
         {
             AbrirFormularioEnPanel(new Frm_Proveedores());
         }
+
+        private void Bt_Compra_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new FrmCompras());
+        }
     }
 }

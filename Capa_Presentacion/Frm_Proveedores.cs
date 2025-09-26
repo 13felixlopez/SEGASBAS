@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,10 +21,20 @@ namespace Capa_Presentacion
         private const int tamanoPagina = 10;
         private int totalRegistros = 0;
 
+
+
         public Frm_Proveedores()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
+            this.TxtRazonSocial.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtRazonSocial_KeyPress);
+            this.TxtVisitador.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtVisitador_KeyPress);
+            this.TxtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtTelefono_KeyPress);
+            this.TxtTelefono.TextChanged += new System.EventHandler(this.TxtTelefono_TextChanged);
+            this.checkProducto.CheckedChanged += new System.EventHandler(this.checkProducto_CheckedChanged);
+            this.CheckServicio.CheckedChanged += new System.EventHandler(this.CheckServicio_CheckedChanged);
+            this.BTCancelar.Click += new System.EventHandler(this.BTCancelar_Click);
+    
         }
 
         private void LbObservacion_Click(object sender, EventArgs e)
@@ -42,8 +53,13 @@ namespace Capa_Presentacion
         {
             try
             {
+              
                 List<L_Proveedor> lista = funciones.ListarPaginado(paginaActual, tamanoPagina, out totalRegistros);
                 DgvProveedores.DataSource = lista;
+
+                
+                ConfigurarDataGridView();
+
                 ActualizarEstadoPaginacion();
             }
             catch (Exception ex)
@@ -54,11 +70,17 @@ namespace Capa_Presentacion
 
         private void ConfigurarDataGridView()
         {
-           
+
             if (DgvProveedores.Columns.Contains("id_proveedor"))
             {
                 DgvProveedores.Columns["id_proveedor"].Visible = false;
             }
+
+            
+            DgvProveedores.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            
+            DgvProveedores.AllowUserToOrderColumns = false;
         }
 
         private void Frm_Proveedores_Load(object sender, EventArgs e)
@@ -70,13 +92,36 @@ namespace Capa_Presentacion
         }
         private void LimpiarControles()
         {
+        
             proveedorSeleccionado = null;
-          
-            string ultimoNumero = funciones.ObtenerUltimoNumeroRegistro();
-            int nuevoNumero = Convert.ToInt32(ultimoNumero) + 1;
-       
-            TxtNumeroRegistro.Text = nuevoNumero.ToString().PadLeft(4, '0');
 
+    
+            try
+            {
+          
+                string ultimoNumero = funciones.ObtenerUltimoNumeroRegistro();
+
+                int ultimoNumeroInt = 0;
+         
+                int.TryParse(ultimoNumero, out ultimoNumeroInt);
+
+       
+                int nuevoNumero = ultimoNumeroInt + 1;
+
+   
+                TxtNumeroRegistro.Text = nuevoNumero.ToString("D2");
+
+               
+                TxtNumeroRegistro.ReadOnly = true;
+            }
+            catch (Exception ex)
+            {
+                TxtNumeroRegistro.Text = "01";
+                TxtNumeroRegistro.ReadOnly = true;
+                MessageBox.Show("Error al generar el número de registro automático: " + ex.Message,
+                                "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+           
             TxtRazonSocial.Clear();
             TxtNRuc.Clear();
             TxtCorreo.Clear();
@@ -86,13 +131,19 @@ namespace Capa_Presentacion
             dateTimePickerFechaIngres.Value = DateTime.Now;
             checkProducto.Checked = false;
             CheckServicio.Checked = false;
-
             BTAgregar.Text = "Guardar";
-            BTAgregar.Enabled = true;
-         
+            BTAgregar.Enabled = true; 
             BTEliminar.Enabled = false;
         }
+        private bool EsCorreoValido(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return true; 
 
+          
+            string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, patron);
+        }
         private void BTAgregar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TxtRazonSocial.Text) || string.IsNullOrWhiteSpace(TxtNRuc.Text))
@@ -100,6 +151,16 @@ namespace Capa_Presentacion
                 MessageBox.Show("Razón Social y Número de RUC son obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+
+            if (!EsCorreoValido(TxtCorreo.Text))
+            {
+                MessageBox.Show("El formato del Correo Electrónico es inválido. Por favor, corríjalo.",
+                                "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TxtCorreo.Focus();
+                return;
+            }
+            
 
             string mensaje = string.Empty;
             L_Proveedor oProveedor = new L_Proveedor()
@@ -116,18 +177,29 @@ namespace Capa_Presentacion
                 es_servicio = CheckServicio.Checked
             };
 
-           
-            if (proveedorSeleccionado == null)
+ 
+            try
             {
-                mensaje = funciones.Insertar(oProveedor);
+                if (proveedorSeleccionado == null)
+                {
+                    mensaje = funciones.Insertar(oProveedor);
+                }
+                else
+                {
+                    oProveedor.id_proveedor = proveedorSeleccionado.id_proveedor;
+                    mensaje = funciones.Editar(oProveedor);
+                }
+
+                MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else
+            catch (Exception ex)
             {
-                oProveedor.id_proveedor = proveedorSeleccionado.id_proveedor;
-                mensaje = funciones.Editar(oProveedor);
+              
+                MessageBox.Show(ex.Message, "Error en la operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; 
             }
 
-            MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          
             CargarProveedoresPaginados();
             LimpiarControles();
         }
@@ -143,12 +215,64 @@ namespace Capa_Presentacion
             DialogResult resultado = MessageBox.Show("¿Estás seguro de que deseas eliminar este proveedor?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (resultado == DialogResult.Yes)
             {
-                string mensaje = funciones.Eliminar(proveedorSeleccionado.id_proveedor);
-                MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarProveedoresPaginados();
-                LimpiarControles();
+                try
+                {
+                    string mensaje = funciones.Eliminar(proveedorSeleccionado.id_proveedor);
+                    MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarProveedoresPaginados();
+                    LimpiarControles();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error en la operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
+        private bool ValidarNumeroRuc(string ruc)
+        {
+            if (string.IsNullOrWhiteSpace(ruc)) return false;
+
+          
+            string cleanRuc = new string(ruc.Where(c => char.IsLetterOrDigit(c)).ToArray());
+
+            if (cleanRuc.Length < 14 || cleanRuc.Length > 17)
+            {
+                return false;
+            }
+
+            int letterCount = cleanRuc.Count(char.IsLetter);
+            if (letterCount != 1)
+            {
+                return false; 
+            }
+
+            char firstChar = cleanRuc[0];
+            char lastChar = cleanRuc[cleanRuc.Length - 1];
+
+            bool letterIsAtStart = char.IsLetter(firstChar);
+            bool letterIsAtEnd = char.IsLetter(lastChar);
+
+
+            if (!letterIsAtStart && !letterIsAtEnd)
+            {
+                return false;
+            }
+
+  
+            if (letterIsAtStart)
+            {
+                return cleanRuc.Substring(1).All(char.IsDigit);
+            }
+
+       
+            if (letterIsAtEnd)
+            {
+                return cleanRuc.Substring(0, cleanRuc.Length - 1).All(char.IsDigit);
+            }
+
+            return false;
+        }
+
 
         private void DgvProveedores_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -215,6 +339,83 @@ namespace Capa_Presentacion
         private void TxtNumeroRegistro_TextChanged(object sender, EventArgs e)
         {
             TxtNumeroRegistro.ReadOnly = true;
+        }
+
+        private void TxtRazonSocial_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TxtVisitador_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TxtTelefono_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            int originalLength = textBox.Text.Length;
+            int originalCursor = textBox.SelectionStart;
+
+            string cleanText = new string(textBox.Text.Where(char.IsDigit).ToArray());
+            if (cleanText.Length > 8)
+            {
+                cleanText = cleanText.Substring(0, 8);
+            }
+
+            string formattedText = cleanText;
+
+        
+            if (cleanText.Length > 4)
+            {
+                formattedText = cleanText.Insert(4, "-");
+            }
+
+            if (textBox.Text != formattedText)
+            {
+                textBox.Text = formattedText;
+
+
+                int newCursor = originalCursor + (formattedText.Length - originalLength);
+                if (newCursor < 0) newCursor = 0;
+                if (newCursor > formattedText.Length) newCursor = formattedText.Length;
+                textBox.SelectionStart = newCursor;
+            }
+        }
+
+        private void TxtTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void checkProducto_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkProducto.Checked)
+            {
+                CheckServicio.Checked = false;
+            }
+        }
+
+        private void CheckServicio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckServicio.Checked)
+            {
+                checkProducto.Checked = false;
+            }
+        }
+
+        private void BTCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarControles();
         }
     }
 }
