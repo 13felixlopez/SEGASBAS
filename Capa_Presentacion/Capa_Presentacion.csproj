@@ -81,6 +81,7 @@
     <Compile Include="Datos\D_Cargo.cs" />
     <Compile Include="Datos\D_Categoria.cs" />
     <Compile Include="Datos\D_Ciclo.cs" />
+    <Compile Include="Datos\D_Compra.cs" />
     <Compile Include="Datos\D_Empleado.cs" />
     <Compile Include="Datos\D_Lote.cs" />
     <Compile Include="Datos\D_Marca.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Logica\L_Cargo.cs" />
     <Compile Include="Logica\L_Categoria.cs" />
     <Compile Include="Logica\L_Ciclo.cs" />
+    <Compile Include="Logica\L_Compra.cs" />
     <Compile Include="Logica\L_Empleado.cs" />
     <Compile Include="Logica\L_Lote.cs" />
     <Compile Include="Logica\L_Marca.cs" />

@@ -64,10 +64,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.BtnSiguiente = new FontAwesome.Sharp.IconButton();
             this.BTEliminar = new FontAwesome.Sharp.IconButton();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.GBTipo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvProveedores)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // LBSalario
@@ -157,6 +159,7 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.TxtTelefono);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.BTCancelar);
@@ -528,6 +531,18 @@
             this.BTEliminar.UseVisualStyleBackColor = false;
             this.BTEliminar.Click += new System.EventHandler(this.BTEliminar_Click);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(1114, -2);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(44, 38);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 115;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
             // Frm_Proveedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -555,6 +570,7 @@
             this.GBTipo.ResumeLayout(false);
             this.GBTipo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvProveedores)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -597,5 +613,6 @@
         private System.Windows.Forms.Label label9;
         private FontAwesome.Sharp.IconButton BtnSiguiente;
         private FontAwesome.Sharp.IconButton BTEliminar;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }

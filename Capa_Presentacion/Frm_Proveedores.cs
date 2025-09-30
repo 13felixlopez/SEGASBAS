@@ -417,5 +417,10 @@ namespace Capa_Presentacion
         {
             LimpiarControles();
         }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

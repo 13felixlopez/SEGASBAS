@@ -103,6 +103,7 @@ namespace Capa_Presentacion
         private void BtProducto_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnPanel(new FrmProducto());
+         
         }
 
         private void BtMarcas_Click(object sender, EventArgs e)
@@ -123,6 +124,11 @@ namespace Capa_Presentacion
         private void Bt_Compra_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnPanel(new FrmCompras());
+        }
+
+        private void iconButton3_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new FrmInventario());
         }
     }
 }

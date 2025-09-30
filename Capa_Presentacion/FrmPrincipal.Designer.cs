@@ -103,7 +103,7 @@
             this.iconButton4.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton4.IconSize = 40;
             this.iconButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton4.Location = new System.Drawing.Point(0, 1022);
+            this.iconButton4.Location = new System.Drawing.Point(0, 1010);
             this.iconButton4.Margin = new System.Windows.Forms.Padding(4);
             this.iconButton4.Name = "iconButton4";
             this.iconButton4.Size = new System.Drawing.Size(240, 41);
@@ -123,13 +123,14 @@
             this.iconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton3.IconSize = 40;
             this.iconButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton3.Location = new System.Drawing.Point(0, 981);
+            this.iconButton3.Location = new System.Drawing.Point(0, 969);
             this.iconButton3.Margin = new System.Windows.Forms.Padding(4);
             this.iconButton3.Name = "iconButton3";
             this.iconButton3.Size = new System.Drawing.Size(240, 41);
             this.iconButton3.TabIndex = 34;
             this.iconButton3.Text = "Inventario";
             this.iconButton3.UseVisualStyleBackColor = true;
+            this.iconButton3.Click += new System.EventHandler(this.iconButton3_Click);
             // 
             // Bt_Compra
             // 
@@ -143,7 +144,7 @@
             this.Bt_Compra.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.Bt_Compra.IconSize = 40;
             this.Bt_Compra.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Bt_Compra.Location = new System.Drawing.Point(0, 940);
+            this.Bt_Compra.Location = new System.Drawing.Point(0, 928);
             this.Bt_Compra.Margin = new System.Windows.Forms.Padding(4);
             this.Bt_Compra.Name = "Bt_Compra";
             this.Bt_Compra.Size = new System.Drawing.Size(240, 41);
@@ -164,7 +165,7 @@
             this.BtUsuario.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtUsuario.IconSize = 40;
             this.BtUsuario.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtUsuario.Location = new System.Drawing.Point(0, 899);
+            this.BtUsuario.Location = new System.Drawing.Point(0, 887);
             this.BtUsuario.Margin = new System.Windows.Forms.Padding(4);
             this.BtUsuario.Name = "BtUsuario";
             this.BtUsuario.Size = new System.Drawing.Size(240, 41);
@@ -185,7 +186,7 @@
             this.BtReporte.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtReporte.IconSize = 40;
             this.BtReporte.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtReporte.Location = new System.Drawing.Point(0, 846);
+            this.BtReporte.Location = new System.Drawing.Point(0, 834);
             this.BtReporte.Margin = new System.Windows.Forms.Padding(4);
             this.BtReporte.Name = "BtReporte";
             this.BtReporte.Size = new System.Drawing.Size(240, 53);
@@ -205,7 +206,7 @@
             this.BtPlanilla.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtPlanilla.IconSize = 40;
             this.BtPlanilla.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtPlanilla.Location = new System.Drawing.Point(0, 793);
+            this.BtPlanilla.Location = new System.Drawing.Point(0, 781);
             this.BtPlanilla.Margin = new System.Windows.Forms.Padding(4);
             this.BtPlanilla.Name = "BtPlanilla";
             this.BtPlanilla.Size = new System.Drawing.Size(240, 53);
@@ -228,7 +229,7 @@
             this.PanelCatalogo.Location = new System.Drawing.Point(0, 350);
             this.PanelCatalogo.Margin = new System.Windows.Forms.Padding(4);
             this.PanelCatalogo.Name = "PanelCatalogo";
-            this.PanelCatalogo.Size = new System.Drawing.Size(240, 443);
+            this.PanelCatalogo.Size = new System.Drawing.Size(240, 431);
             this.PanelCatalogo.TabIndex = 27;
             this.PanelCatalogo.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelCatalogo_Paint);
             // 

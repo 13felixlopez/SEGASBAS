@@ -313,5 +313,10 @@ namespace Capa_Presentacion
                 CargarUnidadesPaginadas();
             }
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -14,6 +14,9 @@ namespace Capa_Presentacion
 {
     public partial class FrmProducto : Form
     {
+        private bool abiertoDesdeBtProducto = false;
+        private bool permitirCerrar = false;
+
         private D_Producto funciones = new D_Producto();
         private L_Producto productoSeleccionado;
         private int paginaActual = 1;
@@ -24,6 +27,10 @@ namespace Capa_Presentacion
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.Load += FrmProducto_Load;
+          
+
+           
+            this.FormClosing += FrmProducto_FormClosing;
         }
 
         private void FrmProducto_Load(object sender, EventArgs e)
@@ -213,6 +220,21 @@ namespace Capa_Presentacion
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
             RealizarBusqueda();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FrmProducto_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (abiertoDesdeBtProducto)
+            {
+               
+                MessageBox.Show("No se puede cerrar porque fue abierto desde BtProducto.");
+                e.Cancel = true;
+            }
         }
     }
 }
