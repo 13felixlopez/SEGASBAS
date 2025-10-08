@@ -1,6 +1,6 @@
 ﻿namespace Capa_Presentacion
 {
-    partial class FrmCompras
+    partial class FrmCompras1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCompras));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCompras1));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btañadiritem = new FontAwesome.Sharp.IconButton();
             this.btañadirunidaddemedida = new System.Windows.Forms.PictureBox();
@@ -66,14 +66,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtdescripcion = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.DatagreedCompra = new System.Windows.Forms.DataGridView();
-            this.label12 = new System.Windows.Forms.Label();
-            this.TxtBuscar = new System.Windows.Forms.TextBox();
-            this.CmbBuscar = new System.Windows.Forms.ComboBox();
+            this.Datagreedguardarcompra = new System.Windows.Forms.DataGridView();
             this.TxtTotalPagina = new System.Windows.Forms.TextBox();
+            this.DatagreeditemsCompra = new System.Windows.Forms.DataGridView();
             this.TxtPagina = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.TxtBuscar = new System.Windows.Forms.TextBox();
             this.BtnSiguiente = new FontAwesome.Sharp.IconButton();
+            this.CmbBuscar = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.BtnAnterior = new FontAwesome.Sharp.IconButton();
             this.BTEditar = new FontAwesome.Sharp.IconButton();
@@ -85,7 +86,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.BtAñadirproducto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btañadirProveedor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DatagreedCompra)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Datagreedguardarcompra)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DatagreeditemsCompra)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -115,7 +117,6 @@
             this.panel1.Controls.Add(this.CbTipoCompra);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.BTCancelar);
-            this.panel1.Controls.Add(this.BTAgregar);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.Cb_Producto);
             this.panel1.Controls.Add(this.label6);
@@ -132,8 +133,8 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1553, 387);
-            this.panel1.TabIndex = 2;
+            this.panel1.Size = new System.Drawing.Size(1722, 387);
+            this.panel1.TabIndex = 3;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // btañadiritem
@@ -146,10 +147,10 @@
             this.btañadiritem.IconColor = System.Drawing.Color.White;
             this.btañadiritem.IconFont = FontAwesome.Sharp.IconFont.Solid;
             this.btañadiritem.IconSize = 30;
-            this.btañadiritem.Location = new System.Drawing.Point(1382, 203);
+            this.btañadiritem.Location = new System.Drawing.Point(1555, 256);
             this.btañadiritem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btañadiritem.Name = "btañadiritem";
-            this.btañadiritem.Size = new System.Drawing.Size(160, 67);
+            this.btañadiritem.Size = new System.Drawing.Size(153, 67);
             this.btañadiritem.TabIndex = 70;
             this.btañadiritem.Text = "Añadir Item";
             this.btañadiritem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -165,7 +166,6 @@
             this.btañadirunidaddemedida.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btañadirunidaddemedida.TabIndex = 69;
             this.btañadirunidaddemedida.TabStop = false;
-            this.btañadirunidaddemedida.Click += new System.EventHandler(this.btañadirunidaddemedida_Click);
             // 
             // CbUnidadmedida
             // 
@@ -195,6 +195,7 @@
             this.DomainupPlazos.Name = "DomainupPlazos";
             this.DomainupPlazos.Size = new System.Drawing.Size(257, 34);
             this.DomainupPlazos.TabIndex = 66;
+            this.DomainupPlazos.SelectedItemChanged += new System.EventHandler(this.DomainupPlazos_SelectedItemChanged);
             // 
             // label16
             // 
@@ -216,7 +217,6 @@
             this.btañadircategoria.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btañadircategoria.TabIndex = 64;
             this.btañadircategoria.TabStop = false;
-            this.btañadircategoria.Click += new System.EventHandler(this.btañadircategoria_Click);
             // 
             // btañadirmarca
             // 
@@ -227,7 +227,6 @@
             this.btañadirmarca.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btañadirmarca.TabIndex = 63;
             this.btañadirmarca.TabStop = false;
-            this.btañadirmarca.Click += new System.EventHandler(this.btañadirmarca_Click);
             // 
             // BtAñadirproducto
             // 
@@ -238,7 +237,6 @@
             this.BtAñadirproducto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.BtAñadirproducto.TabIndex = 62;
             this.BtAñadirproducto.TabStop = false;
-            this.BtAñadirproducto.Click += new System.EventHandler(this.BtAñadirproducto_Click);
             // 
             // btañadirProveedor
             // 
@@ -249,7 +247,6 @@
             this.btañadirProveedor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btañadirProveedor.TabIndex = 61;
             this.btañadirProveedor.TabStop = false;
-            this.btañadirProveedor.Click += new System.EventHandler(this.btañadirProveedor_Click);
             // 
             // label11
             // 
@@ -361,6 +358,7 @@
             this.CbTipoCompra.Name = "CbTipoCompra";
             this.CbTipoCompra.Size = new System.Drawing.Size(259, 35);
             this.CbTipoCompra.TabIndex = 46;
+            this.CbTipoCompra.SelectedIndexChanged += new System.EventHandler(this.CbTipoCompra_SelectedIndexChanged);
             // 
             // label9
             // 
@@ -384,7 +382,7 @@
             this.BTCancelar.IconColor = System.Drawing.Color.White;
             this.BTCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BTCancelar.IconSize = 30;
-            this.BTCancelar.Location = new System.Drawing.Point(1386, 276);
+            this.BTCancelar.Location = new System.Drawing.Point(1555, 324);
             this.BTCancelar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTCancelar.Name = "BTCancelar";
             this.BTCancelar.Size = new System.Drawing.Size(156, 47);
@@ -404,10 +402,10 @@
             this.BTAgregar.IconColor = System.Drawing.Color.White;
             this.BTAgregar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             this.BTAgregar.IconSize = 30;
-            this.BTAgregar.Location = new System.Drawing.Point(1386, 333);
+            this.BTAgregar.Location = new System.Drawing.Point(1232, 762);
             this.BTAgregar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTAgregar.Name = "BTAgregar";
-            this.BTAgregar.Size = new System.Drawing.Size(160, 48);
+            this.BTAgregar.Size = new System.Drawing.Size(160, 42);
             this.BTAgregar.TabIndex = 43;
             this.BTAgregar.Text = "Agregar";
             this.BTAgregar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -542,53 +540,22 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // DatagreedCompra
+            // Datagreedguardarcompra
             // 
-            this.DatagreedCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Datagreedguardarcompra.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DatagreedCompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DatagreedCompra.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.DatagreedCompra.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.DatagreedCompra.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            this.DatagreedCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DatagreedCompra.Location = new System.Drawing.Point(13, 433);
-            this.DatagreedCompra.Margin = new System.Windows.Forms.Padding(4);
-            this.DatagreedCompra.Name = "DatagreedCompra";
-            this.DatagreedCompra.RowHeadersWidth = 51;
-            this.DatagreedCompra.Size = new System.Drawing.Size(1515, 311);
-            this.DatagreedCompra.TabIndex = 114;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(8, 396);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(118, 26);
-            this.label12.TabIndex = 113;
-            this.label12.Text = "Buscar Por:";
-            // 
-            // TxtBuscar
-            // 
-            this.TxtBuscar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtBuscar.Location = new System.Drawing.Point(158, 393);
-            this.TxtBuscar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TxtBuscar.Multiline = true;
-            this.TxtBuscar.Name = "TxtBuscar";
-            this.TxtBuscar.Size = new System.Drawing.Size(288, 34);
-            this.TxtBuscar.TabIndex = 112;
-            this.TxtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
-            // 
-            // CmbBuscar
-            // 
-            this.CmbBuscar.Font = new System.Drawing.Font("Microsoft YaHei", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBuscar.FormattingEnabled = true;
-            this.CmbBuscar.Location = new System.Drawing.Point(453, 393);
-            this.CmbBuscar.Margin = new System.Windows.Forms.Padding(4);
-            this.CmbBuscar.Name = "CmbBuscar";
-            this.CmbBuscar.Size = new System.Drawing.Size(276, 38);
-            this.CmbBuscar.TabIndex = 111;
+            this.Datagreedguardarcompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.Datagreedguardarcompra.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.Datagreedguardarcompra.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Datagreedguardarcompra.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            this.Datagreedguardarcompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Datagreedguardarcompra.Location = new System.Drawing.Point(879, 435);
+            this.Datagreedguardarcompra.Margin = new System.Windows.Forms.Padding(4);
+            this.Datagreedguardarcompra.Name = "Datagreedguardarcompra";
+            this.Datagreedguardarcompra.RowHeadersWidth = 51;
+            this.Datagreedguardarcompra.Size = new System.Drawing.Size(818, 311);
+            this.Datagreedguardarcompra.TabIndex = 140;
             // 
             // TxtTotalPagina
             // 
@@ -596,12 +563,29 @@
             this.TxtTotalPagina.BackColor = System.Drawing.SystemColors.HighlightText;
             this.TxtTotalPagina.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtTotalPagina.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.TxtTotalPagina.Location = new System.Drawing.Point(360, 760);
+            this.TxtTotalPagina.Location = new System.Drawing.Point(364, 762);
             this.TxtTotalPagina.Margin = new System.Windows.Forms.Padding(4);
             this.TxtTotalPagina.Name = "TxtTotalPagina";
             this.TxtTotalPagina.ReadOnly = true;
             this.TxtTotalPagina.Size = new System.Drawing.Size(47, 34);
-            this.TxtTotalPagina.TabIndex = 124;
+            this.TxtTotalPagina.TabIndex = 137;
+            // 
+            // DatagreeditemsCompra
+            // 
+            this.DatagreeditemsCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DatagreeditemsCompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DatagreeditemsCompra.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.DatagreeditemsCompra.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.DatagreeditemsCompra.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            this.DatagreeditemsCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DatagreeditemsCompra.Location = new System.Drawing.Point(17, 435);
+            this.DatagreeditemsCompra.Margin = new System.Windows.Forms.Padding(4);
+            this.DatagreeditemsCompra.Name = "DatagreeditemsCompra";
+            this.DatagreeditemsCompra.RowHeadersWidth = 51;
+            this.DatagreeditemsCompra.Size = new System.Drawing.Size(839, 311);
+            this.DatagreeditemsCompra.TabIndex = 131;
             // 
             // TxtPagina
             // 
@@ -609,11 +593,21 @@
             this.TxtPagina.BackColor = System.Drawing.SystemColors.HighlightText;
             this.TxtPagina.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtPagina.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.TxtPagina.Location = new System.Drawing.Point(164, 760);
+            this.TxtPagina.Location = new System.Drawing.Point(168, 762);
             this.TxtPagina.Margin = new System.Windows.Forms.Padding(4);
             this.TxtPagina.Name = "TxtPagina";
             this.TxtPagina.Size = new System.Drawing.Size(47, 34);
-            this.TxtPagina.TabIndex = 123;
+            this.TxtPagina.TabIndex = 136;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(24, 396);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(118, 26);
+            this.label12.TabIndex = 130;
+            this.label12.Text = "Buscar Por:";
             // 
             // label13
             // 
@@ -621,13 +615,24 @@
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label13.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label13.Location = new System.Drawing.Point(294, 764);
+            this.label13.Location = new System.Drawing.Point(298, 766);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(37, 28);
-            this.label13.TabIndex = 125;
+            this.label13.TabIndex = 138;
             this.label13.Text = "De";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // TxtBuscar
+            // 
+            this.TxtBuscar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtBuscar.Location = new System.Drawing.Point(168, 393);
+            this.TxtBuscar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TxtBuscar.Multiline = true;
+            this.TxtBuscar.Name = "TxtBuscar";
+            this.TxtBuscar.Size = new System.Drawing.Size(288, 34);
+            this.TxtBuscar.TabIndex = 129;
+            this.TxtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
             // 
             // BtnSiguiente
             // 
@@ -640,13 +645,23 @@
             this.BtnSiguiente.IconColor = System.Drawing.Color.Black;
             this.BtnSiguiente.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtnSiguiente.IconSize = 28;
-            this.BtnSiguiente.Location = new System.Drawing.Point(246, 760);
+            this.BtnSiguiente.Location = new System.Drawing.Point(250, 762);
             this.BtnSiguiente.Margin = new System.Windows.Forms.Padding(4);
             this.BtnSiguiente.Name = "BtnSiguiente";
             this.BtnSiguiente.Size = new System.Drawing.Size(40, 37);
-            this.BtnSiguiente.TabIndex = 122;
+            this.BtnSiguiente.TabIndex = 135;
             this.BtnSiguiente.UseVisualStyleBackColor = false;
             this.BtnSiguiente.Click += new System.EventHandler(this.BtnSiguiente_Click);
+            // 
+            // CmbBuscar
+            // 
+            this.CmbBuscar.Font = new System.Drawing.Font("Microsoft YaHei", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CmbBuscar.FormattingEnabled = true;
+            this.CmbBuscar.Location = new System.Drawing.Point(479, 391);
+            this.CmbBuscar.Margin = new System.Windows.Forms.Padding(4);
+            this.CmbBuscar.Name = "CmbBuscar";
+            this.CmbBuscar.Size = new System.Drawing.Size(276, 38);
+            this.CmbBuscar.TabIndex = 128;
             // 
             // label14
             // 
@@ -654,11 +669,11 @@
             this.label14.AutoSize = true;
             this.label14.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label14.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label14.Location = new System.Drawing.Point(13, 764);
+            this.label14.Location = new System.Drawing.Point(17, 766);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(72, 28);
-            this.label14.TabIndex = 126;
+            this.label14.TabIndex = 139;
             this.label14.Text = "Página";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -673,11 +688,11 @@
             this.BtnAnterior.IconColor = System.Drawing.Color.Black;
             this.BtnAnterior.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtnAnterior.IconSize = 28;
-            this.BtnAnterior.Location = new System.Drawing.Point(98, 760);
+            this.BtnAnterior.Location = new System.Drawing.Point(102, 762);
             this.BtnAnterior.Margin = new System.Windows.Forms.Padding(4);
             this.BtnAnterior.Name = "BtnAnterior";
             this.BtnAnterior.Size = new System.Drawing.Size(40, 37);
-            this.BtnAnterior.TabIndex = 121;
+            this.BtnAnterior.TabIndex = 134;
             this.BtnAnterior.UseVisualStyleBackColor = false;
             this.BtnAnterior.Click += new System.EventHandler(this.BtnAnterior_Click);
             // 
@@ -691,11 +706,11 @@
             this.BTEditar.IconColor = System.Drawing.Color.White;
             this.BTEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BTEditar.IconSize = 30;
-            this.BTEditar.Location = new System.Drawing.Point(1223, 753);
+            this.BTEditar.Location = new System.Drawing.Point(1398, 762);
             this.BTEditar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTEditar.Name = "BTEditar";
-            this.BTEditar.Size = new System.Drawing.Size(153, 46);
-            this.BTEditar.TabIndex = 120;
+            this.BTEditar.Size = new System.Drawing.Size(153, 43);
+            this.BTEditar.TabIndex = 133;
             this.BTEditar.Text = "Editar";
             this.BTEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BTEditar.UseVisualStyleBackColor = false;
@@ -710,24 +725,24 @@
             this.BTEliminar.IconColor = System.Drawing.Color.White;
             this.BTEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BTEliminar.IconSize = 30;
-            this.BTEliminar.Location = new System.Drawing.Point(1382, 753);
+            this.BTEliminar.Location = new System.Drawing.Point(1557, 759);
             this.BTEliminar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTEliminar.Name = "BTEliminar";
             this.BTEliminar.Size = new System.Drawing.Size(156, 46);
-            this.BTEliminar.TabIndex = 119;
+            this.BTEliminar.TabIndex = 132;
             this.BTEliminar.Text = "Eliminar";
             this.BTEliminar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BTEliminar.UseVisualStyleBackColor = false;
-            this.BTEliminar.Click += new System.EventHandler(this.BTEliminar_Click);
             // 
-            // FrmCompras
+            // FrmCompras1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(1553, 801);
+            this.ClientSize = new System.Drawing.Size(1722, 817);
+            this.Controls.Add(this.Datagreedguardarcompra);
             this.Controls.Add(this.TxtTotalPagina);
-            this.Controls.Add(this.DatagreedCompra);
+            this.Controls.Add(this.DatagreeditemsCompra);
             this.Controls.Add(this.TxtPagina);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label13);
@@ -736,11 +751,13 @@
             this.Controls.Add(this.CmbBuscar);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.BtnAnterior);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.BTEditar);
             this.Controls.Add(this.BTEliminar);
-            this.Name = "FrmCompras";
-            this.Text = "FrmCompras";
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.BTAgregar);
+            this.Name = "FrmCompras1";
+            this.Text = "FrmCompras1";
+            this.Load += new System.EventHandler(this.FrmCompras1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btañadirunidaddemedida)).EndInit();
@@ -749,7 +766,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.BtAñadirproducto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btañadirProveedor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DatagreedCompra)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Datagreedguardarcompra)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DatagreeditemsCompra)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -758,6 +776,24 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
+        private FontAwesome.Sharp.IconButton btañadiritem;
+        private System.Windows.Forms.PictureBox btañadirunidaddemedida;
+        private System.Windows.Forms.ComboBox CbUnidadmedida;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.DomainUpDown DomainupPlazos;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.PictureBox btañadircategoria;
+        private System.Windows.Forms.PictureBox btañadirmarca;
+        private System.Windows.Forms.PictureBox BtAñadirproducto;
+        private System.Windows.Forms.PictureBox btañadirProveedor;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox TxtNumeFactura;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.DateTimePicker dateTimePicker3;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DomainUpDown domainUpPrecioCompra;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DomainUpDown DomaiUpCantidad;
         private System.Windows.Forms.ComboBox CbMarca;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox CbTipoCompra;
@@ -776,35 +812,18 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtdescripcion;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.DomainUpDown domainUpPrecioCompra;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DomainUpDown DomaiUpCantidad;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox TxtNumeFactura;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.PictureBox btañadircategoria;
-        private System.Windows.Forms.PictureBox btañadirmarca;
-        private System.Windows.Forms.PictureBox BtAñadirproducto;
-        private System.Windows.Forms.PictureBox btañadirProveedor;
-        private System.Windows.Forms.DataGridView DatagreedCompra;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox TxtBuscar;
-        private System.Windows.Forms.ComboBox CmbBuscar;
+        private System.Windows.Forms.DataGridView Datagreedguardarcompra;
         private System.Windows.Forms.TextBox TxtTotalPagina;
+        private System.Windows.Forms.DataGridView DatagreeditemsCompra;
         private System.Windows.Forms.TextBox TxtPagina;
+        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox TxtBuscar;
         private FontAwesome.Sharp.IconButton BtnSiguiente;
+        private System.Windows.Forms.ComboBox CmbBuscar;
         private System.Windows.Forms.Label label14;
         private FontAwesome.Sharp.IconButton BtnAnterior;
         private FontAwesome.Sharp.IconButton BTEditar;
         private FontAwesome.Sharp.IconButton BTEliminar;
-        private System.Windows.Forms.DomainUpDown DomainupPlazos;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.PictureBox btañadirunidaddemedida;
-        private System.Windows.Forms.ComboBox CbUnidadmedida;
-        private System.Windows.Forms.Label label17;
-        private FontAwesome.Sharp.IconButton btañadiritem;
     }
 }

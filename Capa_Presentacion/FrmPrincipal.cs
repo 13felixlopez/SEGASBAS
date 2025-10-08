@@ -123,7 +123,7 @@ namespace Capa_Presentacion
 
         private void Bt_Compra_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnPanel(new FrmCompras());
+            AbrirFormularioEnPanel(new FrmCompras1());
         }
 
         private void iconButton3_Click(object sender, EventArgs e)

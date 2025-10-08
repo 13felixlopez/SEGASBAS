@@ -79,6 +79,7 @@
     <Compile Include="Datos\D_Asistencia.cs" />
     <Compile Include="Datos\Conexion.cs" />
     <Compile Include="Datos\D_Cargo.cs" />
+    <Compile Include="Datos\D_Catalogo.cs" />
     <Compile Include="Datos\D_Categoria.cs" />
     <Compile Include="Datos\D_Ciclo.cs" />
     <Compile Include="Datos\D_Compra.cs" />
@@ -119,11 +120,11 @@
     <Compile Include="FrmCiclo.Designer.cs">
       <DependentUpon>FrmCiclo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmCompras.cs">
+    <Compile Include="FrmCompras1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCompras.Designer.cs">
-      <DependentUpon>FrmCompras.cs</DependentUpon>
+    <Compile Include="FrmCompras1.Designer.cs">
+      <DependentUpon>FrmCompras1.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmEmpleado.cs">
       <SubType>Form</SubType>
@@ -206,6 +207,7 @@
     <Compile Include="Logica\L_Categoria.cs" />
     <Compile Include="Logica\L_Ciclo.cs" />
     <Compile Include="Logica\L_Compra.cs" />
+    <Compile Include="Logica\L_DetalleCompra.cs" />
     <Compile Include="Logica\L_Empleado.cs" />
     <Compile Include="Logica\L_Lote.cs" />
     <Compile Include="Logica\L_Marca.cs" />
@@ -230,8 +232,8 @@
     <EmbeddedResource Include="FrmCiclo.resx">
       <DependentUpon>FrmCiclo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCompras.resx">
-      <DependentUpon>FrmCompras.cs</DependentUpon>
+    <EmbeddedResource Include="FrmCompras1.resx">
+      <DependentUpon>FrmCompras1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEmpleado.resx">
       <DependentUpon>FrmEmpleado.cs</DependentUpon>
