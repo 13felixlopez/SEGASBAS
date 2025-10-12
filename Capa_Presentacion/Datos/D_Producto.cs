@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Capa_Presentacion.Logica;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Capa_Presentacion.Logica;
 
 namespace Capa_Presentacion.Datos
 {
@@ -44,7 +44,7 @@ namespace Capa_Presentacion.Datos
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                
+
                     SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
                     cmd.Parameters.Add(paramResultado);
                     SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
@@ -77,7 +77,7 @@ namespace Capa_Presentacion.Datos
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id_producto", obj.id_producto);
                     cmd.Parameters.AddWithValue("@nombre", obj.nombre);
-                    
+
                     SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
                     cmd.Parameters.Add(paramResultado);
                     SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
@@ -109,7 +109,7 @@ namespace Capa_Presentacion.Datos
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id_producto", id_producto);
-           
+
                     SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
                     cmd.Parameters.Add(paramResultado);
                     SqlParameter paramMensaje = new SqlParameter("@mensaje", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output };
@@ -150,7 +150,11 @@ namespace Capa_Presentacion.Datos
                         lista.Add(new L_Producto()
                         {
                             id_producto = Convert.ToInt32(dr["id_producto"]),
-                            nombre = dr["nombre"].ToString()
+                            nombre = dr["nombre"].ToString(),
+                            Descripcion = dr["Descripcion"].ToString(),
+                            StockActual = Convert.ToInt32(dr["Stock Actual"]),
+                            CostoPromedio = Convert.ToDecimal(dr["CostoPromedio"]),
+                            UltimoCostoFactura = Convert.ToDecimal(dr["UltimoCostoFactura"])
                         });
                     }
                 }

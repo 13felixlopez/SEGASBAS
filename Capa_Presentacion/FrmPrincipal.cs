@@ -40,7 +40,14 @@ namespace Capa_Presentacion
         {
 
             PanelCatalogo.Visible = !PanelCatalogo.Visible;
-
+            if (BT_Catalogo.Text == "Catalogo 🔽")
+            {
+                BT_Catalogo.Text = "Catalogo 🔼";
+            }
+            else
+            {
+                BT_Catalogo.Text = "Catalogo 🔽";
+            }
         }
 
         private void BT_INICIO_Click(object sender, EventArgs e)
@@ -103,7 +110,7 @@ namespace Capa_Presentacion
         private void BtProducto_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnPanel(new FrmProducto());
-         
+
         }
 
         private void BtMarcas_Click(object sender, EventArgs e)

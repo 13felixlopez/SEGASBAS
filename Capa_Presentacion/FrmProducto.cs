@@ -2,12 +2,6 @@
 using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Capa_Presentacion
@@ -27,9 +21,9 @@ namespace Capa_Presentacion
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.Load += FrmProducto_Load;
-          
 
-           
+
+
             this.FormClosing += FrmProducto_FormClosing;
         }
 
@@ -41,13 +35,13 @@ namespace Capa_Presentacion
                 dgvProducto.Columns["id_producto"].Visible = false;
             }
 
-            dgvProducto.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            //dgvProducto.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
-          
-            if (dgvProducto.ColumnCount > 0)
-            {
-                dgvProducto.Columns[dgvProducto.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            }
+
+            //if (dgvProducto.ColumnCount > 0)
+            //{
+            //    dgvProducto.Columns[dgvProducto.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //}
             CargarProductosPaginado();
             LimpiarControles();
 
@@ -115,12 +109,12 @@ namespace Capa_Presentacion
 
             if (productoSeleccionado == null)
             {
-               
+
                 mensaje = funciones.Insertar(oProducto);
             }
             else
             {
-            
+
                 oProducto.id_producto = productoSeleccionado.id_producto;
                 mensaje = funciones.Editar(oProducto);
             }
@@ -231,7 +225,7 @@ namespace Capa_Presentacion
         {
             if (abiertoDesdeBtProducto)
             {
-               
+
                 MessageBox.Show("No se puede cerrar porque fue abierto desde BtProducto.");
                 e.Cancel = true;
             }
