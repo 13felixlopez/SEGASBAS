@@ -15,7 +15,7 @@ namespace Capa_Presentacion.Datos
             try
             {
                 Conexion.abrir();
-                // ¡AQUÍ ESTÁ LA CORRECCIÓN! El nombre del SP ahora coincide con el que me diste.
+          
                 SqlCommand cmd = new SqlCommand("sp_ListarCategorias", Conexion.conectar);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@paginaActual", paginaActual);
