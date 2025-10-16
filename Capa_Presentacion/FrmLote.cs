@@ -3,6 +3,8 @@ using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -29,7 +31,14 @@ namespace Capa_Presentacion
             TxtBuscar.TextChanged += TxtBuscar_TextChanged;
             CBEstadoCultivo.SelectedIndexChanged += CBEstadoCultivo_SelectedIndexChanged;
             CBEstadoCultivo.DropDownStyle = ComboBoxStyle.DropDownList;
+            SetPlaceholder();
 
+        }
+
+        private void SetPlaceholder()
+        {
+            TxtObservacion.Text = "Notas adicionales sobre el lote";
+            TxtObservacion.ForeColor = Color.Gray; 
         }
 
         private void FrmLote_Load(object sender, EventArgs e)
@@ -39,7 +48,14 @@ namespace Capa_Presentacion
             ConfigurarFiltrosBusqueda();
             CargarLotes();
 
+            TxtObservacion.Text = "Notas adicionales sobre el lote";
+            TxtObservacion.ForeColor = Color.Gray;
+            TxtObservacion.Enter += TxtObservacion_Enter;
+            TxtObservacion.Leave += TxtObservacion_Leave;
+
+
         }
+       
         private void LlenarComboBoxes()
         {
             D_Generico objGenerico = new D_Generico();
@@ -81,9 +97,11 @@ namespace Capa_Presentacion
             DatagreedLote.Columns.Clear();
             DatagreedLote.AutoGenerateColumns = false;
 
+
             DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "IDLote", HeaderText = "ID Lote", DataPropertyName = "IDLote", Visible = false });
             DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "NombreLote", HeaderText = "Nombre", DataPropertyName = "NombreLote", Width = 100 });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Manzanaje", HeaderText = "Manzanaje", DataPropertyName = "Manzanaje", Width = 100 });
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Manzanaje", HeaderText = "Manzanaje", DataPropertyName = "Manzanaje", Width = 100 });    
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VariedadArroz", HeaderText = "Variedad Arroz", DataPropertyName = "VariedadArroz", Width = 150 });
             DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "TipoSiembra", HeaderText = "Tipo Siembra", DataPropertyName = "TipoSiembra", Width = 120 });
             DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "EstadoCultivo", HeaderText = "Estado Cultivo", DataPropertyName = "EstadoCultivo", Width = 120 });
             DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Ciclo", HeaderText = "Ciclo", DataPropertyName = "Ciclo", Width = 80 });
@@ -157,7 +175,6 @@ namespace Capa_Presentacion
         private void BTAgregar_Click(object sender, EventArgs e)
         {
 
-
             if (CBEstadoCultivo.SelectedIndex == -1)
             {
                 MessageBox.Show("Debe seleccionar un 'Estado del Cultivo'.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -168,6 +185,10 @@ namespace Capa_Presentacion
             string mensaje = string.Empty;
             D_Lote objNegocio = new D_Lote();
 
+            string observacion = (TxtObservacion.Text == "Notas adicionales sobre el lote")
+                         ? ""
+                         : TxtObservacion.Text;
+
             L_Lote oLote = new L_Lote()
             {
                 IDLote = 0,
@@ -176,7 +197,8 @@ namespace Capa_Presentacion
                 IDTipoSiembra = CBTipoSiembra.SelectedValue != null ? (int?)CBTipoSiembra.SelectedValue : null,
                 IDEstadoCultivo = (int)CBEstadoCultivo.SelectedValue,
                 IDCiclo = CbCiclo.SelectedValue != null ? (int?)CbCiclo.SelectedValue : null,
-                Observacion = TxtObservacion.Text
+                Observacion = observacion,
+                VariedadArroz = TxtVariedadeArroz.Text 
             };
 
             if (objNegocio.InsertarLote(oLote, out mensaje))
@@ -189,6 +211,8 @@ namespace Capa_Presentacion
             {
                 MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+           
         }
         private void LimpiarControles()
         {
@@ -199,6 +223,7 @@ namespace Capa_Presentacion
             CBTipoSiembra.SelectedIndex = -1;
             CBEstadoCultivo.SelectedIndex = -1;
             TxtObservacion.Text = string.Empty;
+            TxtVariedadeArroz.Text = string.Empty;
             dateTimePickerSiembra.Value = DateTime.Now;
             dateTimePickerCorte.Value = DateTime.Now;
         }
@@ -222,7 +247,8 @@ namespace Capa_Presentacion
                 IDTipoSiembra = CBTipoSiembra.SelectedValue != null ? (int?)CBTipoSiembra.SelectedValue : null,
                 IDEstadoCultivo = (int)CBEstadoCultivo.SelectedValue,
                 IDCiclo = CbCiclo.SelectedValue != null ? (int?)CbCiclo.SelectedValue : null,
-                Observacion = TxtObservacion.Text
+                Observacion = TxtObservacion.Text,
+                VariedadArroz = TxtVariedadeArroz.Text 
             };
 
             if (objNegocio.ActualizarLote(oLote, out mensaje))
@@ -411,11 +437,13 @@ namespace Capa_Presentacion
                     Ciclo = row.Cells["Ciclo"].Value.ToString(),
                     FechaSiembra = row.Cells["FechaSiembra"].Value as DateTime?,
                     FechaCorte = row.Cells["FechaCorte"].Value as DateTime?,
+                    VariedadArroz = row.Cells["VariedadArroz"].Value.ToString(),
                     Observacion = row.Cells["Observacion"].Value.ToString()
                 };
 
                 TxtNombreLote.Text = loteSeleccionado.NombreLote;
                 TxtManzanaje.Text = loteSeleccionado.Manzanaje;
+                TxtVariedadeArroz.Text = loteSeleccionado.VariedadArroz;
                 TxtObservacion.Text = loteSeleccionado.Observacion;
 
                 CBTipoSiembra.SelectedIndex = CBTipoSiembra.FindStringExact(loteSeleccionado.TipoSiembra);
@@ -441,6 +469,54 @@ namespace Capa_Presentacion
             FrmMapa frmMapa = new FrmMapa();
 
             frmMapa.ShowDialog();
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TxtObservacion_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void TxtObservacion_Enter(object sender, EventArgs e)
+        {
+            if (TxtObservacion.Text == "Notas adicionales sobre el lote")
+            {
+                TxtObservacion.Text = "";
+                TxtObservacion.ForeColor = Color.Black;
+            }
+        }
+
+        private void TxtObservacion_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TxtObservacion.Text))
+            {
+                SetPlaceholder();
+            }
+        }
+
+        private void BTAgregar_Click_1(object sender, EventArgs e)
+        {
+            string observacion = (TxtObservacion.Text == "Notas adicionales sobre el lote")
+                        ? ""
+                        : TxtObservacion.Text;
+        }
+
+        private void TxtManzanaje_Enter(object sender, EventArgs e)
+        {
+            if (TxtObservacion.Text == "Notas adicionales sobre el lote")
+            {
+                TxtObservacion.Text = "";
+                TxtObservacion.ForeColor = Color.Black;
+            }
+        }
+
+        private void PanelLote_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }

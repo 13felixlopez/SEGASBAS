@@ -67,7 +67,8 @@ namespace Capa_Presentacion.Datos
                             Ciclo = dr["ciclo"].ToString(),
                             FechaSiembra = dr["fecha_siembra"] as DateTime?,
                             FechaCorte = dr["fecha_corte"] as DateTime?,
-                            Observacion = dr["observacion"].ToString()
+                            Observacion = dr["observacion"].ToString(),
+                            VariedadArroz = dr["VariedadArroz"].ToString()
                         });
                     }
                 }
@@ -97,6 +98,7 @@ namespace Capa_Presentacion.Datos
                 cmd.Parameters.AddWithValue("@id_estado_cultivo", oLote.IDEstadoCultivo);
                 cmd.Parameters.AddWithValue("@id_ciclo", oLote.IDCiclo.HasValue ? (object)oLote.IDCiclo.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@observacion", oLote.Observacion);
+                cmd.Parameters.AddWithValue("@VariedadArroz", oLote.VariedadArroz);
                 cmd.ExecuteNonQuery();
                 resultado = true;
             }
@@ -124,6 +126,7 @@ namespace Capa_Presentacion.Datos
                 cmd.Parameters.AddWithValue("@id_estado_cultivo", oLote.IDEstadoCultivo);
                 cmd.Parameters.AddWithValue("@id_ciclo", oLote.IDCiclo.HasValue ? (object)oLote.IDCiclo.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@observacion", oLote.Observacion);
+                cmd.Parameters.AddWithValue("@VariedadArroz", oLote.VariedadArroz);
                 cmd.ExecuteNonQuery();
                 resultado = true;
             }

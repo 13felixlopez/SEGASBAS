@@ -38,6 +38,7 @@
             this.TxtNumeroRegistro = new System.Windows.Forms.TextBox();
             this.TxtRazonSocial = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.TxtTelefono = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BTCancelar = new FontAwesome.Sharp.IconButton();
@@ -57,19 +58,18 @@
             this.TxtBuscar = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.DgvProveedores = new System.Windows.Forms.DataGridView();
-            this.BtnAnterior = new FontAwesome.Sharp.IconButton();
-            this.label8 = new System.Windows.Forms.Label();
+            this.BtnAnteriorProveedor = new FontAwesome.Sharp.IconButton();
+            this.Labelpaginaproveedor = new System.Windows.Forms.Label();
             this.TxtTotalPagina = new System.Windows.Forms.TextBox();
             this.TxtPagina = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.BtnSiguiente = new FontAwesome.Sharp.IconButton();
+            this.Lbpaginadodeproveedor = new System.Windows.Forms.Label();
+            this.BtnSiguienteProveedor = new FontAwesome.Sharp.IconButton();
             this.BTEliminar = new FontAwesome.Sharp.IconButton();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.GBTipo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvProveedores)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // LBSalario
@@ -187,6 +187,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1160, 373);
             this.panel1.TabIndex = 4;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(1114, -2);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(44, 38);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 115;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // TxtTelefono
             // 
@@ -420,38 +432,38 @@
             this.DgvProveedores.TabIndex = 55;
             this.DgvProveedores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvProveedores_CellClick);
             // 
-            // BtnAnterior
+            // BtnAnteriorProveedor
             // 
-            this.BtnAnterior.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnAnterior.BackColor = System.Drawing.Color.Transparent;
-            this.BtnAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnAnterior.FlatAppearance.BorderSize = 0;
-            this.BtnAnterior.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAnterior.IconChar = FontAwesome.Sharp.IconChar.AngleLeft;
-            this.BtnAnterior.IconColor = System.Drawing.Color.Black;
-            this.BtnAnterior.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.BtnAnterior.IconSize = 28;
-            this.BtnAnterior.Location = new System.Drawing.Point(92, 688);
-            this.BtnAnterior.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnAnterior.Name = "BtnAnterior";
-            this.BtnAnterior.Size = new System.Drawing.Size(40, 37);
-            this.BtnAnterior.TabIndex = 62;
-            this.BtnAnterior.UseVisualStyleBackColor = false;
-            this.BtnAnterior.Click += new System.EventHandler(this.BtnAnterior_Click);
+            this.BtnAnteriorProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnAnteriorProveedor.BackColor = System.Drawing.Color.Transparent;
+            this.BtnAnteriorProveedor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnAnteriorProveedor.FlatAppearance.BorderSize = 0;
+            this.BtnAnteriorProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnAnteriorProveedor.IconChar = FontAwesome.Sharp.IconChar.AngleLeft;
+            this.BtnAnteriorProveedor.IconColor = System.Drawing.Color.Black;
+            this.BtnAnteriorProveedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.BtnAnteriorProveedor.IconSize = 28;
+            this.BtnAnteriorProveedor.Location = new System.Drawing.Point(92, 684);
+            this.BtnAnteriorProveedor.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnAnteriorProveedor.Name = "BtnAnteriorProveedor";
+            this.BtnAnteriorProveedor.Size = new System.Drawing.Size(40, 37);
+            this.BtnAnteriorProveedor.TabIndex = 62;
+            this.BtnAnteriorProveedor.UseVisualStyleBackColor = false;
+            this.BtnAnteriorProveedor.Click += new System.EventHandler(this.BtnAnterior_Click);
             // 
-            // label8
+            // Labelpaginaproveedor
             // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label8.Location = new System.Drawing.Point(13, 690);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(72, 28);
-            this.label8.TabIndex = 67;
-            this.label8.Text = "Página";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Labelpaginaproveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Labelpaginaproveedor.AutoSize = true;
+            this.Labelpaginaproveedor.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Labelpaginaproveedor.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.Labelpaginaproveedor.Location = new System.Drawing.Point(13, 684);
+            this.Labelpaginaproveedor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Labelpaginaproveedor.Name = "Labelpaginaproveedor";
+            this.Labelpaginaproveedor.Size = new System.Drawing.Size(72, 28);
+            this.Labelpaginaproveedor.TabIndex = 67;
+            this.Labelpaginaproveedor.Text = "Página";
+            this.Labelpaginaproveedor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TxtTotalPagina
             // 
@@ -459,7 +471,7 @@
             this.TxtTotalPagina.BackColor = System.Drawing.SystemColors.HighlightText;
             this.TxtTotalPagina.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtTotalPagina.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.TxtTotalPagina.Location = new System.Drawing.Point(278, 688);
+            this.TxtTotalPagina.Location = new System.Drawing.Point(288, 682);
             this.TxtTotalPagina.Margin = new System.Windows.Forms.Padding(4);
             this.TxtTotalPagina.Name = "TxtTotalPagina";
             this.TxtTotalPagina.ReadOnly = true;
@@ -472,44 +484,44 @@
             this.TxtPagina.BackColor = System.Drawing.SystemColors.HighlightText;
             this.TxtPagina.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtPagina.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.TxtPagina.Location = new System.Drawing.Point(140, 688);
+            this.TxtPagina.Location = new System.Drawing.Point(140, 682);
             this.TxtPagina.Margin = new System.Windows.Forms.Padding(4);
             this.TxtPagina.Name = "TxtPagina";
             this.TxtPagina.Size = new System.Drawing.Size(47, 34);
             this.TxtPagina.TabIndex = 64;
             // 
-            // label9
+            // Lbpaginadodeproveedor
             // 
-            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.label9.Location = new System.Drawing.Point(230, 692);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(37, 28);
-            this.label9.TabIndex = 66;
-            this.label9.Text = "De";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Lbpaginadodeproveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Lbpaginadodeproveedor.AutoSize = true;
+            this.Lbpaginadodeproveedor.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Lbpaginadodeproveedor.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.Lbpaginadodeproveedor.Location = new System.Drawing.Point(243, 684);
+            this.Lbpaginadodeproveedor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Lbpaginadodeproveedor.Name = "Lbpaginadodeproveedor";
+            this.Lbpaginadodeproveedor.Size = new System.Drawing.Size(37, 28);
+            this.Lbpaginadodeproveedor.TabIndex = 66;
+            this.Lbpaginadodeproveedor.Text = "De";
+            this.Lbpaginadodeproveedor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // BtnSiguiente
+            // BtnSiguienteProveedor
             // 
-            this.BtnSiguiente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnSiguiente.BackColor = System.Drawing.Color.Transparent;
-            this.BtnSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BtnSiguiente.FlatAppearance.BorderSize = 0;
-            this.BtnSiguiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSiguiente.IconChar = FontAwesome.Sharp.IconChar.AngleRight;
-            this.BtnSiguiente.IconColor = System.Drawing.Color.Black;
-            this.BtnSiguiente.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.BtnSiguiente.IconSize = 28;
-            this.BtnSiguiente.Location = new System.Drawing.Point(196, 688);
-            this.BtnSiguiente.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnSiguiente.Name = "BtnSiguiente";
-            this.BtnSiguiente.Size = new System.Drawing.Size(40, 37);
-            this.BtnSiguiente.TabIndex = 63;
-            this.BtnSiguiente.UseVisualStyleBackColor = false;
-            this.BtnSiguiente.Click += new System.EventHandler(this.BtnSiguiente_Click);
+            this.BtnSiguienteProveedor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnSiguienteProveedor.BackColor = System.Drawing.Color.Transparent;
+            this.BtnSiguienteProveedor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BtnSiguienteProveedor.FlatAppearance.BorderSize = 0;
+            this.BtnSiguienteProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSiguienteProveedor.IconChar = FontAwesome.Sharp.IconChar.AngleRight;
+            this.BtnSiguienteProveedor.IconColor = System.Drawing.Color.Black;
+            this.BtnSiguienteProveedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.BtnSiguienteProveedor.IconSize = 28;
+            this.BtnSiguienteProveedor.Location = new System.Drawing.Point(195, 684);
+            this.BtnSiguienteProveedor.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnSiguienteProveedor.Name = "BtnSiguienteProveedor";
+            this.BtnSiguienteProveedor.Size = new System.Drawing.Size(40, 37);
+            this.BtnSiguienteProveedor.TabIndex = 63;
+            this.BtnSiguienteProveedor.UseVisualStyleBackColor = false;
+            this.BtnSiguienteProveedor.Click += new System.EventHandler(this.BtnSiguiente_Click);
             // 
             // BTEliminar
             // 
@@ -531,18 +543,6 @@
             this.BTEliminar.UseVisualStyleBackColor = false;
             this.BTEliminar.Click += new System.EventHandler(this.BTEliminar_Click);
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(1114, -2);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(44, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 115;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
-            // 
             // Frm_Proveedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -550,12 +550,12 @@
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1160, 727);
             this.Controls.Add(this.BTEliminar);
-            this.Controls.Add(this.BtnAnterior);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.BtnAnteriorProveedor);
+            this.Controls.Add(this.Labelpaginaproveedor);
             this.Controls.Add(this.TxtTotalPagina);
             this.Controls.Add(this.TxtPagina);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.BtnSiguiente);
+            this.Controls.Add(this.Lbpaginadodeproveedor);
+            this.Controls.Add(this.BtnSiguienteProveedor);
             this.Controls.Add(this.DgvProveedores);
             this.Controls.Add(this.CmbBuscar);
             this.Controls.Add(this.TxtBuscar);
@@ -566,11 +566,11 @@
             this.Load += new System.EventHandler(this.Frm_Proveedores_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.GBTipo.ResumeLayout(false);
             this.GBTipo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvProveedores)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -606,12 +606,12 @@
         private System.Windows.Forms.TextBox TxtBuscar;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView DgvProveedores;
-        private FontAwesome.Sharp.IconButton BtnAnterior;
-        private System.Windows.Forms.Label label8;
+        private FontAwesome.Sharp.IconButton BtnAnteriorProveedor;
+        private System.Windows.Forms.Label Labelpaginaproveedor;
         private System.Windows.Forms.TextBox TxtTotalPagina;
         private System.Windows.Forms.TextBox TxtPagina;
-        private System.Windows.Forms.Label label9;
-        private FontAwesome.Sharp.IconButton BtnSiguiente;
+        private System.Windows.Forms.Label Lbpaginadodeproveedor;
+        private FontAwesome.Sharp.IconButton BtnSiguienteProveedor;
         private FontAwesome.Sharp.IconButton BTEliminar;
         private System.Windows.Forms.PictureBox pictureBox2;
     }

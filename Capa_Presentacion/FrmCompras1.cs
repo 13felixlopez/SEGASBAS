@@ -26,12 +26,13 @@ namespace Capa_Presentacion
         public FrmCompras1()
         {
             InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.None;
             DatagreeditemsCompra.AutoGenerateColumns = false;
             CbTipoCompra.TextChanged += (sender, e) => CalcularVencimiento();
-            DomainupPlazos.TextChanged += (sender, e) => CalcularVencimiento();
+            numericPlazos.TextChanged += (sender, e) => CalcularVencimiento();
 
             CbTipoCompra.TextChanged += (sender, e) => CalcularVencimiento();
-            DomainupPlazos.TextChanged += (sender, e) => CalcularVencimiento();
+            numericPlazos.TextChanged += (sender, e) => CalcularVencimiento();
             DatagreeditemsCompra.Columns.Clear();
 
           
@@ -46,9 +47,9 @@ namespace Capa_Presentacion
 
            
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_producto", HeaderText = "ID Producto", Visible = false });
+            this.StartPosition = FormStartPosition.CenterScreen;
 
 
-            DatagreeditemsCompra.DataSource = itemsTemporales;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -71,6 +72,8 @@ namespace Capa_Presentacion
             CargarCombos();
             CargarHistorialCompras(paginaActual);
             InicializarGrillaTemporal();
+            datetimeVencimiento.ShowUpDown = true;
+            datetimeVencimiento.Enabled = false;
         }
         private void InicializarGrillaTemporal()
         {
@@ -184,18 +187,18 @@ namespace Capa_Presentacion
                 MessageBox.Show("Debe ingresar el número de factura antes de agregar ítems.", "Advertencia");
                 return;
             }
-            if (!decimal.TryParse(DomaiUpCantidad.Text, out decimal cantidad) || cantidad <= 0)
+            if (!decimal.TryParse(TxtCantidad.Text, out decimal cantidad) || cantidad <= 0)
             {
                 MessageBox.Show("Ingrese una cantidad válida y mayor a cero.", "Error de Formato");
                 return;
             }
-            if (!decimal.TryParse(domainUpPrecioCompra.Text, out decimal precioCompra) || precioCompra <= 0)
+            if (!decimal.TryParse(TxtCostoUnitario.Text, out decimal precioCompra) || precioCompra <= 0)
             {
                 MessageBox.Show("Ingrese un precio de compra válido y mayor a cero.", "Error de Formato");
                 return;
             }
 
-            // Recolección de datos
+         
             int idProd = Convert.ToInt32(Cb_Producto.SelectedValue);
             int? idUnidad = CbUnidadmedida.SelectedValue != null ? Convert.ToInt32(CbUnidadmedida.SelectedValue) : (int?)null;
             int? idMarca = CbMarca.SelectedValue != null ? Convert.ToInt32(CbMarca.SelectedValue) : (int?)null;
@@ -234,8 +237,8 @@ namespace Capa_Presentacion
             }
 
            
-            DomaiUpCantidad.Text = "1";
-            domainUpPrecioCompra.Text = "0";
+            TxtCantidad.Text = "1";
+            TxtCostoUnitario.Text = "0";
             Cb_Producto.SelectedIndex = -1;
             CbMarca.SelectedIndex = -1;
             CbCategoria.SelectedIndex = -1;
@@ -277,10 +280,10 @@ namespace Capa_Presentacion
 
             if (tipoCompra == "CRÉDITO" || tipoCompra == "CREDITO")
             {
-               
-                DomainupPlazos.Enabled = true;
 
-                if (int.TryParse(DomainupPlazos.Text, out int plazoDias) && plazoDias > 0)
+                numericPlazos.Enabled = true;
+
+                if (int.TryParse(numericPlazos.Text, out int plazoDias) && plazoDias > 0)
                 {
 
                     DateTime fechaIngreso = DateTime.Now.Date;
@@ -300,11 +303,11 @@ namespace Capa_Presentacion
             }
             else
             {
-               
-                DomainupPlazos.Enabled = false;
 
-              
-                DomainupPlazos.Text = "0";
+                numericPlazos.Enabled = false;
+
+
+                numericPlazos.Text = "0";
 
                 datetimeVencimiento.Checked = false;
             }
@@ -319,7 +322,7 @@ namespace Capa_Presentacion
             }
 
             int? plazoValor = null;
-            if (int.TryParse(DomainupPlazos.Text, out int tempPlazo) && tempPlazo > 0)
+            if (int.TryParse(numericPlazos.Text, out int tempPlazo) && tempPlazo > 0)
             {
                 plazoValor = tempPlazo;
             }
@@ -406,9 +409,9 @@ namespace Capa_Presentacion
             txtdescripcion.Text = string.Empty;
 
         
-            DomaiUpCantidad.Text = "1";
-            domainUpPrecioCompra.Text = "0";
-            DomainupPlazos.Text = "0"; 
+            TxtCantidad.Text = "1";
+            TxtCostoUnitario.Text = "0";
+            numericPlazos.Text = "0"; 
 
        
             itemsTemporales.Clear();
@@ -424,6 +427,106 @@ namespace Capa_Presentacion
         private void CbTipoCompra_SelectedIndexChanged(object sender, EventArgs e)
         {
             CalcularVencimiento();
+        }
+
+        private void DomaiUpCantidad_SelectedItemChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void datetimeVencimiento_ValueChanged(object sender, EventArgs e)
+        {
+            datetimeVencimiento.Enabled = false;
+           
+        }
+      
+        private void btañadirProveedor_Click(object sender, EventArgs e)
+        {
+            Frm_Proveedores form2 = new Frm_Proveedores();
+            form2.BackColor = Color.DarkGray;
+            form2.StartPosition = FormStartPosition.CenterScreen;
+            if (form2.Controls["panel1"] is Panel panel)
+            {
+                panel.BackColor = Color.DarkGray; 
+            }
+         
+            if (form2.Controls["Labelpaginaproveedor"] is Label lbl)
+            {
+                lbl.BackColor = Color.DarkGray;
+                lbl.ForeColor = Color.Black;
+            }
+
+            if (form2.Controls["BtnAnteriorProveedor"] is Button btn)
+            {
+                btn.BackColor = Color.DarkGray;
+                btn.ForeColor = Color.Black;
+            }
+
+            if (form2.Controls["BtnSiguienteProveedor"] is Label lb)
+            {
+                lb.BackColor = Color.DarkGray;
+                lb.ForeColor = Color.Black;
+            }
+
+            if (form2.Controls["Lbpaginadodeproveedor"] is Button bt)
+            {
+                bt.BackColor = Color.DarkGray;
+                bt.ForeColor = Color.Black;
+            }
+            form2.ShowDialog();
+        }
+
+        private void BtAñadirproducto_Click(object sender, EventArgs e)
+        {
+            FrmProducto form2 = new FrmProducto();
+            form2.BackColor = Color.DarkGray;
+            form2.StartPosition = FormStartPosition.CenterScreen;
+            if (form2.Controls["panel1"] is Panel panel)
+            {
+                panel.BackColor = Color.DarkGray;
+            }
+            form2.ShowDialog();
+        }
+
+        private void btañadirmarca_Click(object sender, EventArgs e)
+        {
+            FrmMarca form2 = new FrmMarca();
+            form2.BackColor = Color.DarkGray;
+            form2.StartPosition = FormStartPosition.CenterScreen;
+            if (form2.Controls["panel1"] is Panel panel)
+            {
+                panel.BackColor = Color.DarkGray;
+            }
+            form2.ShowDialog();
+        }
+
+        private void btañadirunidaddemedida_Click(object sender, EventArgs e)
+        {
+            Frm_Unidadmedida form2 = new Frm_Unidadmedida();
+            form2.BackColor = Color.DarkGray;
+            form2.StartPosition = FormStartPosition.CenterScreen;
+            if (form2.Controls["panel1"] is Panel panel)
+            {
+                panel.BackColor = Color.DarkGray;
+            }
+            form2.ShowDialog();
+        }
+
+        private void btañadircategoria_Click(object sender, EventArgs e)
+        {
+            FrmCategoria form2 = new FrmCategoria();
+            form2.BackColor = Color.DarkGray;
+            form2.StartPosition = FormStartPosition.CenterScreen;
+            if (form2.Controls["panel1"] is Panel panel)
+            {
+                panel.BackColor = Color.DarkGray;
+            }
+            form2.ShowDialog();
         }
     }
 

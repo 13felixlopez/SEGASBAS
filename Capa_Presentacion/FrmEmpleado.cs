@@ -9,7 +9,7 @@ namespace Capa_Presentacion
     public partial class FrmEmpleado : Form
     {
         private D_Empleado _logica = new D_Empleado();
-        //private CN_Empleado _logica = new CN_Empleado();
+     
         private int paginaActual = 1;
         private const int tamanoPagina = 10;
         private int idEmpleadoSeleccionado = 0;

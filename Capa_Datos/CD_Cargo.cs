@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-using Capa_Entidad; // Referencia a la capa de Entidad
+using Capa_Entidad; 
 
 namespace Capa_Datos
 {

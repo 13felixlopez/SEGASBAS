@@ -46,8 +46,8 @@ namespace Capa_Presentacion
             int totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamanoPagina);
             TxtPagina.Text = paginaActual.ToString();
             TxtTotalPagina.Text = totalPaginas.ToString();
-            BtnAnterior.Enabled = paginaActual > 1;
-            BtnSiguiente.Enabled = paginaActual < totalPaginas;
+            BtnAnteriorProveedor.Enabled = paginaActual > 1;
+            BtnSiguienteProveedor.Enabled = paginaActual < totalPaginas;
         }
         private void CargarProveedoresPaginados()
         {
