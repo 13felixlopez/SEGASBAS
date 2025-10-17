@@ -89,6 +89,7 @@ namespace Capa_Presentacion
             ConfigurarDataGridView();
             CargarProveedoresPaginados();
             LimpiarControles();
+            DgvProveedores.ReadOnly = true;
         }
         private void LimpiarControles()
         {

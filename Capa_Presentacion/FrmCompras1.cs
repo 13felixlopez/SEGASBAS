@@ -14,6 +14,7 @@ namespace Capa_Presentacion
 {
     public partial class FrmCompras1 : Form
     {
+        private L_DetalleCompra itemAEditar = null;
         private readonly D_Compra _datosCompra = new D_Compra();
         private readonly D_Catalogo _datosCatalogo = new D_Catalogo();
         private List<L_DetalleCompra> itemsTemporales = new List<L_DetalleCompra>();
@@ -26,6 +27,7 @@ namespace Capa_Presentacion
         public FrmCompras1()
         {
             InitializeComponent();
+
             this.FormBorderStyle = FormBorderStyle.None;
             DatagreeditemsCompra.AutoGenerateColumns = false;
             CbTipoCompra.TextChanged += (sender, e) => CalcularVencimiento();
@@ -33,16 +35,19 @@ namespace Capa_Presentacion
 
             CbTipoCompra.TextChanged += (sender, e) => CalcularVencimiento();
             numericPlazos.TextChanged += (sender, e) => CalcularVencimiento();
-            DatagreeditemsCompra.Columns.Clear();
+            DatagreeditemsCompra.CellDoubleClick += DatagreeditemsCompra_CellDoubleClick;
+           // Cb_Proveedor.DropDownStyle = ComboBoxStyle.DropDownList;
+           //Cb_Producto.DropDownStyle = ComboBoxStyle.DropDownList;
+            // DatagreeditemsCompra.Columns.Clear();
 
-          
-            DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreProducto", HeaderText = "Producto" });
+
+            //DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreProducto", HeaderText = "Producto" });
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreMarca", HeaderText = "Marca" });
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreCategoria", HeaderText = "Categoría" });
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Cantidad", HeaderText = "Cantidad" });
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "PrecioCompra", HeaderText = "Precio Unitario" });
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "SubTotal", HeaderText = "Sub Total" });
-            DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NumeroFactura", HeaderText = "No. Factura" });
+           // DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NumeroFactura", HeaderText = "No. Factura" });
 
 
            
@@ -68,28 +73,63 @@ namespace Capa_Presentacion
 
         private void FrmCompras1_Load(object sender, EventArgs e)
         {
-            CargarTiposCompra(); 
+            CargarTiposCompra();
             CargarCombos();
             CargarHistorialCompras(paginaActual);
-            InicializarGrillaTemporal();
             datetimeVencimiento.ShowUpDown = true;
             datetimeVencimiento.Enabled = false;
+            InicializarGrillaTemporal();
+            ActualizarTotalFactura();
+            Cb_Proveedor.DropDownStyle = ComboBoxStyle.DropDown;
+            Cb_Proveedor.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            Cb_Proveedor.AutoCompleteSource = AutoCompleteSource.ListItems;
+            Cb_Producto.DropDownStyle = ComboBoxStyle.DropDown; 
+            Cb_Producto.AutoCompleteMode = AutoCompleteMode.SuggestAppend; 
+            Cb_Producto.AutoCompleteSource = AutoCompleteSource.ListItems;
+            CbMarca.DropDownStyle = ComboBoxStyle.DropDown;
+            CbMarca.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            CbMarca.AutoCompleteSource = AutoCompleteSource.ListItems;
+        }
+        private void DesbloquearCabecera()
+        {
+     
+            facturaBloqueada = false;
+
+            TxtNumeFactura.Enabled = true;
+            Cb_Proveedor.Enabled = true;
+
+          
+            CbTipoCompra.Enabled = true;
+            numericPlazos.Enabled = false;
+            numericPlazos.Text = "0";
+
+           
+            CbTipoCompra.SelectedItem = "Contado";
+            datetimeVencimiento.Enabled = false;
+            datetimeVencimiento.Checked = false;
+        }
+        private void RefrescarGrillaYTotal()
+        {
+            DatagreeditemsCompra.DataSource = null;
+            DatagreeditemsCompra.DataSource = itemsTemporales;
+
+          
+            ActualizarTotalFactura();
         }
         private void InicializarGrillaTemporal()
         {
-
             DatagreeditemsCompra.Columns.Clear();
-
-
+            DatagreeditemsCompra.AutoGenerateColumns = false;
+            DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NumeroFactura", HeaderText = "No. Factura" });
+            DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreProveedor", HeaderText = "Proveedor" }); 
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreProducto", HeaderText = "Producto" });
+            DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreMarca", HeaderText = "Marca" });
+            DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "NombreCategoria", HeaderText = "Categoría" });
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Cantidad", HeaderText = "Cantidad" });
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "PrecioCompra", HeaderText = "Precio Unitario" });
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "SubTotal", HeaderText = "Sub Total" });
 
-
             DatagreeditemsCompra.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_producto", HeaderText = "ID Producto", Visible = false });
-
-
             DatagreeditemsCompra.DataSource = itemsTemporales;
         }
         private void CargarCombos()
@@ -173,41 +213,86 @@ namespace Capa_Presentacion
 
                 MessageBox.Show($"Error al cargar el catálogo '{catalogoActual}'.\n\nDetalle: {ex.Message}", "Error de Configuración", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
 
+            this.Invoke((MethodInvoker)delegate
+            {
+                Cb_Proveedor.SelectedIndex = -1;
+                Cb_Producto.SelectedIndex = -1;
+                CbMarca.SelectedIndex = -1;
+                CbCategoria.SelectedIndex = -1;
+                CbUnidadmedida.SelectedIndex = -1;
+            });
+        }
+        private void ActualizarTotalFactura()
+        {
+            decimal total = 0;
+            foreach (var item in itemsTemporales)
+            {
+                total += item.SubTotal;
+            }
+            lbtotalfactura.Text = total.ToString("C");
+
+        }
         private void btañadiritem_Click(object sender, EventArgs e)
         {
-            if (Cb_Producto.SelectedValue == null)
-            {
-                MessageBox.Show("Debe seleccionar un producto.", "Advertencia");
-                return;
-            }
             if (string.IsNullOrWhiteSpace(TxtNumeFactura.Text))
             {
-                MessageBox.Show("Debe ingresar el número de factura antes de agregar ítems.", "Advertencia");
+                MessageBox.Show("Debe ingresar el número de factura.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                TxtNumeFactura.Focus();
                 return;
             }
-            if (!decimal.TryParse(TxtCantidad.Text, out decimal cantidad) || cantidad <= 0)
+            if (Cb_Proveedor.SelectedValue == null || Convert.ToInt32(Cb_Proveedor.SelectedValue) <= 0)
             {
-                MessageBox.Show("Ingrese una cantidad válida y mayor a cero.", "Error de Formato");
-                return;
-            }
-            if (!decimal.TryParse(TxtCostoUnitario.Text, out decimal precioCompra) || precioCompra <= 0)
-            {
-                MessageBox.Show("Ingrese un precio de compra válido y mayor a cero.", "Error de Formato");
+                MessageBox.Show("Debe seleccionar un proveedor válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Cb_Proveedor.Focus();
                 return;
             }
 
-         
+            string tipoCompra = CbTipoCompra.Text.Trim().ToUpper();
+
+            if (tipoCompra == "CRÉDITO" || tipoCompra == "CREDITO")
+            {
+                DateTime fechaIngreso = DateTime.Now.Date;
+                if (!datetimeVencimiento.Checked || datetimeVencimiento.Value.Date <= fechaIngreso)
+                {
+                    MessageBox.Show("Para una compra a Crédito, debe especificar un Plazo válido que resulte en una Fecha de Vencimiento futura.", "Advertencia de Crédito", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    numericPlazos.Focus();
+                    return;
+                }
+            }
+            if (Cb_Producto.SelectedValue == null)
+            {
+                MessageBox.Show("Debe seleccionar el Producto a comprar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Cb_Producto.Focus();
+                return;
+            }
+            if (CbUnidadmedida.SelectedValue == null || Convert.ToInt32(CbUnidadmedida.SelectedValue) <= 0)
+            {
+                MessageBox.Show("Debe seleccionar la Unidad de Medida para el producto.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                CbUnidadmedida.Focus();
+                return;
+            }
+
+            if (!decimal.TryParse(TxtCantidad.Text, out decimal cantidad) || cantidad <= 0)
+            {
+                MessageBox.Show("Ingrese una Cantidad válida y mayor a cero.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TxtCantidad.Focus();
+                return;
+            }
+
+            if (!decimal.TryParse(TxtCostoUnitario.Text, out decimal precioCompra) || precioCompra <= 0)
+            {
+                MessageBox.Show("Ingrese un Precio Unitario de compra válido y mayor a cero.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TxtCostoUnitario.Focus();
+                return;
+            }
             int idProd = Convert.ToInt32(Cb_Producto.SelectedValue);
             int? idUnidad = CbUnidadmedida.SelectedValue != null ? Convert.ToInt32(CbUnidadmedida.SelectedValue) : (int?)null;
             int? idMarca = CbMarca.SelectedValue != null ? Convert.ToInt32(CbMarca.SelectedValue) : (int?)null;
             int? idCategoria = CbCategoria.SelectedValue != null ? Convert.ToInt32(CbCategoria.SelectedValue) : (int?)null;
             string numFactura = TxtNumeFactura.Text.Trim();
-
+            string nombreProveedor = Cb_Proveedor.Text;
             decimal subTotal = cantidad * precioCompra;
-
-
             itemsTemporales.Add(new L_DetalleCompra()
             {
                 Id_producto = idProd,
@@ -215,36 +300,42 @@ namespace Capa_Presentacion
                 Cantidad = cantidad,
                 PrecioCompra = precioCompra,
                 SubTotal = subTotal,
-                
+
                 Id_unidad = idUnidad,
                 Id_marca = idMarca,
                 Id_categoria = idCategoria,
-                
-                NombreMarca = CbMarca.Text, 
-                NombreCategoria = CbCategoria.Text, 
-                NumeroFactura = numFactura
-            });
 
-            
+                NombreMarca = CbMarca.Text,
+                NombreCategoria = CbCategoria.Text,
+
+                NumeroFactura = numFactura,
+                NombreProveedor = nombreProveedor
+            });
+            if (Cb_Proveedor.SelectedValue == null || Convert.ToInt32(Cb_Proveedor.SelectedValue) <= 0)
+            {
+                MessageBox.Show("Debe seleccionar un proveedor válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Cb_Proveedor.Focus();
+                return;
+            }
             DatagreeditemsCompra.DataSource = null;
             DatagreeditemsCompra.DataSource = itemsTemporales;
-
-          
+            ActualizarTotalFactura();
             if (!facturaBloqueada)
             {
                 TxtNumeFactura.Enabled = false;
+                Cb_Proveedor.Enabled = false;
+                CbTipoCompra.Enabled = false;
+                numericPlazos.Enabled = false; 
+                datetimeVencimiento.Enabled = false;
+
                 facturaBloqueada = true;
             }
-
-           
             TxtCantidad.Text = "1";
             TxtCostoUnitario.Text = "0";
             Cb_Producto.SelectedIndex = -1;
             CbMarca.SelectedIndex = -1;
             CbCategoria.SelectedIndex = -1;
             CbUnidadmedida.SelectedIndex = -1;
-
-
         }
         private void CargarHistorialCompras(int pagina)
         {
@@ -258,18 +349,12 @@ namespace Capa_Presentacion
                 terminoBusqueda,
                 out totalPaginas
             );
-
-          
             paginaActual = pagina;
-
-           
             TxtPagina.Text = paginaActual.ToString();
             TxtTotalPagina.Text = totalPaginas.ToString();
 
             BtnAnterior.Enabled = (paginaActual > 1);
             BtnSiguiente.Enabled = (paginaActual < totalPaginas);
-
-         
             
         }
 
@@ -402,21 +487,22 @@ namespace Capa_Presentacion
         }
         private void LimpiarCamposCabecera()
         {
-         
             Cb_Proveedor.SelectedIndex = -1;
             Cb_Producto.SelectedIndex = -1;
             TxtNumeFactura.Text = string.Empty;
             txtdescripcion.Text = string.Empty;
 
-        
-            TxtCantidad.Text = "1";
-            TxtCostoUnitario.Text = "0";
-            numericPlazos.Text = "0"; 
-
-       
             itemsTemporales.Clear();
             DatagreeditemsCompra.DataSource = null;
             DatagreeditemsCompra.DataSource = itemsTemporales;
+            facturaBloqueada = false;
+            TxtNumeFactura.Enabled = true;
+            Cb_Proveedor.Enabled = true;
+            CbTipoCompra.Enabled = true;
+
+            ActualizarTotalFactura();
+            CbTipoCompra.SelectedItem = "Contado";
+            CalcularVencimiento();
         }
 
         private void DomainupPlazos_SelectedItemChanged(object sender, EventArgs e)
@@ -528,6 +614,77 @@ namespace Capa_Presentacion
             }
             form2.ShowDialog();
         }
-    }
 
+        private void BTEliminar_Click(object sender, EventArgs e)
+        {
+            if (DatagreeditemsCompra.CurrentRow == null)
+            {
+                MessageBox.Show("Por favor, selecciona un ítem para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int indiceFila = DatagreeditemsCompra.CurrentRow.Index;
+
+            DialogResult resultado = MessageBox.Show("¿Estás seguro de que deseas eliminar este ítem de la lista temporal?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (resultado == DialogResult.Yes)
+            {
+              
+                itemsTemporales.RemoveAt(indiceFila);
+
+               
+                RefrescarGrillaYTotal();
+
+                MessageBox.Show("Ítem eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+               
+                if (itemsTemporales.Count == 0)
+                {
+                    DesbloquearCabecera();
+                }
+            }
+
+        }
+
+        private void DatagreeditemsCompra_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return; // Salir si el índice es inválido
+
+            // Obtener el objeto L_DetalleCompra de la fila
+            // Esta línea es segura ya que se comprobó e.RowIndex >= 0
+            L_DetalleCompra itemAEditar = itemsTemporales[e.RowIndex];
+
+            try
+            {
+         
+                Cb_Producto.SelectedValue = itemAEditar.Id_producto > 0 ? (object)itemAEditar.Id_producto : null;
+
+
+                CbMarca.SelectedValue = itemAEditar.Id_marca.GetValueOrDefault() > 0 ? (object)itemAEditar.Id_marca.Value : null;
+
+                CbCategoria.SelectedValue = itemAEditar.Id_categoria.GetValueOrDefault() > 0 ? (object)itemAEditar.Id_categoria.Value : null;
+
+                CbUnidadmedida.SelectedValue = itemAEditar.Id_unidad.GetValueOrDefault() > 0 ? (object)itemAEditar.Id_unidad.Value : null;
+
+                TxtCantidad.Text = itemAEditar.Cantidad.ToString();
+                TxtCostoUnitario.Text = itemAEditar.PrecioCompra.ToString();
+
+                itemsTemporales.RemoveAt(e.RowIndex);
+                RefrescarGrillaYTotal();
+
+                MessageBox.Show("Ítem cargado para edición. Modifica los campos y haz clic en 'Añadir Ítem'.", "Modificando Ítem", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+              
+                MessageBox.Show("Error al cargar el ítem para edición. Confirme que el ID del producto y los catálogos existen en la base de datos. Detalle: " + ex.Message, "Error de Edición", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+               
+                itemsTemporales.Insert(e.RowIndex, itemAEditar);
+                RefrescarGrillaYTotal();
+            }
+        }
+
+        
+    }
 }

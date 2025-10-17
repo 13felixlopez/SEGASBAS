@@ -135,7 +135,7 @@ namespace Capa_Presentacion
 
         private void iconButton3_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnPanel(new FrmInventario());
+            AbrirFormularioEnPanel(new FrmSalidas());
         }
     }
 }

@@ -167,6 +167,7 @@ namespace Capa_Presentacion
                 CargarProductosPaginado();
                 LimpiarControles();
             }
+
         }
 
         private void dgvProducto_CellContentClick(object sender, DataGridViewCellEventArgs e)
