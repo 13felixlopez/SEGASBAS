@@ -86,7 +86,7 @@
             this.PanelBotonesdemenu.Controls.Add(this.PanelNombreSistema);
             this.PanelBotonesdemenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelBotonesdemenu.Location = new System.Drawing.Point(0, 0);
-            this.PanelBotonesdemenu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PanelBotonesdemenu.Margin = new System.Windows.Forms.Padding(4);
             this.PanelBotonesdemenu.Name = "PanelBotonesdemenu";
             this.PanelBotonesdemenu.Size = new System.Drawing.Size(265, 736);
             this.PanelBotonesdemenu.TabIndex = 0;
@@ -104,7 +104,7 @@
             this.iconButton4.IconSize = 40;
             this.iconButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton4.Location = new System.Drawing.Point(0, 1010);
-            this.iconButton4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iconButton4.Margin = new System.Windows.Forms.Padding(4);
             this.iconButton4.Name = "iconButton4";
             this.iconButton4.Size = new System.Drawing.Size(240, 41);
             this.iconButton4.TabIndex = 35;
@@ -124,7 +124,7 @@
             this.iconButton3.IconSize = 40;
             this.iconButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton3.Location = new System.Drawing.Point(0, 969);
-            this.iconButton3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iconButton3.Margin = new System.Windows.Forms.Padding(4);
             this.iconButton3.Name = "iconButton3";
             this.iconButton3.Size = new System.Drawing.Size(240, 41);
             this.iconButton3.TabIndex = 34;
@@ -145,7 +145,7 @@
             this.Bt_Compra.IconSize = 40;
             this.Bt_Compra.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Bt_Compra.Location = new System.Drawing.Point(0, 928);
-            this.Bt_Compra.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Bt_Compra.Margin = new System.Windows.Forms.Padding(4);
             this.Bt_Compra.Name = "Bt_Compra";
             this.Bt_Compra.Size = new System.Drawing.Size(240, 41);
             this.Bt_Compra.TabIndex = 33;
@@ -166,7 +166,7 @@
             this.BtUsuario.IconSize = 40;
             this.BtUsuario.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtUsuario.Location = new System.Drawing.Point(0, 887);
-            this.BtUsuario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtUsuario.Margin = new System.Windows.Forms.Padding(4);
             this.BtUsuario.Name = "BtUsuario";
             this.BtUsuario.Size = new System.Drawing.Size(240, 41);
             this.BtUsuario.TabIndex = 32;
@@ -187,7 +187,7 @@
             this.BtReporte.IconSize = 40;
             this.BtReporte.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtReporte.Location = new System.Drawing.Point(0, 834);
-            this.BtReporte.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtReporte.Margin = new System.Windows.Forms.Padding(4);
             this.BtReporte.Name = "BtReporte";
             this.BtReporte.Size = new System.Drawing.Size(240, 53);
             this.BtReporte.TabIndex = 31;
@@ -207,7 +207,7 @@
             this.BtPlanilla.IconSize = 40;
             this.BtPlanilla.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtPlanilla.Location = new System.Drawing.Point(0, 781);
-            this.BtPlanilla.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtPlanilla.Margin = new System.Windows.Forms.Padding(4);
             this.BtPlanilla.Name = "BtPlanilla";
             this.BtPlanilla.Size = new System.Drawing.Size(240, 53);
             this.BtPlanilla.TabIndex = 30;
@@ -227,7 +227,7 @@
             this.PanelCatalogo.Controls.Add(this.BtMarcas);
             this.PanelCatalogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelCatalogo.Location = new System.Drawing.Point(0, 350);
-            this.PanelCatalogo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PanelCatalogo.Margin = new System.Windows.Forms.Padding(4);
             this.PanelCatalogo.Name = "PanelCatalogo";
             this.PanelCatalogo.Size = new System.Drawing.Size(240, 431);
             this.PanelCatalogo.TabIndex = 27;
@@ -245,7 +245,7 @@
             this.BtProveedor.IconSize = 40;
             this.BtProveedor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtProveedor.Location = new System.Drawing.Point(19, 379);
-            this.BtProveedor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtProveedor.Margin = new System.Windows.Forms.Padding(4);
             this.BtProveedor.Name = "BtProveedor";
             this.BtProveedor.Size = new System.Drawing.Size(216, 44);
             this.BtProveedor.TabIndex = 13;
@@ -265,7 +265,7 @@
             this.btcargo.IconSize = 40;
             this.btcargo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btcargo.Location = new System.Drawing.Point(19, 233);
-            this.btcargo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btcargo.Margin = new System.Windows.Forms.Padding(4);
             this.btcargo.Name = "btcargo";
             this.btcargo.Size = new System.Drawing.Size(213, 44);
             this.btcargo.TabIndex = 11;
@@ -285,7 +285,7 @@
             this.btActividades.IconSize = 40;
             this.btActividades.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btActividades.Location = new System.Drawing.Point(19, 7);
-            this.btActividades.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btActividades.Margin = new System.Windows.Forms.Padding(4);
             this.btActividades.Name = "btActividades";
             this.btActividades.Size = new System.Drawing.Size(219, 50);
             this.btActividades.TabIndex = 10;
@@ -306,7 +306,7 @@
             this.BtUnidaddemedida.IconSize = 40;
             this.BtUnidaddemedida.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtUnidaddemedida.Location = new System.Drawing.Point(16, 284);
-            this.BtUnidaddemedida.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtUnidaddemedida.Margin = new System.Windows.Forms.Padding(4);
             this.BtUnidaddemedida.Name = "BtUnidaddemedida";
             this.BtUnidaddemedida.Size = new System.Drawing.Size(216, 44);
             this.BtUnidaddemedida.TabIndex = 9;
@@ -326,7 +326,7 @@
             this.BtProducto.IconSize = 40;
             this.BtProducto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtProducto.Location = new System.Drawing.Point(16, 65);
-            this.BtProducto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtProducto.Margin = new System.Windows.Forms.Padding(4);
             this.BtProducto.Name = "BtProducto";
             this.BtProducto.Size = new System.Drawing.Size(216, 53);
             this.BtProducto.TabIndex = 7;
@@ -346,7 +346,7 @@
             this.BtCiclos.IconSize = 40;
             this.BtCiclos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtCiclos.Location = new System.Drawing.Point(19, 336);
-            this.BtCiclos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtCiclos.Margin = new System.Windows.Forms.Padding(4);
             this.BtCiclos.Name = "BtCiclos";
             this.BtCiclos.Size = new System.Drawing.Size(219, 46);
             this.BtCiclos.TabIndex = 8;
@@ -366,7 +366,7 @@
             this.BtCategoria.IconSize = 40;
             this.BtCategoria.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtCategoria.Location = new System.Drawing.Point(16, 126);
-            this.BtCategoria.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtCategoria.Margin = new System.Windows.Forms.Padding(4);
             this.BtCategoria.Name = "BtCategoria";
             this.BtCategoria.Size = new System.Drawing.Size(216, 44);
             this.BtCategoria.TabIndex = 6;
@@ -386,7 +386,7 @@
             this.BtMarcas.IconSize = 40;
             this.BtMarcas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtMarcas.Location = new System.Drawing.Point(13, 177);
-            this.BtMarcas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtMarcas.Margin = new System.Windows.Forms.Padding(4);
             this.BtMarcas.Name = "BtMarcas";
             this.BtMarcas.Size = new System.Drawing.Size(225, 42);
             this.BtMarcas.TabIndex = 5;
@@ -407,7 +407,7 @@
             this.BT_Catalogo.IconSize = 42;
             this.BT_Catalogo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BT_Catalogo.Location = new System.Drawing.Point(0, 298);
-            this.BT_Catalogo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BT_Catalogo.Margin = new System.Windows.Forms.Padding(4);
             this.BT_Catalogo.Name = "BT_Catalogo";
             this.BT_Catalogo.Size = new System.Drawing.Size(240, 52);
             this.BT_Catalogo.TabIndex = 26;
@@ -428,7 +428,7 @@
             this.BtLotes.IconSize = 42;
             this.BtLotes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtLotes.Location = new System.Drawing.Point(0, 244);
-            this.BtLotes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtLotes.Margin = new System.Windows.Forms.Padding(4);
             this.BtLotes.Name = "BtLotes";
             this.BtLotes.Size = new System.Drawing.Size(240, 54);
             this.BtLotes.TabIndex = 22;
@@ -449,7 +449,7 @@
             this.BT_Empleado.IconSize = 42;
             this.BT_Empleado.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BT_Empleado.Location = new System.Drawing.Point(0, 182);
-            this.BT_Empleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BT_Empleado.Margin = new System.Windows.Forms.Padding(4);
             this.BT_Empleado.Name = "BT_Empleado";
             this.BT_Empleado.Size = new System.Drawing.Size(240, 62);
             this.BT_Empleado.TabIndex = 21;
@@ -471,7 +471,7 @@
             this.BT_Asistenacia.IconSize = 42;
             this.BT_Asistenacia.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BT_Asistenacia.Location = new System.Drawing.Point(0, 122);
-            this.BT_Asistenacia.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BT_Asistenacia.Margin = new System.Windows.Forms.Padding(4);
             this.BT_Asistenacia.Name = "BT_Asistenacia";
             this.BT_Asistenacia.Size = new System.Drawing.Size(240, 60);
             this.BT_Asistenacia.TabIndex = 20;
@@ -487,7 +487,7 @@
             this.PanelNombreSistema.Controls.Add(this.label1);
             this.PanelNombreSistema.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelNombreSistema.Location = new System.Drawing.Point(0, 0);
-            this.PanelNombreSistema.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PanelNombreSistema.Margin = new System.Windows.Forms.Padding(4);
             this.PanelNombreSistema.Name = "PanelNombreSistema";
             this.PanelNombreSistema.Size = new System.Drawing.Size(240, 122);
             this.PanelNombreSistema.TabIndex = 1;
@@ -519,7 +519,7 @@
             this.panelinicio.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelinicio.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panelinicio.Location = new System.Drawing.Point(265, 0);
-            this.panelinicio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelinicio.Margin = new System.Windows.Forms.Padding(4);
             this.panelinicio.Name = "panelinicio";
             this.panelinicio.Size = new System.Drawing.Size(990, 53);
             this.panelinicio.TabIndex = 1;
@@ -561,7 +561,7 @@
             this.BtNotificacion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtNotificacion.IconSize = 38;
             this.BtNotificacion.Location = new System.Drawing.Point(875, 11);
-            this.BtNotificacion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtNotificacion.Margin = new System.Windows.Forms.Padding(4);
             this.BtNotificacion.Name = "BtNotificacion";
             this.BtNotificacion.Size = new System.Drawing.Size(72, 32);
             this.BtNotificacion.TabIndex = 7;
@@ -578,7 +578,7 @@
             this.BTConfiguracion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BTConfiguracion.IconSize = 38;
             this.BTConfiguracion.Location = new System.Drawing.Point(946, 6);
-            this.BTConfiguracion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTConfiguracion.Margin = new System.Windows.Forms.Padding(4);
             this.BTConfiguracion.Name = "BTConfiguracion";
             this.BTConfiguracion.Size = new System.Drawing.Size(35, 39);
             this.BTConfiguracion.TabIndex = 6;
@@ -594,7 +594,7 @@
             this.BT_INICIO.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BT_INICIO.IconSize = 38;
             this.BT_INICIO.Location = new System.Drawing.Point(4, 9);
-            this.BT_INICIO.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BT_INICIO.Margin = new System.Windows.Forms.Padding(4);
             this.BT_INICIO.Name = "BT_INICIO";
             this.BT_INICIO.Size = new System.Drawing.Size(64, 38);
             this.BT_INICIO.TabIndex = 2;
@@ -610,7 +610,7 @@
             this.Panelcontenedorprincipal.Controls.Add(this.pictureBoxFoto);
             this.Panelcontenedorprincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Panelcontenedorprincipal.Location = new System.Drawing.Point(265, 53);
-            this.Panelcontenedorprincipal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Panelcontenedorprincipal.Margin = new System.Windows.Forms.Padding(4);
             this.Panelcontenedorprincipal.Name = "Panelcontenedorprincipal";
             this.Panelcontenedorprincipal.Size = new System.Drawing.Size(990, 683);
             this.Panelcontenedorprincipal.TabIndex = 1;
@@ -627,7 +627,7 @@
             this.BTInformacio.IconSize = 38;
             this.BTInformacio.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BTInformacio.Location = new System.Drawing.Point(930, -2);
-            this.BTInformacio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BTInformacio.Margin = new System.Windows.Forms.Padding(4);
             this.BTInformacio.Name = "BTInformacio";
             this.BTInformacio.Size = new System.Drawing.Size(59, 42);
             this.BTInformacio.TabIndex = 15;
@@ -644,7 +644,7 @@
             this.BtModoOscuro_Claro.IconSize = 40;
             this.BtModoOscuro_Claro.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtModoOscuro_Claro.Location = new System.Drawing.Point(-3, 0);
-            this.BtModoOscuro_Claro.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtModoOscuro_Claro.Margin = new System.Windows.Forms.Padding(4);
             this.BtModoOscuro_Claro.Name = "BtModoOscuro_Claro";
             this.BtModoOscuro_Claro.Size = new System.Drawing.Size(64, 46);
             this.BtModoOscuro_Claro.TabIndex = 14;
@@ -658,7 +658,7 @@
             this.pictureBoxFoto.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pictureBoxFoto.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxFoto.Image")));
             this.pictureBoxFoto.Location = new System.Drawing.Point(69, 38);
-            this.pictureBoxFoto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxFoto.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxFoto.Name = "pictureBoxFoto";
             this.pictureBoxFoto.Size = new System.Drawing.Size(850, 600);
             this.pictureBoxFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -673,7 +673,7 @@
             this.Controls.Add(this.Panelcontenedorprincipal);
             this.Controls.Add(this.panelinicio);
             this.Controls.Add(this.PanelBotonesdemenu);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmPrincipal";
             this.Text = "Principal";
             this.Load += new System.EventHandler(this.FrmPrincipal_Load);

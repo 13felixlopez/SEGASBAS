@@ -88,6 +88,7 @@
     <Compile Include="Datos\D_Marca.cs" />
     <Compile Include="Datos\D_Producto.cs" />
     <Compile Include="Datos\D_Proveedores.cs" />
+    <Compile Include="Datos\D_Salida.cs" />
     <Compile Include="Datos\D_UnidadMedida.cs" />
     <Compile Include="Datos\NUser.cs" />
     <Compile Include="FrmActividad.cs">
@@ -168,11 +169,11 @@
     <Compile Include="FrmProducto.Designer.cs">
       <DependentUpon>FrmProducto.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmSalidas.cs">
+    <Compile Include="FRMSALIDA1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmSalidas.Designer.cs">
-      <DependentUpon>FrmSalidas.cs</DependentUpon>
+    <Compile Include="FRMSALIDA1.Designer.cs">
+      <DependentUpon>FRMSALIDA1.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmUsuario.cs">
       <SubType>Form</SubType>
@@ -213,6 +214,7 @@
     <Compile Include="Logica\L_Marca.cs" />
     <Compile Include="Logica\L_Producto.cs" />
     <Compile Include="Logica\L_Proveedor.cs" />
+    <Compile Include="Logica\L_Salida.cs" />
     <Compile Include="Logica\L_UnidadMedida.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,8 +258,8 @@
     <EmbeddedResource Include="FrmProducto.resx">
       <DependentUpon>FrmProducto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmSalidas.resx">
-      <DependentUpon>FrmSalidas.cs</DependentUpon>
+    <EmbeddedResource Include="FRMSALIDA1.resx">
+      <DependentUpon>FRMSALIDA1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmUsuario.resx">
       <DependentUpon>FrmUsuario.cs</DependentUpon>
