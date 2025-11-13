@@ -137,5 +137,10 @@ namespace Capa_Presentacion
         {
             AbrirFormularioEnPanel(new FRMSALIDA1());
         }
+
+        private void BtPlanilla_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new FrmPlanillaAsegurado());
+        }
     }
 }

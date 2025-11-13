@@ -57,6 +57,34 @@ namespace Capa_Presentacion.Datos
             finally { Conexion.cerrar(); }
             return lista;
         }
+        public bool VerificarDobleAsistencia(int idEmpleado, DateTime fecha)
+        {
+            bool existe = false;
+            try
+            {
+                Conexion.abrir();
+          
+                SqlCommand cmd = new SqlCommand("sp_VerificarDobleAsistencia", Conexion.conectar);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+               
+                cmd.Parameters.AddWithValue("@Id_empleado", idEmpleado);
+                cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+
+                int resultado = (int)cmd.ExecuteScalar();
+                existe = resultado > 0; 
+            }
+            catch (Exception)
+            {
+  
+                existe = false;
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+            return existe;
+        }
 
         public bool InsertarAsistencia(L_Asistencia obj, out string Mensaje)
         {

@@ -86,6 +86,7 @@
     <Compile Include="Datos\D_Empleado.cs" />
     <Compile Include="Datos\D_Lote.cs" />
     <Compile Include="Datos\D_Marca.cs" />
+    <Compile Include="Datos\D_Planilla.cs" />
     <Compile Include="Datos\D_Producto.cs" />
     <Compile Include="Datos\D_Proveedores.cs" />
     <Compile Include="Datos\D_Salida.cs" />
@@ -157,6 +158,12 @@
     <Compile Include="FrmMarca.Designer.cs">
       <DependentUpon>FrmMarca.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPlanillaAsegurado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPlanillaAsegurado.Designer.cs">
+      <DependentUpon>FrmPlanillaAsegurado.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,6 +219,7 @@
     <Compile Include="Logica\L_Empleado.cs" />
     <Compile Include="Logica\L_Lote.cs" />
     <Compile Include="Logica\L_Marca.cs" />
+    <Compile Include="Logica\L_Planilla.cs" />
     <Compile Include="Logica\L_Producto.cs" />
     <Compile Include="Logica\L_Proveedor.cs" />
     <Compile Include="Logica\L_Salida.cs" />
@@ -251,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMarca.resx">
       <DependentUpon>FrmMarca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPlanillaAsegurado.resx">
+      <DependentUpon>FrmPlanillaAsegurado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>

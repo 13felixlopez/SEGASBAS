@@ -213,6 +213,7 @@
             this.BtPlanilla.TabIndex = 30;
             this.BtPlanilla.Text = "Planilla";
             this.BtPlanilla.UseVisualStyleBackColor = true;
+            this.BtPlanilla.Click += new System.EventHandler(this.BtPlanilla_Click);
             // 
             // PanelCatalogo
             // 
