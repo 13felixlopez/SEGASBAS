@@ -142,19 +142,31 @@ namespace Capa_Presentacion.Datos
         {
             bool resultado = false;
             mensaje = string.Empty;
+
             try
             {
                 Conexion.abrir();
                 SqlCommand cmd = new SqlCommand("sp_EliminarLote", Conexion.conectar);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id_lote", idLote);
-                int filasAfectadas = cmd.ExecuteNonQuery();
-                if (filasAfectadas > 0)
+
+                SqlParameter mensajeParam = cmd.Parameters.Add("@mensaje", SqlDbType.VarChar, 255);
+                mensajeParam.Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+
+                mensaje = mensajeParam.Value.ToString();
+
+            
+                if (mensaje.Contains("exitosamente"))
+                {
                     resultado = true;
-                else
-                    mensaje = "No se pudo eliminar el lote.";
+                }
             }
-            catch (Exception ex) { mensaje = ex.Message; }
+            catch (Exception ex)
+            {
+                mensaje = "Error de código: " + ex.Message;
+            }
             finally
             {
                 Conexion.cerrar();

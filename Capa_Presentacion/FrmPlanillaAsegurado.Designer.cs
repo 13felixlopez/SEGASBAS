@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPlanillaAsegurado));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Totalhe = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.txtpagoneto = new System.Windows.Forms.TextBox();
             this.txttotaldededucciones = new System.Windows.Forms.TextBox();
@@ -79,7 +80,6 @@
             this.BTEditar = new FontAwesome.Sharp.IconButton();
             this.BTEliminar = new FontAwesome.Sharp.IconButton();
             this.btguardar = new FontAwesome.Sharp.IconButton();
-            this.Totalhe = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Datagreedplanilla)).BeginInit();
@@ -132,6 +132,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1404, 430);
             this.panel1.TabIndex = 2;
+            // 
+            // Totalhe
+            // 
+            this.Totalhe.AutoSize = true;
+            this.Totalhe.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Totalhe.Location = new System.Drawing.Point(855, 115);
+            this.Totalhe.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Totalhe.Name = "Totalhe";
+            this.Totalhe.Size = new System.Drawing.Size(37, 27);
+            this.Totalhe.TabIndex = 69;
+            this.Totalhe.Text = "C$";
             // 
             // label18
             // 
@@ -197,6 +208,7 @@
             this.txtIR.Name = "txtIR";
             this.txtIR.Size = new System.Drawing.Size(202, 34);
             this.txtIR.TabIndex = 63;
+            this.txtIR.TextChanged += new System.EventHandler(this.txtIR_TextChanged);
             // 
             // txtins
             // 
@@ -551,6 +563,8 @@
             this.Datagreedplanilla.RowHeadersWidth = 51;
             this.Datagreedplanilla.Size = new System.Drawing.Size(1348, 321);
             this.Datagreedplanilla.TabIndex = 111;
+            this.Datagreedplanilla.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Datagreedplanilla_CellClick);
+            this.Datagreedplanilla.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Datagreedplanilla_CellDoubleClick);
             // 
             // TxtTotalPagina
             // 
@@ -689,6 +703,7 @@
             this.BTEditar.Text = "Editar";
             this.BTEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BTEditar.UseVisualStyleBackColor = false;
+            this.BTEditar.Click += new System.EventHandler(this.BTEditar_Click);
             // 
             // BTEliminar
             // 
@@ -708,6 +723,7 @@
             this.BTEliminar.Text = "Eliminar";
             this.BTEliminar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BTEliminar.UseVisualStyleBackColor = false;
+            this.BTEliminar.Click += new System.EventHandler(this.BTEliminar_Click);
             // 
             // btguardar
             // 
@@ -719,7 +735,7 @@
             this.btguardar.IconColor = System.Drawing.Color.White;
             this.btguardar.IconFont = FontAwesome.Sharp.IconFont.Solid;
             this.btguardar.IconSize = 30;
-            this.btguardar.Location = new System.Drawing.Point(1194, 464);
+            this.btguardar.Location = new System.Drawing.Point(902, 868);
             this.btguardar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btguardar.Name = "btguardar";
             this.btguardar.Size = new System.Drawing.Size(160, 48);
@@ -728,17 +744,6 @@
             this.btguardar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btguardar.UseVisualStyleBackColor = false;
             this.btguardar.Click += new System.EventHandler(this.btguardar_Click);
-            // 
-            // Totalhe
-            // 
-            this.Totalhe.AutoSize = true;
-            this.Totalhe.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Totalhe.Location = new System.Drawing.Point(855, 115);
-            this.Totalhe.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.Totalhe.Name = "Totalhe";
-            this.Totalhe.Size = new System.Drawing.Size(37, 27);
-            this.Totalhe.TabIndex = 69;
-            this.Totalhe.Text = "C$";
             // 
             // FrmPlanillaAsegurado
             // 

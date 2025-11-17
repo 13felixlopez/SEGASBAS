@@ -24,6 +24,7 @@ namespace Capa_Presentacion
         {
             InitializeComponent();
             CargarCombosIniciales();
+            this.FormBorderStyle = FormBorderStyle.None;
             ConfigurarControlesLectura(); 
             CargarSalidas(_paginaActual);
         }
@@ -129,11 +130,11 @@ namespace Capa_Presentacion
                 {
                     MessageBox.Show("Salida registrada con éxito y stock actualizado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarFormularioTotal();
-                    CargarSalidas(_paginaActual); // Recargar la grilla actual
+                    CargarSalidas(_paginaActual); 
                 }
                 else
                 {
-                    // Muestra el error de stock o validación capturado en D_Salida
+                    
                     MessageBox.Show($"Fallo en el registro: {mensaje}", "Error de Transacción", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
