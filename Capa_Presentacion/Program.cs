@@ -5,15 +5,28 @@ namespace Capa_Presentacion
 {
     internal static class Program
     {
-        /// <summary>
-        /// Punto de entrada principal para la aplicación.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmLogin());
+
+            try
+            {
+                Application.Run(new FrmLogin());
+            }
+            catch (Exception ex)
+            {
+           
+                MessageBox.Show("Excepción no controlada al iniciar la aplicación:\n\n" + ex.ToString(),
+                                "Error crítico (DEBUG)", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                try
+                {
+                    System.IO.File.WriteAllText("error_debug.txt", ex.ToString());
+                }
+                catch { }
+            }
         }
     }
 }

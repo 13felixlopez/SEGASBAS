@@ -145,6 +145,7 @@
             this.numericPlazos.Name = "numericPlazos";
             this.numericPlazos.Size = new System.Drawing.Size(120, 34);
             this.numericPlazos.TabIndex = 75;
+            this.numericPlazos.ValueChanged += new System.EventHandler(this.numericPlazos_ValueChanged);
             // 
             // TxtCostoUnitario
             // 

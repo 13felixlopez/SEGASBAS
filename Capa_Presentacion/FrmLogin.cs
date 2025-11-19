@@ -79,5 +79,32 @@ namespace Capa_Presentacion
                 }
             }
         }
+
+        private void FrmLogin_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void linkLabelrecuperarcontraseña_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                
+                string posibleEmail = TxtUser.Text.Trim();
+                Recuperar_Contraseña frm;
+
+                if (!string.IsNullOrEmpty(posibleEmail) && posibleEmail.Contains("@"))
+                    frm = new Recuperar_Contraseña(posibleEmail); // constructor que recibe email
+                else
+                    frm = new Recuperar_Contraseña();
+
+                // Abrir modal para que el usuario termine el proceso antes de volver
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir recuperación de contraseña: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

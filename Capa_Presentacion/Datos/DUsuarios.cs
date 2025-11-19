@@ -73,7 +73,7 @@ namespace Capa_Presentacion.Datos
         {
             try
             {
-                // Validar el nombre de la base de datos
+     
                 if (!Regex.IsMatch(db, @"^[\w]+$"))
                 {
                     Indicador = "Nombre de base de datos inválido";
@@ -82,7 +82,7 @@ namespace Capa_Presentacion.Datos
 
                 Conexion.abrir();
 
-                // Consulta segura usando QUOTENAME para escapar el nombre
+    
                 string query = $@"
             SELECT TOP 1 TABLE_NAME 
             FROM {EscapeDatabaseName(db)}.INFORMATION_SCHEMA.TABLES 
@@ -90,7 +90,7 @@ namespace Capa_Presentacion.Datos
 
                 SqlCommand cmd = new SqlCommand(query, Conexion.conectar);
 
-                // Si devuelve algún resultado, hay al menos una tabla
+  
                 var resultado = cmd.ExecuteScalar();
                 Conexion.cerrar();
 
@@ -104,10 +104,10 @@ namespace Capa_Presentacion.Datos
             }
         }
 
-        // Función para escapar nombres de bases de datos de forma segura
+   
         private string EscapeDatabaseName(string dbName)
         {
-            // Usamos QUOTENAME para prevenir inyección SQL y manejar nombres especiales
+         
             return $"[{dbName.Replace("]", "]]")}]";
         }
         public DataTable D_Usuarios(LUsuarios parametros)

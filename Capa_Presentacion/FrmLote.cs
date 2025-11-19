@@ -17,11 +17,19 @@ namespace Capa_Presentacion
         private int totalRegistros = 0;
         private const int tamanoPagina = 10;
         private L_Lote loteSeleccionado = null;
+
+
+        private BindingSource bsLotes = new BindingSource();
         public FrmLote()
         {
             InitializeComponent();
+
             this.FormBorderStyle = FormBorderStyle.None;
+
+  
             DatagreedLote.CellDoubleClick += DatagreedLote_CellDoubleClick;
+            DatagreedLote.CellClick += DatagreedLote_CellClick;
+
             BTAgregar.Click += BTAgregar_Click;
             BTEditar.Click += BTEditar_Click;
             BTEliminar.Click += BTEliminar_Click;
@@ -30,7 +38,9 @@ namespace Capa_Presentacion
             BtnSiguiente.Click += BtnSiguiente_Click;
             TxtBuscar.TextChanged += TxtBuscar_TextChanged;
             CBEstadoCultivo.SelectedIndexChanged += CBEstadoCultivo_SelectedIndexChanged;
+
             CBEstadoCultivo.DropDownStyle = ComboBoxStyle.DropDownList;
+
             SetPlaceholder();
 
         }
@@ -38,7 +48,7 @@ namespace Capa_Presentacion
         private void SetPlaceholder()
         {
             TxtObservacion.Text = "Notas adicionales sobre el lote";
-            TxtObservacion.ForeColor = Color.Gray; 
+            TxtObservacion.ForeColor = Color.Gray;
         }
 
         private void FrmLote_Load(object sender, EventArgs e)
@@ -48,18 +58,24 @@ namespace Capa_Presentacion
             ConfigurarFiltrosBusqueda();
             CargarLotes();
 
-            TxtObservacion.Text = "Notas adicionales sobre el lote";
-            TxtObservacion.ForeColor = Color.Gray;
+
             TxtObservacion.Enter += TxtObservacion_Enter;
             TxtObservacion.Leave += TxtObservacion_Leave;
 
 
         }
-       
+        private void ConfigurarBinding()
+        {
+        
+            DatagreedLote.AutoGenerateColumns = false;
+            DatagreedLote.DataSource = bsLotes;
+        }
+
         private void LlenarComboBoxes()
         {
             D_Generico objGenerico = new D_Generico();
 
+            
             CbCiclo.DataSource = objGenerico.ObtenerCiclos();
             CbCiclo.DisplayMember = "Value";
             CbCiclo.ValueMember = "Key";
@@ -78,7 +94,6 @@ namespace Capa_Presentacion
 
         private void ConfigurarFiltrosBusqueda()
         {
-
             List<KeyValuePair<string, string>> opciones = new List<KeyValuePair<string, string>>();
             opciones.Add(new KeyValuePair<string, string>("Nombre Lote", "NombreLote"));
             opciones.Add(new KeyValuePair<string, string>("Manzanaje", "Manzanaje"));
@@ -90,6 +105,7 @@ namespace Capa_Presentacion
             CmbBuscar.DataSource = opciones;
             CmbBuscar.DisplayMember = "Key";
             CmbBuscar.ValueMember = "Value";
+            CmbBuscar.SelectedIndex = 0;
         }
 
         private void ConfigurarDataGridView()
@@ -97,17 +113,17 @@ namespace Capa_Presentacion
             DatagreedLote.Columns.Clear();
             DatagreedLote.AutoGenerateColumns = false;
 
-
+         
             DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "IDLote", HeaderText = "ID Lote", DataPropertyName = "IDLote", Visible = false });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "NombreLote", HeaderText = "Nombre", DataPropertyName = "NombreLote", Width = 100 });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Manzanaje", HeaderText = "Manzanaje", DataPropertyName = "Manzanaje", Width = 100 });    
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "NombreLote", HeaderText = "Nombre", DataPropertyName = "NombreLote", Width = 200 });
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Manzanaje", HeaderText = "Manzanaje", DataPropertyName = "Manzanaje", Width = 120 });
             DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VariedadArroz", HeaderText = "Variedad Arroz", DataPropertyName = "VariedadArroz", Width = 150 });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "TipoSiembra", HeaderText = "Tipo Siembra", DataPropertyName = "TipoSiembra", Width = 120 });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "EstadoCultivo", HeaderText = "Estado Cultivo", DataPropertyName = "EstadoCultivo", Width = 120 });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Ciclo", HeaderText = "Ciclo", DataPropertyName = "Ciclo", Width = 80 });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "FechaSiembra", HeaderText = "F. Siembra", DataPropertyName = "FechaSiembra", Width = 100 });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "FechaCorte", HeaderText = "F. Corte", DataPropertyName = "FechaCorte", Width = 100 });
-            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Observacion", HeaderText = "Observación", DataPropertyName = "Observacion", Width = 200 });
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "TipoSiembra", HeaderText = "Tipo Siembra", DataPropertyName = "TipoSiembra", Width = 140 });
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "EstadoCultivo", HeaderText = "Estado Cultivo", DataPropertyName = "EstadoCultivo", Width = 140 });
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Ciclo", HeaderText = "Ciclo", DataPropertyName = "Ciclo", Width = 100 });
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "FechaSiembra", HeaderText = "F. Siembra", DataPropertyName = "FechaSiembra", Width = 120 });
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "FechaCorte", HeaderText = "F. Corte", DataPropertyName = "FechaCorte", Width = 120 });
+            DatagreedLote.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Observacion", HeaderText = "Observación", DataPropertyName = "Observacion", Width = 220 });
 
             DatagreedLote.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             DatagreedLote.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
@@ -115,31 +131,77 @@ namespace Capa_Presentacion
 
         private void CargarLotes()
         {
-            D_Lote objNegocio = new D_Lote();
-            DatagreedLote.DataSource = objNegocio.ObtenerLotesPaginados(paginaActual, tamanoPagina, out totalRegistros);
-            totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamanoPagina);
-            TxtPagina.Text = paginaActual.ToString();
-            TxtTotalPagina.Text = totalPaginas.ToString();
+            try
+    {
+                D_Lote objNegocio = new D_Lote();
+
+                object resultado = objNegocio.ObtenerLotesPaginados(paginaActual, tamanoPagina, out totalRegistros);
+
+                
+                totalPaginas = totalRegistros > 0 ? (int)Math.Ceiling((double)totalRegistros / tamanoPagina) : 1;
+                TxtPagina.Text = paginaActual.ToString();
+                TxtTotalPagina.Text = totalPaginas.ToString();
+
+
+                if (resultado == null)
+                {
+                    bsLotes.DataSource = null;
+                    DatagreedLote.DataSource = bsLotes;
+                    MessageBox.Show("La consulta devolvió null (sin datos). Revisa D_Lote.ObtenerLotesPaginados().", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+
+                if (resultado is List<L_Lote> lista)
+                {
+                    bsLotes.DataSource = lista;
+                    DatagreedLote.DataSource = bsLotes;
+
+                  
+                    return;
+                }
+
+      
+                if (resultado is System.Data.DataTable dt)
+                {
+                
+
+                    bsLotes.DataSource = dt;
+                    DatagreedLote.DataSource = bsLotes;
+
+                    return;
+                }
+
+              
+                var tipo = resultado.GetType();
+             
+                bsLotes.DataSource = resultado;
+                DatagreedLote.DataSource = bsLotes;
+
+
+            }
+               catch (Exception ex)
+                {
+                MessageBox.Show("Error al cargar lotes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
         }
         private void CBEstadoCultivo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CBEstadoCultivo.SelectedValue != null)
-            {
-                string estadoSeleccionado = ((KeyValuePair<int, string>)CBEstadoCultivo.SelectedItem).Value;
+              if (CBEstadoCultivo.SelectedItem == null) return;
 
-                bool esNinguno = estadoSeleccionado == "Ninguno";
-                bool esCosecha = estadoSeleccionado == "En Cosecha";
+            var selected = (KeyValuePair<int, string>)CBEstadoCultivo.SelectedItem;
+            string estadoSeleccionado = selected.Value;
 
+            bool esNinguno = estadoSeleccionado == "Ninguno";
+            bool esCosecha = estadoSeleccionado == "En Cosecha";
 
-                LbtipoDeCienmbra.Enabled = !esNinguno;
-                CBTipoSiembra.Enabled = !esNinguno;
-                label1.Enabled = !esNinguno;
-                dateTimePickerSiembra.Enabled = !esNinguno;
+            LbtipoDeCienmbra.Enabled = !esNinguno;
+            CBTipoSiembra.Enabled = !esNinguno;
+            label1.Enabled = !esNinguno;
+            dateTimePickerSiembra.Enabled = !esNinguno;
 
-
-                label4.Enabled = esCosecha;
-                dateTimePickerCorte.Enabled = esCosecha;
-            }
+            label4.Enabled = esCosecha;
+            dateTimePickerCorte.Enabled = esCosecha;
         }
         private void BuscarLotes(string textoBusqueda, string columnaBusqueda)
         {
@@ -181,38 +243,37 @@ namespace Capa_Presentacion
                 return;
             }
 
-
             string mensaje = string.Empty;
             D_Lote objNegocio = new D_Lote();
 
-            string observacion = (TxtObservacion.Text == "Notas adicionales sobre el lote")
-                         ? ""
-                         : TxtObservacion.Text;
+            string observacion = (TxtObservacion.Text == "Notas adicionales sobre el lote") ? "" : TxtObservacion.Text;
 
             L_Lote oLote = new L_Lote()
             {
                 IDLote = 0,
-                NombreLote = TxtNombreLote.Text,
-                Manzanaje = TxtManzanaje.Text,
+                NombreLote = TxtNombreLote.Text.Trim(),
+                Manzanaje = TxtManzanaje.Text.Trim(),
                 IDTipoSiembra = CBTipoSiembra.SelectedValue != null ? (int?)CBTipoSiembra.SelectedValue : null,
-                IDEstadoCultivo = (int)CBEstadoCultivo.SelectedValue,
+                IDEstadoCultivo = (int)((KeyValuePair<int, string>)CBEstadoCultivo.SelectedItem).Key,
                 IDCiclo = CbCiclo.SelectedValue != null ? (int?)CbCiclo.SelectedValue : null,
                 Observacion = observacion,
-                VariedadArroz = TxtVariedadeArroz.Text 
+                VariedadArroz = TxtVariedadeArroz.Text.Trim(),
+                FechaSiembra = dateTimePickerSiembra.Checked ? (DateTime?)dateTimePickerSiembra.Value.Date : null,
+                FechaCorte = dateTimePickerCorte.Checked ? (DateTime?)dateTimePickerCorte.Value.Date : null
             };
 
             if (objNegocio.InsertarLote(oLote, out mensaje))
             {
                 MessageBox.Show("Lote guardado correctamente.");
-                CargarLotes();
                 LimpiarControles();
+                CargarLotes(); 
             }
             else
             {
                 MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-           
+
         }
         private void LimpiarControles()
         {
@@ -225,7 +286,17 @@ namespace Capa_Presentacion
             TxtObservacion.Text = string.Empty;
             TxtVariedadeArroz.Text = string.Empty;
             dateTimePickerSiembra.Value = DateTime.Now;
+            dateTimePickerSiembra.Checked = false;
             dateTimePickerCorte.Value = DateTime.Now;
+            dateTimePickerCorte.Checked = false;
+
+      
+            SetPlaceholder();
+
+        
+            BTAgregar.Enabled = true;
+            BTEditar.Enabled = false;
+            BTEliminar.Enabled = false;
         }
 
         private void BTEditar_Click(object sender, EventArgs e)
@@ -242,20 +313,22 @@ namespace Capa_Presentacion
             L_Lote oLote = new L_Lote()
             {
                 IDLote = loteSeleccionado.IDLote,
-                NombreLote = TxtNombreLote.Text,
-                Manzanaje = TxtManzanaje.Text,
+                NombreLote = TxtNombreLote.Text.Trim(),
+                Manzanaje = TxtManzanaje.Text.Trim(),
                 IDTipoSiembra = CBTipoSiembra.SelectedValue != null ? (int?)CBTipoSiembra.SelectedValue : null,
-                IDEstadoCultivo = (int)CBEstadoCultivo.SelectedValue,
+                IDEstadoCultivo = (int)((KeyValuePair<int, string>)CBEstadoCultivo.SelectedItem).Key,
                 IDCiclo = CbCiclo.SelectedValue != null ? (int?)CbCiclo.SelectedValue : null,
-                Observacion = TxtObservacion.Text,
-                VariedadArroz = TxtVariedadeArroz.Text 
+                Observacion = (TxtObservacion.Text == "Notas adicionales sobre el lote") ? "" : TxtObservacion.Text,
+                VariedadArroz = TxtVariedadeArroz.Text.Trim(),
+                FechaSiembra = dateTimePickerSiembra.Checked ? (DateTime?)dateTimePickerSiembra.Value.Date : null,
+                FechaCorte = dateTimePickerCorte.Checked ? (DateTime?)dateTimePickerCorte.Value.Date : null
             };
 
             if (objNegocio.ActualizarLote(oLote, out mensaje))
             {
                 MessageBox.Show("Lote actualizado correctamente.");
-                CargarLotes();
                 LimpiarControles();
+                CargarLotes();
             }
             else
             {
@@ -279,8 +352,8 @@ namespace Capa_Presentacion
                 if (objNegocio.EliminarLote(loteSeleccionado.IDLote, out mensaje))
                 {
                     MessageBox.Show("Lote eliminado correctamente.");
-                    CargarLotes();
                     LimpiarControles();
+                    CargarLotes();
                 }
                 else
                 {
@@ -295,19 +368,15 @@ namespace Capa_Presentacion
             string textoBusqueda = TxtBuscar.Text.Trim();
             string columnaBusqueda = string.Empty;
 
-
             if (CmbBuscar.SelectedItem != null)
             {
-
                 var selectedPair = (KeyValuePair<string, string>)CmbBuscar.SelectedItem;
                 columnaBusqueda = selectedPair.Value;
             }
             else
             {
-
                 columnaBusqueda = "NombreLote";
             }
-
 
             if (string.IsNullOrWhiteSpace(textoBusqueda))
             {
@@ -315,25 +384,24 @@ namespace Capa_Presentacion
                 return;
             }
 
-
             D_Lote objNegocio = new D_Lote();
             int total;
             List<L_Lote> listaLotes = objNegocio.ObtenerLotesPaginados(1, totalRegistros, out total);
 
-            List<L_Lote> listaFiltrada = listaLotes
+            var listaFiltrada = listaLotes
                 .Where(lote =>
                 {
-                    var propiedad = lote.GetType().GetProperty(columnaBusqueda);
-                    if (propiedad != null)
+                    var prop = lote.GetType().GetProperty(columnaBusqueda);
+                    if (prop != null)
                     {
-                        var valor = propiedad.GetValue(lote, null);
-                        return valor != null && valor.ToString().ToLower().Contains(textoBusqueda.ToLower());
+                        var val = prop.GetValue(lote, null);
+                        return val != null && val.ToString().ToLower().Contains(textoBusqueda.ToLower());
                     }
                     return false;
                 })
                 .ToList();
 
-            DatagreedLote.DataSource = listaFiltrada;
+            bsLotes.DataSource = listaFiltrada;
             TxtPagina.Text = "1";
             TxtTotalPagina.Text = "1";
         }
@@ -364,104 +432,126 @@ namespace Capa_Presentacion
 
         private void DatagreedLote_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0) return;
 
-            if (e.RowIndex >= 0)
+            DataGridViewRow fila = this.DatagreedLote.Rows[e.RowIndex];
+
+            // Usar los nombres de columna que definimos
+            TxtNombreLote.Text = fila.Cells["NombreLote"].Value?.ToString() ?? string.Empty;
+            TxtManzanaje.Text = fila.Cells["Manzanaje"].Value?.ToString() ?? string.Empty;
+            TxtObservacion.Text = fila.Cells["Observacion"].Value?.ToString() ?? string.Empty;
+            TxtVariedadeArroz.Text = fila.Cells["VariedadArroz"].Value?.ToString() ?? string.Empty;
+
+            // Intentar setear selected values por Id (si existen en las columnas)
+            if (fila.Cells["TipoSiembra"].Value != null)
             {
-                DataGridViewRow fila = this.DatagreedLote.Rows[e.RowIndex];
+                // si tu fuente tiene el id en otra columna, preferible usar esa columna id, por ejemplo "id_tipo_siembra"
+                // Si no existe, tratamos de buscar por texto:
+                int idx = CBTipoSiembra.FindStringExact(fila.Cells["TipoSiembra"].Value.ToString());
+                CBTipoSiembra.SelectedIndex = idx >= 0 ? idx : -1;
+            }
+            else
+            {
+                CBTipoSiembra.SelectedIndex = -1;
+            }
 
-                TxtNombreLote.Text = fila.Cells["nombre"].Value?.ToString();
-                TxtManzanaje.Text = fila.Cells["manzanaje"].Value?.ToString();
-                TxtObservacion.Text = fila.Cells["observacion"].Value?.ToString();
+            if (fila.Cells["EstadoCultivo"].Value != null)
+            {
+                int idx = CBEstadoCultivo.FindStringExact(fila.Cells["EstadoCultivo"].Value.ToString());
+                CBEstadoCultivo.SelectedIndex = idx >= 0 ? idx : -1;
+            }
+            else
+            {
+                CBEstadoCultivo.SelectedIndex = -1;
+            }
 
-                if (fila.Cells["id_tipo_siembra"].Value != DBNull.Value)
-                {
-                    CBTipoSiembra.SelectedValue = Convert.ToInt32(fila.Cells["id_tipo_siembra"].Value);
-                }
-                else
-                {
-                    CBTipoSiembra.SelectedIndex = -1;
-                }
+            if (fila.Cells["Ciclo"].Value != null)
+            {
+                int idx = CbCiclo.FindStringExact(fila.Cells["Ciclo"].Value.ToString());
+                CbCiclo.SelectedIndex = idx >= 0 ? idx : -1;
+            }
+            else
+            {
+                CbCiclo.SelectedIndex = -1;
+            }
 
-                if (fila.Cells["id_estado_cultivo"].Value != DBNull.Value)
-                {
-                    CBEstadoCultivo.SelectedValue = Convert.ToInt32(fila.Cells["id_estado_cultivo"].Value);
-                }
-                else
-                {
-                    CBEstadoCultivo.SelectedIndex = -1;
-                }
+            // Fechas
+            if (fila.Cells["FechaSiembra"].Value != null && DateTime.TryParse(fila.Cells["FechaSiembra"].Value.ToString(), out DateTime fSiembra))
+            {
+                dateTimePickerSiembra.Value = fSiembra;
+                dateTimePickerSiembra.Checked = true;
+            }
+            else
+            {
+                dateTimePickerSiembra.Checked = false;
+            }
 
-                if (fila.Cells["id_ciclo"].Value != DBNull.Value)
-                {
-                    CbCiclo.SelectedValue = Convert.ToInt32(fila.Cells["id_ciclo"].Value);
-                }
-                else
-                {
-                    CbCiclo.SelectedIndex = -1;
-                }
-
-                if (fila.Cells["fecha_siembra"].Value != DBNull.Value)
-                {
-                    dateTimePickerSiembra.Value = Convert.ToDateTime(fila.Cells["fecha_siembra"].Value);
-                    dateTimePickerSiembra.Checked = true;
-                }
-                else
-                {
-                    dateTimePickerSiembra.Checked = false;
-                }
-
-                if (fila.Cells["fecha_corte"].Value != DBNull.Value)
-                {
-                    dateTimePickerCorte.Value = Convert.ToDateTime(fila.Cells["fecha_corte"].Value);
-                    dateTimePickerCorte.Checked = true;
-                }
-                else
-                {
-                    dateTimePickerCorte.Checked = false;
-                }
+            if (fila.Cells["FechaCorte"].Value != null && DateTime.TryParse(fila.Cells["FechaCorte"].Value.ToString(), out DateTime fCorte))
+            {
+                dateTimePickerCorte.Value = fCorte;
+                dateTimePickerCorte.Checked = true;
+            }
+            else
+            {
+                dateTimePickerCorte.Checked = false;
             }
         }
 
         private void DatagreedLote_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow row = DatagreedLote.Rows[e.RowIndex];
+
+            loteSeleccionado = new L_Lote()
             {
-                DataGridViewRow row = DatagreedLote.Rows[e.RowIndex];
-                loteSeleccionado = new L_Lote()
-                {
-                    IDLote = Convert.ToInt32(row.Cells["IDLote"].Value),
-                    NombreLote = row.Cells["NombreLote"].Value.ToString(),
-                    Manzanaje = row.Cells["Manzanaje"].Value.ToString(),
-                    TipoSiembra = row.Cells["TipoSiembra"].Value.ToString(),
-                    EstadoCultivo = row.Cells["EstadoCultivo"].Value.ToString(),
-                    Ciclo = row.Cells["Ciclo"].Value.ToString(),
-                    FechaSiembra = row.Cells["FechaSiembra"].Value as DateTime?,
-                    FechaCorte = row.Cells["FechaCorte"].Value as DateTime?,
-                    VariedadArroz = row.Cells["VariedadArroz"].Value.ToString(),
-                    Observacion = row.Cells["Observacion"].Value.ToString()
-                };
+                IDLote = Convert.ToInt32(row.Cells["IDLote"].Value),
+                NombreLote = row.Cells["NombreLote"].Value?.ToString(),
+                Manzanaje = row.Cells["Manzanaje"].Value?.ToString(),
+                TipoSiembra = row.Cells["TipoSiembra"].Value?.ToString(),
+                EstadoCultivo = row.Cells["EstadoCultivo"].Value?.ToString(),
+                Ciclo = row.Cells["Ciclo"].Value?.ToString(),
+                FechaSiembra = row.Cells["FechaSiembra"].Value as DateTime?,
+                FechaCorte = row.Cells["FechaCorte"].Value as DateTime?,
+                VariedadArroz = row.Cells["VariedadArroz"].Value?.ToString(),
+                Observacion = row.Cells["Observacion"].Value?.ToString()
+            };
 
-                TxtNombreLote.Text = loteSeleccionado.NombreLote;
-                TxtManzanaje.Text = loteSeleccionado.Manzanaje;
-                TxtVariedadeArroz.Text = loteSeleccionado.VariedadArroz;
-                TxtObservacion.Text = loteSeleccionado.Observacion;
+            // Cargar controles
+            TxtNombreLote.Text = loteSeleccionado.NombreLote;
+            TxtManzanaje.Text = loteSeleccionado.Manzanaje;
+            TxtVariedadeArroz.Text = loteSeleccionado.VariedadArroz;
+            TxtObservacion.Text = string.IsNullOrEmpty(loteSeleccionado.Observacion) ? "" : loteSeleccionado.Observacion;
 
-                CBTipoSiembra.SelectedIndex = CBTipoSiembra.FindStringExact(loteSeleccionado.TipoSiembra);
-                CBEstadoCultivo.SelectedIndex = CBEstadoCultivo.FindStringExact(loteSeleccionado.EstadoCultivo);
-                CbCiclo.SelectedIndex = CbCiclo.FindStringExact(loteSeleccionado.Ciclo);
-
-                if (loteSeleccionado.FechaSiembra.HasValue)
-                    dateTimePickerSiembra.Value = loteSeleccionado.FechaSiembra.Value;
-                if (loteSeleccionado.FechaCorte.HasValue)
-                    dateTimePickerCorte.Value = loteSeleccionado.FechaCorte.Value;
-
-
-                BTAgregar.Enabled = false;
-
-
-                BTEditar.Enabled = true;
-                BTEliminar.Enabled = true;
+            // Preferible setear SelectedValue si tus ComboBoxes contienen KeyValuePair con Key=ID
+            if (!string.IsNullOrEmpty(loteSeleccionado.TipoSiembra))
+            {
+                int idx = CBTipoSiembra.FindStringExact(loteSeleccionado.TipoSiembra);
+                CBTipoSiembra.SelectedIndex = idx >= 0 ? idx : -1;
             }
+
+            if (!string.IsNullOrEmpty(loteSeleccionado.EstadoCultivo))
+            {
+                int idx = CBEstadoCultivo.FindStringExact(loteSeleccionado.EstadoCultivo);
+                CBEstadoCultivo.SelectedIndex = idx >= 0 ? idx : -1;
+            }
+
+            if (!string.IsNullOrEmpty(loteSeleccionado.Ciclo))
+            {
+                int idx = CbCiclo.FindStringExact(loteSeleccionado.Ciclo);
+                CbCiclo.SelectedIndex = idx >= 0 ? idx : -1;
+            }
+
+            if (loteSeleccionado.FechaSiembra.HasValue)
+                dateTimePickerSiembra.Value = loteSeleccionado.FechaSiembra.Value;
+
+            if (loteSeleccionado.FechaCorte.HasValue)
+                dateTimePickerCorte.Value = loteSeleccionado.FechaCorte.Value;
+
+           
+            BTAgregar.Enabled = false;
+            BTEditar.Enabled = true;
+            BTEliminar.Enabled = true;
         }
 
         private void BTInformacion_Click(object sender, EventArgs e)

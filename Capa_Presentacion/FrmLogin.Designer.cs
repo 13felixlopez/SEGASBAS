@@ -34,7 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabelrecuperarcontraseña = new System.Windows.Forms.LinkLabel();
             this.BT_Aceptar = new FontAwesome.Sharp.IconButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -90,15 +90,16 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Contraseña:";
             // 
-            // linkLabel1
+            // linkLabelrecuperarcontraseña
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(728, 359);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(183, 16);
-            this.linkLabel1.TabIndex = 7;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Has Olvidado la Contraseña?";
+            this.linkLabelrecuperarcontraseña.AutoSize = true;
+            this.linkLabelrecuperarcontraseña.Location = new System.Drawing.Point(728, 359);
+            this.linkLabelrecuperarcontraseña.Name = "linkLabelrecuperarcontraseña";
+            this.linkLabelrecuperarcontraseña.Size = new System.Drawing.Size(183, 16);
+            this.linkLabelrecuperarcontraseña.TabIndex = 7;
+            this.linkLabelrecuperarcontraseña.TabStop = true;
+            this.linkLabelrecuperarcontraseña.Text = "Has Olvidado la Contraseña?";
+            this.linkLabelrecuperarcontraseña.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelrecuperarcontraseña_LinkClicked);
             // 
             // BT_Aceptar
             // 
@@ -135,7 +136,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1061, 425);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.linkLabelrecuperarcontraseña);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -146,6 +147,7 @@
             this.Name = "FrmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmLogin";
+            this.Load += new System.EventHandler(this.FrmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -159,7 +161,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabelrecuperarcontraseña;
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

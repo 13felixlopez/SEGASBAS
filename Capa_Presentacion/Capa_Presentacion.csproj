@@ -57,6 +57,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -74,6 +75,7 @@
     <Compile Include="Base.cs" />
     <Compile Include="Datos\DModulos.cs" />
     <Compile Include="Datos\DPermisos.cs" />
+    <Compile Include="Datos\DRecuperacion.cs" />
     <Compile Include="Datos\DUsuarios.cs" />
     <Compile Include="Datos\D_Actividad.cs" />
     <Compile Include="Datos\D_Asistencia.cs" />
@@ -208,6 +210,7 @@
     </Compile>
     <Compile Include="Logica\Encrip.cs" />
     <Compile Include="Logica\LPermisos.cs" />
+    <Compile Include="Logica\LRecuperacion.cs" />
     <Compile Include="Logica\LUsuarios.cs" />
     <Compile Include="Logica\L_Actividad.cs" />
     <Compile Include="Logica\L_Asistencia.cs" />
@@ -226,6 +229,12 @@
     <Compile Include="Logica\L_UnidadMedida.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recuperar Contraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recuperar Contraseña.Designer.cs">
+      <DependentUpon>Recuperar Contraseña.cs</DependentUpon>
+    </Compile>
     <Compile Include="Validaciones.cs" />
     <EmbeddedResource Include="FrmActividad.resx">
       <DependentUpon>FrmActividad.cs</DependentUpon>
@@ -294,6 +303,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Recuperar Contraseña.resx">
+      <DependentUpon>Recuperar Contraseña.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

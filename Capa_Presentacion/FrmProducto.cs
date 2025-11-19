@@ -9,7 +9,7 @@ namespace Capa_Presentacion
     public partial class FrmProducto : Form
     {
         private bool abiertoDesdeBtProducto = false;
-        private bool permitirCerrar = false;
+      
 
         private D_Producto funciones = new D_Producto();
         private L_Producto productoSeleccionado;
@@ -35,13 +35,8 @@ namespace Capa_Presentacion
                 dgvProducto.Columns["id_producto"].Visible = false;
             }
 
-            //dgvProducto.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
-
-            //if (dgvProducto.ColumnCount > 0)
-            //{
-            //    dgvProducto.Columns[dgvProducto.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            //}
+         
             CargarProductosPaginado();
             LimpiarControles();
 
