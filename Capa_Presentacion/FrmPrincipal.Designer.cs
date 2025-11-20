@@ -28,7 +28,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrincipal));
             this.PanelBotonesdemenu = new System.Windows.Forms.Panel();
-            this.iconButton4 = new FontAwesome.Sharp.IconButton();
             this.iconButton3 = new FontAwesome.Sharp.IconButton();
             this.Bt_Compra = new FontAwesome.Sharp.IconButton();
             this.BtUsuario = new FontAwesome.Sharp.IconButton();
@@ -56,14 +55,18 @@
             this.BTConfiguracion = new FontAwesome.Sharp.IconButton();
             this.BT_INICIO = new FontAwesome.Sharp.IconButton();
             this.Panelcontenedorprincipal = new System.Windows.Forms.Panel();
+            this.Panelrespaldo = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.BTInformacio = new FontAwesome.Sharp.IconButton();
             this.BtModoOscuro_Claro = new FontAwesome.Sharp.IconButton();
             this.pictureBoxFoto = new System.Windows.Forms.PictureBox();
+            this.BtInformacion = new System.Windows.Forms.Button();
             this.PanelBotonesdemenu.SuspendLayout();
             this.PanelCatalogo.SuspendLayout();
             this.PanelNombreSistema.SuspendLayout();
             this.panelinicio.SuspendLayout();
             this.Panelcontenedorprincipal.SuspendLayout();
+            this.Panelrespaldo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFoto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,7 +75,6 @@
             this.PanelBotonesdemenu.AutoScroll = true;
             this.PanelBotonesdemenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(48)))), ((int)(((byte)(91)))));
             this.PanelBotonesdemenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.PanelBotonesdemenu.Controls.Add(this.iconButton4);
             this.PanelBotonesdemenu.Controls.Add(this.iconButton3);
             this.PanelBotonesdemenu.Controls.Add(this.Bt_Compra);
             this.PanelBotonesdemenu.Controls.Add(this.BtUsuario);
@@ -91,26 +93,6 @@
             this.PanelBotonesdemenu.Size = new System.Drawing.Size(265, 736);
             this.PanelBotonesdemenu.TabIndex = 0;
             // 
-            // iconButton4
-            // 
-            this.iconButton4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.iconButton4.FlatAppearance.BorderSize = 0;
-            this.iconButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton4.Font = new System.Drawing.Font("Microsoft YaHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iconButton4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.iconButton4.IconChar = FontAwesome.Sharp.IconChar.Users;
-            this.iconButton4.IconColor = System.Drawing.Color.White;
-            this.iconButton4.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.iconButton4.IconSize = 40;
-            this.iconButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton4.Location = new System.Drawing.Point(0, 1010);
-            this.iconButton4.Margin = new System.Windows.Forms.Padding(4);
-            this.iconButton4.Name = "iconButton4";
-            this.iconButton4.Size = new System.Drawing.Size(240, 41);
-            this.iconButton4.TabIndex = 35;
-            this.iconButton4.Text = "Usuarios";
-            this.iconButton4.UseVisualStyleBackColor = true;
-            // 
             // iconButton3
             // 
             this.iconButton3.Dock = System.Windows.Forms.DockStyle.Top;
@@ -118,7 +100,7 @@
             this.iconButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.iconButton3.Font = new System.Drawing.Font("Microsoft YaHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.iconButton3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.iconButton3.IconChar = FontAwesome.Sharp.IconChar.Users;
+            this.iconButton3.IconChar = FontAwesome.Sharp.IconChar.CartArrowDown;
             this.iconButton3.IconColor = System.Drawing.Color.White;
             this.iconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton3.IconSize = 40;
@@ -193,6 +175,7 @@
             this.BtReporte.TabIndex = 31;
             this.BtReporte.Text = "Reportes";
             this.BtReporte.UseVisualStyleBackColor = true;
+            this.BtReporte.Click += new System.EventHandler(this.BtReporte_Click);
             // 
             // BtPlanilla
             // 
@@ -522,7 +505,7 @@
             this.panelinicio.Location = new System.Drawing.Point(265, 0);
             this.panelinicio.Margin = new System.Windows.Forms.Padding(4);
             this.panelinicio.Name = "panelinicio";
-            this.panelinicio.Size = new System.Drawing.Size(990, 53);
+            this.panelinicio.Size = new System.Drawing.Size(1201, 53);
             this.panelinicio.TabIndex = 1;
             // 
             // label3
@@ -531,7 +514,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(519, 15);
+            this.label3.Location = new System.Drawing.Point(730, 15);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(124, 26);
@@ -544,7 +527,7 @@
             this.LblUser.AutoSize = true;
             this.LblUser.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblUser.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.LblUser.Location = new System.Drawing.Point(651, 15);
+            this.LblUser.Location = new System.Drawing.Point(862, 15);
             this.LblUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LblUser.Name = "LblUser";
             this.LblUser.Size = new System.Drawing.Size(85, 26);
@@ -561,7 +544,7 @@
             this.BtNotificacion.IconColor = System.Drawing.Color.White;
             this.BtNotificacion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtNotificacion.IconSize = 38;
-            this.BtNotificacion.Location = new System.Drawing.Point(875, 11);
+            this.BtNotificacion.Location = new System.Drawing.Point(1086, 11);
             this.BtNotificacion.Margin = new System.Windows.Forms.Padding(4);
             this.BtNotificacion.Name = "BtNotificacion";
             this.BtNotificacion.Size = new System.Drawing.Size(72, 32);
@@ -578,12 +561,13 @@
             this.BTConfiguracion.IconColor = System.Drawing.Color.White;
             this.BTConfiguracion.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BTConfiguracion.IconSize = 38;
-            this.BTConfiguracion.Location = new System.Drawing.Point(946, 6);
+            this.BTConfiguracion.Location = new System.Drawing.Point(1157, 6);
             this.BTConfiguracion.Margin = new System.Windows.Forms.Padding(4);
             this.BTConfiguracion.Name = "BTConfiguracion";
             this.BTConfiguracion.Size = new System.Drawing.Size(35, 39);
             this.BTConfiguracion.TabIndex = 6;
             this.BTConfiguracion.UseVisualStyleBackColor = true;
+            this.BTConfiguracion.Click += new System.EventHandler(this.BTConfiguracion_Click);
             // 
             // BT_INICIO
             // 
@@ -606,6 +590,7 @@
             // 
             this.Panelcontenedorprincipal.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.Panelcontenedorprincipal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Panelcontenedorprincipal.Controls.Add(this.Panelrespaldo);
             this.Panelcontenedorprincipal.Controls.Add(this.BTInformacio);
             this.Panelcontenedorprincipal.Controls.Add(this.BtModoOscuro_Claro);
             this.Panelcontenedorprincipal.Controls.Add(this.pictureBoxFoto);
@@ -613,8 +598,33 @@
             this.Panelcontenedorprincipal.Location = new System.Drawing.Point(265, 53);
             this.Panelcontenedorprincipal.Margin = new System.Windows.Forms.Padding(4);
             this.Panelcontenedorprincipal.Name = "Panelcontenedorprincipal";
-            this.Panelcontenedorprincipal.Size = new System.Drawing.Size(990, 683);
+            this.Panelcontenedorprincipal.Size = new System.Drawing.Size(1201, 683);
             this.Panelcontenedorprincipal.TabIndex = 1;
+            // 
+            // Panelrespaldo
+            // 
+            this.Panelrespaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panelrespaldo.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Panelrespaldo.Controls.Add(this.BtInformacion);
+            this.Panelrespaldo.Controls.Add(this.button1);
+            this.Panelrespaldo.Location = new System.Drawing.Point(992, 3);
+            this.Panelrespaldo.Name = "Panelrespaldo";
+            this.Panelrespaldo.Size = new System.Drawing.Size(200, 100);
+            this.Panelrespaldo.TabIndex = 9;
+            this.Panelrespaldo.Paint += new System.Windows.Forms.PaintEventHandler(this.Panelrespaldo_Paint);
+            // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(14, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(181, 43);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Respalado";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // BTInformacio
             // 
@@ -627,7 +637,7 @@
             this.BTInformacio.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BTInformacio.IconSize = 38;
             this.BTInformacio.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BTInformacio.Location = new System.Drawing.Point(930, -2);
+            this.BTInformacio.Location = new System.Drawing.Point(1141, -2);
             this.BTInformacio.Margin = new System.Windows.Forms.Padding(4);
             this.BTInformacio.Name = "BTInformacio";
             this.BTInformacio.Size = new System.Drawing.Size(59, 42);
@@ -661,16 +671,29 @@
             this.pictureBoxFoto.Location = new System.Drawing.Point(69, 38);
             this.pictureBoxFoto.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxFoto.Name = "pictureBoxFoto";
-            this.pictureBoxFoto.Size = new System.Drawing.Size(850, 600);
+            this.pictureBoxFoto.Size = new System.Drawing.Size(1061, 600);
             this.pictureBoxFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxFoto.TabIndex = 1;
             this.pictureBoxFoto.TabStop = false;
+            // 
+            // BtInformacion
+            // 
+            this.BtInformacion.FlatAppearance.BorderSize = 0;
+            this.BtInformacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtInformacion.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtInformacion.Location = new System.Drawing.Point(14, 57);
+            this.BtInformacion.Name = "BtInformacion";
+            this.BtInformacion.Size = new System.Drawing.Size(181, 43);
+            this.BtInformacion.TabIndex = 1;
+            this.BtInformacion.Text = "Informacion";
+            this.BtInformacion.UseVisualStyleBackColor = true;
+            this.BtInformacion.Click += new System.EventHandler(this.BtInformacion_Click);
             // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1255, 736);
+            this.ClientSize = new System.Drawing.Size(1466, 736);
             this.Controls.Add(this.Panelcontenedorprincipal);
             this.Controls.Add(this.panelinicio);
             this.Controls.Add(this.PanelBotonesdemenu);
@@ -685,6 +708,7 @@
             this.panelinicio.ResumeLayout(false);
             this.panelinicio.PerformLayout();
             this.Panelcontenedorprincipal.ResumeLayout(false);
+            this.Panelrespaldo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFoto)).EndInit();
             this.ResumeLayout(false);
 
@@ -720,10 +744,12 @@
         private FontAwesome.Sharp.IconButton BtUsuario;
         private FontAwesome.Sharp.IconButton BtReporte;
         private FontAwesome.Sharp.IconButton BtPlanilla;
-        private FontAwesome.Sharp.IconButton iconButton4;
         private FontAwesome.Sharp.IconButton iconButton3;
         private FontAwesome.Sharp.IconButton Bt_Compra;
         private FontAwesome.Sharp.IconButton BtProveedor;
+        private System.Windows.Forms.Panel Panelrespaldo;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BtInformacion;
     }
 }
 

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
+using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Capa_Presentacion.Datos
 {
@@ -266,6 +268,26 @@ namespace Capa_Presentacion.Datos
             catch (Exception ex)
             {
                 MessageBox.Show("No se pudo eliminar el empleado seleccionado " + ex.Message, "Error en EliminarEmpleado", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+        }
+        public void ReporteEmpleado(ref DataTable dt)
+        {
+            try
+            {
+                Conexion.abrir();
+                using (SqlDataAdapter da = new SqlDataAdapter("ReporteEmpleado", Conexion.conectar))
+                {
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.Fill(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al mostrar los datos de Empleado: " + ex.Message, "Error en Cargar Datos", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {

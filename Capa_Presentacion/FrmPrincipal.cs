@@ -32,6 +32,7 @@ namespace Capa_Presentacion
 
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
+            Panelrespaldo.Visible = false;
             PanelCatalogo.Visible = false;
             LblUser.Text = FrmLogin.NombreA;
         }
@@ -59,7 +60,7 @@ namespace Capa_Presentacion
             pictureBoxFoto.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxFoto.Visible = true;
             BtModoOscuro_Claro.Visible = true;
-            BTInformacio.Visible = true;
+            BTInformacio.Visible = false;
 
 
 
@@ -141,6 +142,34 @@ namespace Capa_Presentacion
         private void BtPlanilla_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnPanel(new FrmPlanillaAsegurado());
+        }
+
+        private void BtReporte_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel(new FrmReporte());
+        }
+
+        private void BTConfiguracion_Click(object sender, EventArgs e)
+        {
+          
+            Panelrespaldo.Visible = !Panelrespaldo.Visible;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmRespaldo frm = new FrmRespaldo();
+            frm.ShowDialog();
+        }
+
+        private void Panelrespaldo_Paint(object sender, PaintEventArgs e)
+        {
+         
+        }
+
+        private void BtInformacion_Click(object sender, EventArgs e)
+        {
+            Frm_Informacion frm = new Frm_Informacion();
+            frm.ShowDialog();
         }
     }
 }

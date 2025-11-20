@@ -31,19 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Recuperar_Contraseña));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Panelingresarcorreo = new System.Windows.Forms.Panel();
-            this.btenviarcoreeo = new FontAwesome.Sharp.IconButton();
-            this.Txtingresarcorreo = new System.Windows.Forms.TextBox();
-            this.lbingresarcorreo = new System.Windows.Forms.Label();
             this.panelcodigo = new System.Windows.Forms.Panel();
-            this.btconfirmarcodigo = new FontAwesome.Sharp.IconButton();
-            this.txtingresarcodigo = new System.Windows.Forms.TextBox();
-            this.lbingresarcodigo = new System.Windows.Forms.Label();
             this.panelnuevacontraseña = new System.Windows.Forms.Panel();
             this.txtConfirmarcotraseña = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btconfirmarcontraseña = new FontAwesome.Sharp.IconButton();
             this.txtnuevacontraseña = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btconfirmarcodigo = new FontAwesome.Sharp.IconButton();
+            this.txtingresarcodigo = new System.Windows.Forms.TextBox();
+            this.lbingresarcodigo = new System.Windows.Forms.Label();
+            this.btenviarcoreeo = new FontAwesome.Sharp.IconButton();
+            this.Txtingresarcorreo = new System.Windows.Forms.TextBox();
+            this.lbingresarcorreo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.Panelingresarcorreo.SuspendLayout();
             this.panelcodigo.SuspendLayout();
@@ -63,6 +63,7 @@
             // 
             // Panelingresarcorreo
             // 
+            this.Panelingresarcorreo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.Panelingresarcorreo.Controls.Add(this.panelcodigo);
             this.Panelingresarcorreo.Controls.Add(this.btenviarcoreeo);
             this.Panelingresarcorreo.Controls.Add(this.Txtingresarcorreo);
@@ -73,37 +74,6 @@
             this.Panelingresarcorreo.Size = new System.Drawing.Size(454, 394);
             this.Panelingresarcorreo.TabIndex = 10;
             // 
-            // btenviarcoreeo
-            // 
-            this.btenviarcoreeo.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.btenviarcoreeo.IconColor = System.Drawing.Color.Black;
-            this.btenviarcoreeo.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btenviarcoreeo.Location = new System.Drawing.Point(148, 231);
-            this.btenviarcoreeo.Name = "btenviarcoreeo";
-            this.btenviarcoreeo.Size = new System.Drawing.Size(244, 50);
-            this.btenviarcoreeo.TabIndex = 5;
-            this.btenviarcoreeo.Text = "Enviar Codigo";
-            this.btenviarcoreeo.UseVisualStyleBackColor = true;
-            this.btenviarcoreeo.Click += new System.EventHandler(this.btenviarcoreeo_Click);
-            // 
-            // Txtingresarcorreo
-            // 
-            this.Txtingresarcorreo.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txtingresarcorreo.Location = new System.Drawing.Point(108, 139);
-            this.Txtingresarcorreo.Name = "Txtingresarcorreo";
-            this.Txtingresarcorreo.Size = new System.Drawing.Size(324, 34);
-            this.Txtingresarcorreo.TabIndex = 4;
-            // 
-            // lbingresarcorreo
-            // 
-            this.lbingresarcorreo.AutoSize = true;
-            this.lbingresarcorreo.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbingresarcorreo.Location = new System.Drawing.Point(102, 47);
-            this.lbingresarcorreo.Name = "lbingresarcorreo";
-            this.lbingresarcorreo.Size = new System.Drawing.Size(330, 31);
-            this.lbingresarcorreo.TabIndex = 3;
-            this.lbingresarcorreo.Text = "Ingresar Correo Electronico";
-            // 
             // panelcodigo
             // 
             this.panelcodigo.Controls.Add(this.panelnuevacontraseña);
@@ -112,11 +82,77 @@
             this.panelcodigo.Controls.Add(this.lbingresarcodigo);
             this.panelcodigo.Location = new System.Drawing.Point(0, 3);
             this.panelcodigo.Name = "panelcodigo";
-            this.panelcodigo.Size = new System.Drawing.Size(454, 376);
+            this.panelcodigo.Size = new System.Drawing.Size(454, 385);
             this.panelcodigo.TabIndex = 6;
+            // 
+            // panelnuevacontraseña
+            // 
+            this.panelnuevacontraseña.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panelnuevacontraseña.Controls.Add(this.txtConfirmarcotraseña);
+            this.panelnuevacontraseña.Controls.Add(this.label2);
+            this.panelnuevacontraseña.Controls.Add(this.btconfirmarcontraseña);
+            this.panelnuevacontraseña.Controls.Add(this.txtnuevacontraseña);
+            this.panelnuevacontraseña.Controls.Add(this.label1);
+            this.panelnuevacontraseña.Location = new System.Drawing.Point(3, 6);
+            this.panelnuevacontraseña.Name = "panelnuevacontraseña";
+            this.panelnuevacontraseña.Size = new System.Drawing.Size(448, 376);
+            this.panelnuevacontraseña.TabIndex = 6;
+            // 
+            // txtConfirmarcotraseña
+            // 
+            this.txtConfirmarcotraseña.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtConfirmarcotraseña.Location = new System.Drawing.Point(79, 201);
+            this.txtConfirmarcotraseña.Name = "txtConfirmarcotraseña";
+            this.txtConfirmarcotraseña.Size = new System.Drawing.Size(324, 34);
+            this.txtConfirmarcotraseña.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(73, 160);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(268, 31);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Confirmar Contraseña";
+            // 
+            // btconfirmarcontraseña
+            // 
+            this.btconfirmarcontraseña.BackColor = System.Drawing.Color.Green;
+            this.btconfirmarcontraseña.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btconfirmarcontraseña.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.btconfirmarcontraseña.IconColor = System.Drawing.Color.Black;
+            this.btconfirmarcontraseña.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btconfirmarcontraseña.Location = new System.Drawing.Point(110, 261);
+            this.btconfirmarcontraseña.Name = "btconfirmarcontraseña";
+            this.btconfirmarcontraseña.Size = new System.Drawing.Size(244, 50);
+            this.btconfirmarcontraseña.TabIndex = 8;
+            this.btconfirmarcontraseña.Text = "Confirmar";
+            this.btconfirmarcontraseña.UseVisualStyleBackColor = false;
+            this.btconfirmarcontraseña.Click += new System.EventHandler(this.btconfirmarcontraseña_Click);
+            // 
+            // txtnuevacontraseña
+            // 
+            this.txtnuevacontraseña.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtnuevacontraseña.Location = new System.Drawing.Point(79, 94);
+            this.txtnuevacontraseña.Name = "txtnuevacontraseña";
+            this.txtnuevacontraseña.Size = new System.Drawing.Size(324, 34);
+            this.txtnuevacontraseña.TabIndex = 7;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(87, 47);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(225, 31);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Nueva Contraseña";
             // 
             // btconfirmarcodigo
             // 
+            this.btconfirmarcodigo.BackColor = System.Drawing.Color.Green;
+            this.btconfirmarcodigo.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btconfirmarcodigo.IconChar = FontAwesome.Sharp.IconChar.None;
             this.btconfirmarcodigo.IconColor = System.Drawing.Color.Black;
             this.btconfirmarcodigo.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -125,7 +161,7 @@
             this.btconfirmarcodigo.Size = new System.Drawing.Size(244, 50);
             this.btconfirmarcodigo.TabIndex = 5;
             this.btconfirmarcodigo.Text = "Confirmar";
-            this.btconfirmarcodigo.UseVisualStyleBackColor = true;
+            this.btconfirmarcodigo.UseVisualStyleBackColor = false;
             this.btconfirmarcodigo.Click += new System.EventHandler(this.btconfirmarcodigo_Click);
             // 
             // txtingresarcodigo
@@ -146,66 +182,38 @@
             this.lbingresarcodigo.TabIndex = 3;
             this.lbingresarcodigo.Text = "Ingresar Codigo";
             // 
-            // panelnuevacontraseña
+            // btenviarcoreeo
             // 
-            this.panelnuevacontraseña.Controls.Add(this.txtConfirmarcotraseña);
-            this.panelnuevacontraseña.Controls.Add(this.label2);
-            this.panelnuevacontraseña.Controls.Add(this.btconfirmarcontraseña);
-            this.panelnuevacontraseña.Controls.Add(this.txtnuevacontraseña);
-            this.panelnuevacontraseña.Controls.Add(this.label1);
-            this.panelnuevacontraseña.Location = new System.Drawing.Point(0, 3);
-            this.panelnuevacontraseña.Name = "panelnuevacontraseña";
-            this.panelnuevacontraseña.Size = new System.Drawing.Size(448, 376);
-            this.panelnuevacontraseña.TabIndex = 6;
+            this.btenviarcoreeo.BackColor = System.Drawing.Color.Green;
+            this.btenviarcoreeo.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btenviarcoreeo.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.btenviarcoreeo.IconColor = System.Drawing.Color.Black;
+            this.btenviarcoreeo.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btenviarcoreeo.Location = new System.Drawing.Point(108, 250);
+            this.btenviarcoreeo.Name = "btenviarcoreeo";
+            this.btenviarcoreeo.Size = new System.Drawing.Size(244, 50);
+            this.btenviarcoreeo.TabIndex = 5;
+            this.btenviarcoreeo.Text = "Enviar Codigo";
+            this.btenviarcoreeo.UseVisualStyleBackColor = false;
+            this.btenviarcoreeo.Click += new System.EventHandler(this.btenviarcoreeo_Click);
             // 
-            // txtConfirmarcotraseña
+            // Txtingresarcorreo
             // 
-            this.txtConfirmarcotraseña.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtConfirmarcotraseña.Location = new System.Drawing.Point(93, 203);
-            this.txtConfirmarcotraseña.Name = "txtConfirmarcotraseña";
-            this.txtConfirmarcotraseña.Size = new System.Drawing.Size(324, 34);
-            this.txtConfirmarcotraseña.TabIndex = 10;
+            this.Txtingresarcorreo.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Txtingresarcorreo.Location = new System.Drawing.Point(72, 168);
+            this.Txtingresarcorreo.Name = "Txtingresarcorreo";
+            this.Txtingresarcorreo.Size = new System.Drawing.Size(324, 34);
+            this.Txtingresarcorreo.TabIndex = 4;
             // 
-            // label2
+            // lbingresarcorreo
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(86, 152);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(268, 31);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Confirmar Contraseña";
-            // 
-            // btconfirmarcontraseña
-            // 
-            this.btconfirmarcontraseña.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.btconfirmarcontraseña.IconColor = System.Drawing.Color.Black;
-            this.btconfirmarcontraseña.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btconfirmarcontraseña.Location = new System.Drawing.Point(133, 259);
-            this.btconfirmarcontraseña.Name = "btconfirmarcontraseña";
-            this.btconfirmarcontraseña.Size = new System.Drawing.Size(244, 50);
-            this.btconfirmarcontraseña.TabIndex = 8;
-            this.btconfirmarcontraseña.Text = "Confirmar";
-            this.btconfirmarcontraseña.UseVisualStyleBackColor = true;
-            this.btconfirmarcontraseña.Click += new System.EventHandler(this.btconfirmarcontraseña_Click);
-            // 
-            // txtnuevacontraseña
-            // 
-            this.txtnuevacontraseña.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtnuevacontraseña.Location = new System.Drawing.Point(92, 96);
-            this.txtnuevacontraseña.Name = "txtnuevacontraseña";
-            this.txtnuevacontraseña.Size = new System.Drawing.Size(324, 34);
-            this.txtnuevacontraseña.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(86, 44);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(225, 31);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Nueva Contraseña";
+            this.lbingresarcorreo.AutoSize = true;
+            this.lbingresarcorreo.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbingresarcorreo.Location = new System.Drawing.Point(66, 69);
+            this.lbingresarcorreo.Name = "lbingresarcorreo";
+            this.lbingresarcorreo.Size = new System.Drawing.Size(330, 31);
+            this.lbingresarcorreo.TabIndex = 3;
+            this.lbingresarcorreo.Text = "Ingresar Correo Electronico";
             // 
             // Recuperar_Contraseña
             // 
@@ -215,6 +223,7 @@
             this.Controls.Add(this.Panelingresarcorreo);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Recuperar_Contraseña";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Recuperar_Contraseña";
             this.Load += new System.EventHandler(this.Recuperar_Contraseña_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

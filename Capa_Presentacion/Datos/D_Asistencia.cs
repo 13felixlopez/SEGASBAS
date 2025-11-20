@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Capa_Presentacion.Datos
 {
@@ -227,6 +228,51 @@ namespace Capa_Presentacion.Datos
                 Conexion.cerrar();
             }
             return lista;
+        }
+
+
+        public void ReporteAsistencia(ref DataTable dt)
+        {
+            try
+            {
+                Conexion.abrir();
+                using (SqlDataAdapter da = new SqlDataAdapter("ReporteAsistencia", Conexion.conectar))
+                {
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.Fill(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al mostrar los datos de asistencia: " + ex.Message,
+                    "Error MostrarLotesExcel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+        }
+
+        public void ReporteAsis(ref DataTable dt)
+        {
+            try
+            {
+                Conexion.abrir();
+                using (SqlDataAdapter da = new SqlDataAdapter("ReporteAsis", Conexion.conectar))
+                {
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.Fill(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al mostrar los datos de asistencia: " + ex.Message,
+                    "Error MostrarLotesExcel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
         }
     }
 }

@@ -31,6 +31,9 @@ namespace Capa_Presentacion
             txttotaldevengado.ReadOnly = true;
             txttotaldededucciones.ReadOnly = true;
             txtpagoneto.ReadOnly = true;
+                
+            txthorasextras.ReadOnly = true;
+
             btguardar.Text = "Guardar Planilla";
           
         }

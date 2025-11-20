@@ -74,9 +74,6 @@
             this.BtnSiguiente = new FontAwesome.Sharp.IconButton();
             this.label20 = new System.Windows.Forms.Label();
             this.BtnAnterior = new FontAwesome.Sharp.IconButton();
-            this.label21 = new System.Windows.Forms.Label();
-            this.TxtBuscar = new System.Windows.Forms.TextBox();
-            this.CmbBuscar = new System.Windows.Forms.ComboBox();
             this.BTEditar = new FontAwesome.Sharp.IconButton();
             this.BTEliminar = new FontAwesome.Sharp.IconButton();
             this.btguardar = new FontAwesome.Sharp.IconButton();
@@ -503,9 +500,9 @@
             this.label1.Location = new System.Drawing.Point(836, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(224, 26);
+            this.label1.Size = new System.Drawing.Size(198, 26);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Registro de Asistencia";
+            this.label1.Text = "Registro de Planilla";
             // 
             // txttotaldevengado
             // 
@@ -655,36 +652,6 @@
             this.BtnAnterior.TabIndex = 122;
             this.BtnAnterior.UseVisualStyleBackColor = false;
             // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(31, 486);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(118, 26);
-            this.label21.TabIndex = 121;
-            this.label21.Text = "Buscar Por:";
-            // 
-            // TxtBuscar
-            // 
-            this.TxtBuscar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtBuscar.Location = new System.Drawing.Point(181, 478);
-            this.TxtBuscar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TxtBuscar.Multiline = true;
-            this.TxtBuscar.Name = "TxtBuscar";
-            this.TxtBuscar.Size = new System.Drawing.Size(288, 34);
-            this.TxtBuscar.TabIndex = 120;
-            // 
-            // CmbBuscar
-            // 
-            this.CmbBuscar.Font = new System.Drawing.Font("Microsoft YaHei", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CmbBuscar.FormattingEnabled = true;
-            this.CmbBuscar.Location = new System.Drawing.Point(476, 476);
-            this.CmbBuscar.Margin = new System.Windows.Forms.Padding(4);
-            this.CmbBuscar.Name = "CmbBuscar";
-            this.CmbBuscar.Size = new System.Drawing.Size(276, 38);
-            this.CmbBuscar.TabIndex = 119;
-            // 
             // BTEditar
             // 
             this.BTEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -760,9 +727,6 @@
             this.Controls.Add(this.BtnSiguiente);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.BtnAnterior);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.TxtBuscar);
-            this.Controls.Add(this.CmbBuscar);
             this.Controls.Add(this.Datagreedplanilla);
             this.Controls.Add(this.panel1);
             this.Name = "FrmPlanillaAsegurado";
@@ -823,9 +787,6 @@
         private FontAwesome.Sharp.IconButton BtnSiguiente;
         private System.Windows.Forms.Label label20;
         private FontAwesome.Sharp.IconButton BtnAnterior;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox TxtBuscar;
-        private System.Windows.Forms.ComboBox CmbBuscar;
         private FontAwesome.Sharp.IconButton BTEditar;
         private FontAwesome.Sharp.IconButton BTEliminar;
         private FontAwesome.Sharp.IconButton btguardar;
