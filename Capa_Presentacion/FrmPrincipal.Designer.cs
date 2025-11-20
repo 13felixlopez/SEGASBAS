@@ -697,6 +697,7 @@
             this.Controls.Add(this.Panelcontenedorprincipal);
             this.Controls.Add(this.panelinicio);
             this.Controls.Add(this.PanelBotonesdemenu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmPrincipal";
             this.Text = "Principal";
