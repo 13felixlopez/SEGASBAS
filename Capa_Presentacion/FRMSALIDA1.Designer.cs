@@ -46,6 +46,8 @@
             this.BTEditar = new FontAwesome.Sharp.IconButton();
             this.BTEliminar = new FontAwesome.Sharp.IconButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.TxtUnidaddemedida = new System.Windows.Forms.TextBox();
+            this.TxtCategoria = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.Cb_Ciclo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -65,8 +67,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtdescripcion = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.TxtCategoria = new System.Windows.Forms.TextBox();
-            this.TxtUnidaddemedida = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DatagreedSalidas)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btañadirunidaddemedida)).BeginInit();
@@ -172,6 +172,7 @@
             this.TxtBuscar.Name = "TxtBuscar";
             this.TxtBuscar.Size = new System.Drawing.Size(288, 34);
             this.TxtBuscar.TabIndex = 159;
+            this.TxtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
             // 
             // BtnSiguiente
             // 
@@ -345,6 +346,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1717, 387);
             this.panel1.TabIndex = 157;
+            // 
+            // TxtUnidaddemedida
+            // 
+            this.TxtUnidaddemedida.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtUnidaddemedida.Location = new System.Drawing.Point(1249, 94);
+            this.TxtUnidaddemedida.Margin = new System.Windows.Forms.Padding(4);
+            this.TxtUnidaddemedida.Multiline = true;
+            this.TxtUnidaddemedida.Name = "TxtUnidaddemedida";
+            this.TxtUnidaddemedida.Size = new System.Drawing.Size(240, 32);
+            this.TxtUnidaddemedida.TabIndex = 144;
+            // 
+            // TxtCategoria
+            // 
+            this.TxtCategoria.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtCategoria.Location = new System.Drawing.Point(580, 94);
+            this.TxtCategoria.Margin = new System.Windows.Forms.Padding(4);
+            this.TxtCategoria.Multiline = true;
+            this.TxtCategoria.Name = "TxtCategoria";
+            this.TxtCategoria.Size = new System.Drawing.Size(240, 32);
+            this.TxtCategoria.TabIndex = 143;
             // 
             // label4
             // 
@@ -550,26 +571,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // TxtCategoria
-            // 
-            this.TxtCategoria.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtCategoria.Location = new System.Drawing.Point(580, 94);
-            this.TxtCategoria.Margin = new System.Windows.Forms.Padding(4);
-            this.TxtCategoria.Multiline = true;
-            this.TxtCategoria.Name = "TxtCategoria";
-            this.TxtCategoria.Size = new System.Drawing.Size(240, 32);
-            this.TxtCategoria.TabIndex = 143;
-            // 
-            // TxtUnidaddemedida
-            // 
-            this.TxtUnidaddemedida.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtUnidaddemedida.Location = new System.Drawing.Point(1249, 94);
-            this.TxtUnidaddemedida.Margin = new System.Windows.Forms.Padding(4);
-            this.TxtUnidaddemedida.Multiline = true;
-            this.TxtUnidaddemedida.Name = "TxtUnidaddemedida";
-            this.TxtUnidaddemedida.Size = new System.Drawing.Size(240, 32);
-            this.TxtUnidaddemedida.TabIndex = 144;
             // 
             // FRMSALIDA1
             // 

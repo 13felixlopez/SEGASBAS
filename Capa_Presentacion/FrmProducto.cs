@@ -2,68 +2,91 @@
 using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Capa_Presentacion
 {
     public partial class FrmProducto : Form
     {
         private bool abiertoDesdeBtProducto = false;
-      
 
         private D_Producto funciones = new D_Producto();
         private L_Producto productoSeleccionado;
         private int paginaActual = 1;
         private const int tamañoPagina = 10;
         private int totalRegistros = 0;
+
+        // Búsqueda debounce
+        private System.Windows.Forms.Timer searchTimer;
+        private const int SearchDebounceMs = 400;
         public FrmProducto()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.Load += FrmProducto_Load;
-
-
-
             this.FormClosing += FrmProducto_FormClosing;
         }
 
         private void FrmProducto_Load(object sender, EventArgs e)
         {
 
-            if (dgvProducto.Columns.Contains("id_producto"))
+            // Inicializar timer de búsqueda (debounce)
+            searchTimer = new System.Windows.Forms.Timer();
+            searchTimer.Interval = SearchDebounceMs;
+            searchTimer.Tick += SearchTimer_Tick;
+
+            // Enlazar eventos de búsqueda (si no están enlazados en designer)
+            if (TxtBuscar != null)
             {
-                dgvProducto.Columns["id_producto"].Visible = false;
+                TxtBuscar.TextChanged += TxtBuscar_TextChanged;
+                TxtBuscar.KeyDown += TxtBuscar_KeyDown;
             }
 
+     
+            if (dgvProducto != null)
+            {
+                dgvProducto.CellClick += dgvProducto_CellClick;
+                dgvProducto.DataBindingComplete += dgvProducto_DataBindingComplete;
+                dgvProducto.CellEndEdit += dgvProducto_CellEndEdit;
+                dgvProducto.CellDoubleClick += dgvProducto_CellDoubleClick;
+            }
 
-         
+            // Ajustes iniciales
             CargarProductosPaginado();
             LimpiarControles();
 
         }
         private void ActualizarEstadoPaginacion()
         {
-            int totalPaginas = (int)Math.Ceiling((double)totalRegistros / tamañoPagina);
-            TxtPagina.Text = paginaActual.ToString();
-            TxtTotalPagina.Text = totalPaginas.ToString();
-            BtnAnterior.Enabled = paginaActual > 1;
-            BtnSiguiente.Enabled = paginaActual < totalPaginas;
+            int totalPaginas = Math.Max(1, (int)Math.Ceiling((double)totalRegistros / tamañoPagina));
+            if (TxtPagina != null) TxtPagina.Text = paginaActual.ToString();
+            if (TxtTotalPagina != null) TxtTotalPagina.Text = totalPaginas.ToString();
+            if (BtnAnterior != null) BtnAnterior.Enabled = paginaActual > 1;
+            if (BtnSiguiente != null) BtnSiguiente.Enabled = paginaActual < totalPaginas;
         }
         private void LimpiarControles()
         {
             productoSeleccionado = null;
-            TxtProducto.Clear();
-            BTAgregar.Text = "Agregar";
-            BTAgregar.Enabled = true;
-            BTEditar.Enabled = false;
-            BTEliminar.Enabled = false;
+            if (TxtProducto != null) TxtProducto.Clear();
+            if (BTAgregar != null) BTAgregar.Text = "Agregar";
+            if (BTAgregar != null) BTAgregar.Enabled = true;
+            if (BTEditar != null) BTEditar.Enabled = false;
+            if (BTEliminar != null) BTEliminar.Enabled = false;
         }
         private void CargarProductosPaginado()
         {
             try
             {
                 List<L_Producto> lista = funciones.ListarPaginado(paginaActual, tamañoPagina, out totalRegistros);
-                dgvProducto.DataSource = lista;
+                if (dgvProducto != null)
+                {
+                    dgvProducto.DataSource = lista;
+                    // ocultar columna id si existe
+                    if (dgvProducto.Columns.Contains("id_producto"))
+                        dgvProducto.Columns["id_producto"].Visible = false;
+                }
                 ActualizarEstadoPaginacion();
             }
             catch (Exception ex)
@@ -93,23 +116,22 @@ namespace Capa_Presentacion
 
         private void BTAgregar_Click(object sender, EventArgs e)
         {
-            string mensaje = string.Empty;
-            if (string.IsNullOrWhiteSpace(TxtProducto.Text))
+            string mensaje = "";
+            if (TxtProducto == null || string.IsNullOrWhiteSpace(TxtProducto.Text))
             {
                 MessageBox.Show("El nombre del producto no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            L_Producto oProducto = new L_Producto() { nombre = TxtProducto.Text };
+            L_Producto oProducto = new L_Producto() { nombre = TxtProducto.Text.Trim() };
 
             if (productoSeleccionado == null)
             {
-
-                mensaje = funciones.Insertar(oProducto);
+           
+                mensaje = funciones.InsertarExt(oProducto);
             }
             else
             {
-
                 oProducto.id_producto = productoSeleccionado.id_producto;
                 mensaje = funciones.Editar(oProducto);
             }
@@ -127,7 +149,6 @@ namespace Capa_Presentacion
                 return;
             }
 
-            string mensaje = string.Empty;
             if (string.IsNullOrWhiteSpace(TxtProducto.Text))
             {
                 MessageBox.Show("El nombre del producto no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -137,10 +158,10 @@ namespace Capa_Presentacion
             L_Producto oProducto = new L_Producto()
             {
                 id_producto = productoSeleccionado.id_producto,
-                nombre = TxtProducto.Text
+                nombre = TxtProducto.Text.Trim()
             };
 
-            mensaje = funciones.Editar(oProducto);
+            string mensaje = funciones.Editar(oProducto);
             MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             CargarProductosPaginado();
             LimpiarControles();
@@ -164,6 +185,73 @@ namespace Capa_Presentacion
             }
 
         }
+        private void RealizarBusqueda()
+        {
+            try
+            {
+                string termino = TxtBuscar.Text.Trim();
+                if (string.IsNullOrWhiteSpace(termino))
+                {
+                    paginaActual = 1;
+                    CargarProductosPaginado();
+                    return;
+                }
+
+                // Intentamos usar BuscarAvanzado (más columnas); si falla, caemos en Buscar simple
+                DataTable dt = null;
+                try
+                {
+                    dt = funciones.BuscarAvanzado(termino);
+                }
+                catch
+                {
+                    dt = funciones.Buscar(termino);
+                }
+
+                dgvProducto.DataSource = dt;
+
+           
+                FormatearYResaltarGridDespuesDeBusqueda();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error en la búsqueda: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void FormatearYResaltarGridDespuesDeBusqueda()
+        {
+            try
+            {
+                if (dgvProducto == null) return;
+
+                if (dgvProducto.Columns.Contains("StockActual"))
+                    dgvProducto.Columns["StockActual"].DefaultCellStyle.Format = "N0";
+                if (dgvProducto.Columns.Contains("StockMinimo"))
+                    dgvProducto.Columns["StockMinimo"].DefaultCellStyle.Format = "N0";
+                if (dgvProducto.Columns.Contains("CostoPromedio"))
+                    dgvProducto.Columns["CostoPromedio"].DefaultCellStyle.Format = "N2";
+                if (dgvProducto.Columns.Contains("UltimoCostoFactura"))
+                    dgvProducto.Columns["UltimoCostoFactura"].DefaultCellStyle.Format = "N2";
+
+                foreach (DataGridViewRow row in dgvProducto.Rows)
+                {
+                    int stock = 0;
+                    int min = 0;
+
+                    if (dgvProducto.Columns.Contains("StockActual") && row.Cells["StockActual"].Value != null && row.Cells["StockActual"].Value != DBNull.Value)
+                        int.TryParse(row.Cells["StockActual"].Value.ToString(), out stock);
+
+                    if (dgvProducto.Columns.Contains("StockMinimo") && row.Cells["StockMinimo"].Value != null && row.Cells["StockMinimo"].Value != DBNull.Value)
+                        int.TryParse(row.Cells["StockMinimo"].Value.ToString(), out min);
+
+                    row.DefaultCellStyle.BackColor = (stock <= min) ? Color.FromArgb(255, 200, 200) : Color.White;
+                }
+            }
+            catch
+            {
+              
+            }
+        }
 
         private void dgvProducto_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -172,43 +260,36 @@ namespace Capa_Presentacion
 
         private void dgvProducto_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && dgvProducto != null)
             {
                 DataGridViewRow row = dgvProducto.Rows[e.RowIndex];
+
+                if (row.Cells["id_producto"].Value == null) return;
+
+                int id;
+                if (!int.TryParse(row.Cells["id_producto"].Value.ToString(), out id)) return;
+
                 productoSeleccionado = new L_Producto()
                 {
-                    id_producto = Convert.ToInt32(row.Cells["id_producto"].Value),
-                    nombre = row.Cells["nombre"].Value.ToString()
+                    id_producto = id,
+                    nombre = row.Cells["nombre"].Value?.ToString() ?? ""
                 };
 
-                TxtProducto.Text = productoSeleccionado.nombre;
-
-                BTEditar.Enabled = true;
-                BTEliminar.Enabled = true;
+                if (TxtProducto != null) TxtProducto.Text = productoSeleccionado.nombre;
+                if (BTEditar != null) BTEditar.Enabled = true;
+                if (BTEliminar != null) BTEliminar.Enabled = true;
             }
         }
-        private void RealizarBusqueda()
-        {
-            try
-            {
-                string termino = TxtBuscar.Text.Trim();
-                if (string.IsNullOrWhiteSpace(termino))
-                {
-                    CargarProductosPaginado();
-                }
-                else
-                {
-                    dgvProducto.DataSource = funciones.Buscar(termino);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ocurrió un error en la búsqueda: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+       
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
+            searchTimer.Stop();
+            searchTimer.Start();
+        }
+        private void SearchTimer_Tick(object sender, EventArgs e)
+        {
+            searchTimer.Stop();
             RealizarBusqueda();
         }
 
@@ -225,6 +306,131 @@ namespace Capa_Presentacion
                 MessageBox.Show("No se puede cerrar porque fue abierto desde BtProducto.");
                 e.Cancel = true;
             }
+        }
+
+        private void TxtBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                searchTimer.Stop();
+                RealizarBusqueda();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                TxtBuscar.Clear();
+                searchTimer.Stop();
+                paginaActual = 1;
+                CargarProductosPaginado();
+            }
+        }
+
+        private void dgvProducto_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            try
+            {
+                if (dgvProducto == null) return;
+
+                if (dgvProducto.Columns.Contains("StockActual"))
+                    dgvProducto.Columns["StockActual"].DefaultCellStyle.Format = "N0";
+                if (dgvProducto.Columns.Contains("StockMinimo"))
+                    dgvProducto.Columns["StockMinimo"].DefaultCellStyle.Format = "N0";
+                if (dgvProducto.Columns.Contains("CostoPromedio"))
+                    dgvProducto.Columns["CostoPromedio"].DefaultCellStyle.Format = "N2";
+                if (dgvProducto.Columns.Contains("UltimoCostoFactura"))
+                    dgvProducto.Columns["UltimoCostoFactura"].DefaultCellStyle.Format = "N2";
+
+                foreach (DataGridViewRow row in dgvProducto.Rows)
+                {
+                    int stock = 0;
+                    int min = 0;
+
+                    if (dgvProducto.Columns.Contains("StockActual") && row.Cells["StockActual"].Value != null && row.Cells["StockActual"].Value != DBNull.Value)
+                        int.TryParse(row.Cells["StockActual"].Value.ToString(), out stock);
+
+                    if (dgvProducto.Columns.Contains("StockMinimo") && row.Cells["StockMinimo"].Value != null && row.Cells["StockMinimo"].Value != DBNull.Value)
+                        int.TryParse(row.Cells["StockMinimo"].Value.ToString(), out min);
+
+                    row.DefaultCellStyle.BackColor = (stock <= min) ? Color.FromArgb(255, 200, 200) : Color.White;
+                }
+            }
+            catch
+            {
+                // no bloqueante
+            }
+
+        }
+
+        private void dgvProducto_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex < 0) return;
+                DataGridViewRow row = dgvProducto.Rows[e.RowIndex];
+
+                if (row.Cells["id_producto"].Value == null) return;
+                int id = Convert.ToInt32(row.Cells["id_producto"].Value);
+
+                // Si editó StockMinimo
+                if (dgvProducto.Columns[e.ColumnIndex].Name == "StockMinimo")
+                {
+                    int nuevoMin = 0;
+                    if (!int.TryParse(row.Cells["StockMinimo"].Value?.ToString(), out nuevoMin) || nuevoMin < 0)
+                    {
+                        MessageBox.Show("Stock mínimo inválido. Debe ser un número entero mayor o igual a 0.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CargarProductosPaginado();
+                        return;
+                    }
+
+                    L_Producto p = new L_Producto { id_producto = id, StockMinimo = nuevoMin };
+                    string mensaje = funciones.EditarExt(p);
+                    MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // refrescar
+                    CargarProductosPaginado();
+                    return;
+                }
+
+                // Si editó Estado (checkbox)
+                if (dgvProducto.Columns[e.ColumnIndex].Name == "Estado")
+                {
+                    bool nuevoEstado = false;
+                    if (bool.TryParse(row.Cells["Estado"].Value?.ToString(), out nuevoEstado))
+                    {
+                        L_Producto p = new L_Producto { id_producto = id, Estado = nuevoEstado };
+                        string mensaje = funciones.EditarExt(p);
+                        MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarProductosPaginado();
+                        return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar cambios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CargarProductosPaginado();
+            }
+        }
+
+        private void dgvProducto_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            DataGridViewRow row = dgvProducto.Rows[e.RowIndex];
+            if (row.Cells["id_producto"].Value == null) return;
+
+            productoSeleccionado = new L_Producto
+            {
+                id_producto = Convert.ToInt32(row.Cells["id_producto"].Value),
+                nombre = row.Cells["nombre"].Value?.ToString() ?? "",
+                Descripcion = row.Cells["Descripcion"].Value?.ToString() ?? "",
+                StockActual = row.Cells["StockActual"].Value == DBNull.Value ? 0 : Convert.ToInt32(row.Cells["StockActual"].Value),
+                StockMinimo = row.Cells["StockMinimo"].Value == DBNull.Value ? 0 : Convert.ToInt32(row.Cells["StockMinimo"].Value),
+                Estado = row.Cells["Estado"].Value == DBNull.Value ? true : Convert.ToBoolean(row.Cells["Estado"].Value)
+            };
+
+            TxtProducto.Text = productoSeleccionado.nombre;
+            BTEditar.Enabled = true;
+            BTEliminar.Enabled = true;
         }
     }
 }
