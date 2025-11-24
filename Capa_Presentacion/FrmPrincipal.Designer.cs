@@ -56,11 +56,11 @@
             this.BT_INICIO = new FontAwesome.Sharp.IconButton();
             this.Panelcontenedorprincipal = new System.Windows.Forms.Panel();
             this.Panelrespaldo = new System.Windows.Forms.Panel();
+            this.BtInformacion = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.BTInformacio = new FontAwesome.Sharp.IconButton();
             this.BtModoOscuro_Claro = new FontAwesome.Sharp.IconButton();
             this.pictureBoxFoto = new System.Windows.Forms.PictureBox();
-            this.BtInformacion = new System.Windows.Forms.Button();
             this.PanelBotonesdemenu.SuspendLayout();
             this.PanelCatalogo.SuspendLayout();
             this.PanelNombreSistema.SuspendLayout();
@@ -613,6 +613,19 @@
             this.Panelrespaldo.TabIndex = 9;
             this.Panelrespaldo.Paint += new System.Windows.Forms.PaintEventHandler(this.Panelrespaldo_Paint);
             // 
+            // BtInformacion
+            // 
+            this.BtInformacion.FlatAppearance.BorderSize = 0;
+            this.BtInformacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtInformacion.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtInformacion.Location = new System.Drawing.Point(14, 57);
+            this.BtInformacion.Name = "BtInformacion";
+            this.BtInformacion.Size = new System.Drawing.Size(181, 43);
+            this.BtInformacion.TabIndex = 1;
+            this.BtInformacion.Text = "Informacion";
+            this.BtInformacion.UseVisualStyleBackColor = true;
+            this.BtInformacion.Click += new System.EventHandler(this.BtInformacion_Click);
+            // 
             // button1
             // 
             this.button1.FlatAppearance.BorderSize = 0;
@@ -675,19 +688,6 @@
             this.pictureBoxFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxFoto.TabIndex = 1;
             this.pictureBoxFoto.TabStop = false;
-            // 
-            // BtInformacion
-            // 
-            this.BtInformacion.FlatAppearance.BorderSize = 0;
-            this.BtInformacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtInformacion.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtInformacion.Location = new System.Drawing.Point(14, 57);
-            this.BtInformacion.Name = "BtInformacion";
-            this.BtInformacion.Size = new System.Drawing.Size(181, 43);
-            this.BtInformacion.TabIndex = 1;
-            this.BtInformacion.Text = "Informacion";
-            this.BtInformacion.UseVisualStyleBackColor = true;
-            this.BtInformacion.Click += new System.EventHandler(this.BtInformacion_Click);
             // 
             // FrmPrincipal
             // 

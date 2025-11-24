@@ -95,6 +95,7 @@
             this.Controls.Add(this.Btexaminar);
             this.Controls.Add(this.textBox1);
             this.Name = "FrmRespaldo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmRespaldo";
             this.Load += new System.EventHandler(this.FrmRespaldo_Load);
             this.ResumeLayout(false);
