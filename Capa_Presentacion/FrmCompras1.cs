@@ -645,6 +645,8 @@ namespace Capa_Presentacion
             if (form2.Controls["panel1"] is Panel panel)
             {
                 panel.BackColor = Color.DarkGray;
+
+
             }
             form2.ShowDialog();
         }

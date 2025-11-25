@@ -1,4 +1,5 @@
-﻿using Capa_Presentacion.Logica;
+﻿// D_Producto.cs
+using Capa_Presentacion.Logica;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,6 +9,17 @@ namespace Capa_Presentacion.Datos
 {
     public class D_Producto
     {
+        // Helper: verificar si un SqlDataReader contiene una columna
+        private bool TieneColumna(SqlDataReader reader, string nombreColumna)
+        {
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                if (reader.GetName(i).Equals(nombreColumna, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
         public DataTable ObtenerProductos()
         {
             DataTable dt = new DataTable();
@@ -195,24 +207,32 @@ namespace Capa_Presentacion.Datos
                     cmd.Parameters.AddWithValue("@tamanoPagina", tamanoPagina);
                     SqlParameter outParam = new SqlParameter("@totalRegistros", SqlDbType.Int) { Direction = ParameterDirection.Output };
                     cmd.Parameters.Add(outParam);
+
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         while (dr.Read())
                         {
-                            lista.Add(new L_Producto()
+                            var prod = new L_Producto()
                             {
-                                id_producto = Convert.ToInt32(dr["id_producto"]),
-                                nombre = dr["nombre"].ToString(),
-                                Descripcion = dr["Descripcion"] == DBNull.Value ? "" : dr["Descripcion"].ToString(),
-                                StockActual = dr["StockActual"] == DBNull.Value ? 0 : Convert.ToInt32(dr["StockActual"]),
-                                StockMinimo = dr["StockMinimo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["StockMinimo"]),
-                                CostoPromedio = dr["CostoPromedio"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["CostoPromedio"]),
-                                UltimoCostoFactura = dr["UltimoCostoFactura"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["UltimoCostoFactura"]),
-                                Estado = dr["Estado"] == DBNull.Value ? true : Convert.ToBoolean(dr["Estado"])
-                            });
+                                id_producto = dr["id_producto"] != DBNull.Value ? Convert.ToInt32(dr["id_producto"]) : 0,
+                                nombre = dr["nombre"] != DBNull.Value ? dr["nombre"].ToString() : "",
+                                Descripcion = TieneColumna(dr, "Descripcion") && dr["Descripcion"] != DBNull.Value ? dr["Descripcion"].ToString() : "",
+                                StockActual = TieneColumna(dr, "StockActual") && dr["StockActual"] != DBNull.Value ? Convert.ToDecimal(dr["StockActual"]) : 0M,
+                                StockMinimo = TieneColumna(dr, "StockMinimo") && dr["StockMinimo"] != DBNull.Value ? Convert.ToDecimal(dr["StockMinimo"]) : 0M,
+                                CostoPromedio = TieneColumna(dr, "CostoPromedio") && dr["CostoPromedio"] != DBNull.Value ? Convert.ToDecimal(dr["CostoPromedio"]) : 0M,
+                                UltimoCostoFactura = TieneColumna(dr, "UltimoCostoFactura") && dr["UltimoCostoFactura"] != DBNull.Value ? Convert.ToDecimal(dr["UltimoCostoFactura"]) : 0M,
+                                Estado = TieneColumna(dr, "Estado") && dr["Estado"] != DBNull.Value ? Convert.ToBoolean(dr["Estado"]) : true,
+                                id_unidad = TieneColumna(dr, "id_unidad") && dr["id_unidad"] != DBNull.Value ? Convert.ToInt32(dr["id_unidad"]) : 0,
+                                id_marca = TieneColumna(dr, "id_marca") && dr["id_marca"] != DBNull.Value ? Convert.ToInt32(dr["id_marca"]) : 0,
+                                id_categoria = TieneColumna(dr, "id_categoria") && dr["id_categoria"] != DBNull.Value ? Convert.ToInt32(dr["id_categoria"]) : 0
+                            };
+
+                            lista.Add(prod);
                         }
                     }
-                    totalRegistros = Convert.ToInt32(outParam.Value);
+
+                    // Los parámetros de salida están disponibles después de cerrar/dispose del reader
+                    totalRegistros = outParam.Value != DBNull.Value && outParam.Value != null ? Convert.ToInt32(outParam.Value) : 0;
                 }
             }
             catch (Exception ex) { throw new Exception("Error al obtener los productos paginados: " + ex.Message, ex); }
@@ -220,7 +240,8 @@ namespace Capa_Presentacion.Datos
             return lista;
         }
 
-        public DataTable Buscar(string textoBusqueda)
+        // Búsqueda con opción para incluir inactivos (requiere que el SP acepte @incluirInactivos)
+        public DataTable Buscar(string textoBusqueda, bool incluirInactivos = false)
         {
             DataTable dt = new DataTable();
             try
@@ -230,6 +251,7 @@ namespace Capa_Presentacion.Datos
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@textoBusqueda", textoBusqueda);
+                    cmd.Parameters.AddWithValue("@incluirInactivos", incluirInactivos ? 1 : 0);
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
                         da.Fill(dt);
@@ -259,31 +281,71 @@ namespace Capa_Presentacion.Datos
             finally { Conexion.cerrar(); }
             return dt;
         }
-        public string ActualizarEstado(int id_producto, bool activar)
+
+        public L_Producto ObtenerProductoPorId(int id)
         {
-            string mensaje = "OK";
-            Conexion.abrir();
+            L_Producto p = null;
             try
             {
+                Conexion.abrir();
+                using (SqlCommand cmd = new SqlCommand("sp_ObtenerProductoPorId", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id_producto", id);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            p = new L_Producto
+                            {
+                                id_producto = dr["id_producto"] != DBNull.Value ? Convert.ToInt32(dr["id_producto"]) : 0,
+                                nombre = dr["nombre"] != DBNull.Value ? dr["nombre"].ToString() : "",
+                                Descripcion = TieneColumna(dr, "Descripcion") && dr["Descripcion"] != DBNull.Value ? dr["Descripcion"].ToString() : "",
+                                StockActual = TieneColumna(dr, "StockActual") && dr["StockActual"] != DBNull.Value ? Convert.ToDecimal(dr["StockActual"]) : 0M,
+                                StockMinimo = TieneColumna(dr, "StockMinimo") && dr["StockMinimo"] != DBNull.Value ? Convert.ToDecimal(dr["StockMinimo"]) : 10M,
+                                CostoPromedio = TieneColumna(dr, "CostoPromedio") && dr["CostoPromedio"] != DBNull.Value ? Convert.ToDecimal(dr["CostoPromedio"]) : 0M,
+                                UltimoCostoFactura = TieneColumna(dr, "UltimoCostoFactura") && dr["UltimoCostoFactura"] != DBNull.Value ? Convert.ToDecimal(dr["UltimoCostoFactura"]) : 0M,
+                                Estado = TieneColumna(dr, "Estado") && dr["Estado"] != DBNull.Value ? Convert.ToBoolean(dr["Estado"]) : true,
+                                id_unidad = TieneColumna(dr, "id_unidad") && dr["id_unidad"] != DBNull.Value ? Convert.ToInt32(dr["id_unidad"]) : 0,
+                                id_marca = TieneColumna(dr, "id_marca") && dr["id_marca"] != DBNull.Value ? Convert.ToInt32(dr["id_marca"]) : 0,
+                                id_categoria = TieneColumna(dr, "id_categoria") && dr["id_categoria"] != DBNull.Value ? Convert.ToInt32(dr["id_categoria"]) : 0,
+                                // opcionales: nombres relacionados si el SP los retorna
+                                NombreUnidad = TieneColumna(dr, "NombreUnidad") && dr["NombreUnidad"] != DBNull.Value ? dr["NombreUnidad"].ToString() : "",
+                                NombreCategoria = TieneColumna(dr, "NombreCategoria") && dr["NombreCategoria"] != DBNull.Value ? dr["NombreCategoria"].ToString() : ""
+                            };
+                        }
+                    }
+                }
+            }
+            finally { Conexion.cerrar(); }
+            return p;
+        }
+
+        public string ActualizarEstado(int id_producto, bool estado)
+        {
+            string mensaje = "";
+            try
+            {
+                Conexion.abrir();
                 using (SqlCommand cmd = new SqlCommand("sp_ActualizarEstadoProducto", Conexion.conectar))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id_producto", id_producto);
-                    cmd.Parameters.AddWithValue("@estado", activar ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@estado", estado ? 1 : 0);
                     cmd.ExecuteNonQuery();
+                    mensaje = "OK";
                 }
             }
             catch (Exception ex)
             {
                 mensaje = ex.Message;
             }
-            finally
-            {
-                Conexion.cerrar();
-            }
+            finally { Conexion.cerrar(); }
             return mensaje;
         }
-        public string ActualizarStock(int id_producto, int cantidad, string tipoMovimiento, string motivo, string usuario)
+
+        public string ActualizarStock(int id_producto, decimal cantidad, string tipoMovimiento, string motivo, string usuario,
+                               int? idLoteDestino = null, int? idCiclo = null, string nombreLoteDestino = null, string descripcionCiclo = null)
         {
             string mensaje = "";
             Conexion.abrir();
@@ -292,11 +354,23 @@ namespace Capa_Presentacion.Datos
                 using (SqlCommand cmd = new SqlCommand("sp_ActualizarStockMovimiento", Conexion.conectar))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
+
                     cmd.Parameters.AddWithValue("@id_producto", id_producto);
-                    cmd.Parameters.AddWithValue("@cantidad", cantidad);
+
+                    var pCantidad = new SqlParameter("@cantidad", SqlDbType.Decimal);
+                    pCantidad.Precision = 18;
+                    pCantidad.Scale = 4;
+                    pCantidad.Value = cantidad;
+                    cmd.Parameters.Add(pCantidad);
+
                     cmd.Parameters.AddWithValue("@tipoMovimiento", string.IsNullOrWhiteSpace(tipoMovimiento) ? (object)DBNull.Value : tipoMovimiento);
                     cmd.Parameters.AddWithValue("@motivo", string.IsNullOrWhiteSpace(motivo) ? (object)DBNull.Value : motivo);
                     cmd.Parameters.AddWithValue("@usuario", string.IsNullOrWhiteSpace(usuario) ? (object)DBNull.Value : usuario);
+
+                    cmd.Parameters.AddWithValue("@IdLoteDestino", idLoteDestino.HasValue ? (object)idLoteDestino.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IdCiclo", idCiclo.HasValue ? (object)idCiclo.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@NombreLoteDestino", string.IsNullOrWhiteSpace(nombreLoteDestino) ? (object)DBNull.Value : nombreLoteDestino);
+                    cmd.Parameters.AddWithValue("@DescripcionCiclo", string.IsNullOrWhiteSpace(descripcionCiclo) ? (object)DBNull.Value : descripcionCiclo);
 
                     SqlParameter paramResultado = new SqlParameter("@resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
                     cmd.Parameters.Add(paramResultado);
@@ -331,5 +405,63 @@ namespace Capa_Presentacion.Datos
             finally { Conexion.cerrar(); }
             return dt;
         }
+        public string SetStockDirecto(int id_producto, decimal nuevoStock, string usuario = null, string motivo = "Ajuste manual")
+        {
+            string mensaje = "";
+            Conexion.abrir();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(@"
+            BEGIN TRANSACTION;
+
+            DECLARE @stockAnterior DECIMAL(18,4);
+            SELECT @stockAnterior = ISNULL(StockActual, 0) FROM Producto WHERE id_producto = @id_producto;
+
+            UPDATE Producto
+            SET StockActual = @nuevoStock,
+                Estado = CASE WHEN @nuevoStock <= 0 THEN 0 ELSE 1 END
+            WHERE id_producto = @id_producto;
+
+            INSERT INTO StockMovimientos (IdProducto, Cantidad, StockAnterior, StockNuevo, TipoMovimiento, Motivo, Usuario)
+            VALUES (@id_producto, @cantidadMovimiento, @stockAnterior, @nuevoStock, 'Ajuste', @motivo, @usuario);
+
+            COMMIT TRANSACTION;
+        ", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@id_producto", id_producto);
+                    cmd.Parameters.AddWithValue("@nuevoStock", nuevoStock);
+                    // Cantidad en movimiento = nuevoStock - anterior (se registra con signo)
+                    // para calcularlo en C# y pasarlo:
+                    decimal cantidadMovimiento = 0;
+                    // obtener stock anterior (consultar)
+                    using (SqlCommand q = new SqlCommand("SELECT ISNULL(StockActual,0) FROM Producto WHERE id_producto = @id", Conexion.conectar))
+                    {
+                        q.Parameters.AddWithValue("@id", id_producto);
+                        object o = q.ExecuteScalar();
+                        decimal stockAnterior = o == DBNull.Value ? 0M : Convert.ToDecimal(o);
+                        cantidadMovimiento = nuevoStock - stockAnterior;
+                    }
+                    cmd.Parameters.AddWithValue("@cantidadMovimiento", cantidadMovimiento);
+                    cmd.Parameters.AddWithValue("@motivo", string.IsNullOrWhiteSpace(motivo) ? (object)DBNull.Value : motivo);
+                    cmd.Parameters.AddWithValue("@usuario", string.IsNullOrWhiteSpace(usuario) ? (object)DBNull.Value : usuario);
+
+                    cmd.ExecuteNonQuery();
+
+                    mensaje = "Stock actualizado correctamente.";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Rollback implícito si excepción; devolvemos mensaje
+                mensaje = "Error al actualizar stock: " + ex.Message;
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+            return mensaje;
+        }
     }
+
 }

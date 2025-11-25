@@ -32,7 +32,6 @@ namespace Capa_Presentacion
         private void FrmProducto_Load(object sender, EventArgs e)
         {
 
-            // Inicializar timer de búsqueda (debounce)
             searchTimer = new System.Windows.Forms.Timer();
             searchTimer.Interval = SearchDebounceMs;
             searchTimer.Tick += SearchTimer_Tick;
@@ -44,7 +43,6 @@ namespace Capa_Presentacion
                 TxtBuscar.KeyDown += TxtBuscar_KeyDown;
             }
 
-     
             if (dgvProducto != null)
             {
                 dgvProducto.CellClick += dgvProducto_CellClick;
@@ -116,27 +114,25 @@ namespace Capa_Presentacion
 
         private void BTAgregar_Click(object sender, EventArgs e)
         {
-            string mensaje = "";
             if (TxtProducto == null || string.IsNullOrWhiteSpace(TxtProducto.Text))
             {
-                MessageBox.Show("El nombre del producto no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El nombre del producto no puede estar vacío.");
                 return;
             }
 
-            L_Producto oProducto = new L_Producto() { nombre = TxtProducto.Text.Trim() };
-
-            if (productoSeleccionado == null)
+            L_Producto p = new L_Producto()
             {
-           
-                mensaje = funciones.InsertarExt(oProducto);
-            }
-            else
-            {
-                oProducto.id_producto = productoSeleccionado.id_producto;
-                mensaje = funciones.Editar(oProducto);
-            }
+                nombre = TxtProducto.Text.Trim(),
+                Descripcion = "",
+                id_categoria = 0,
+                id_unidad = 0,
+                StockMinimo = 10,
+                ControlStock = true
+            };
 
-            MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string mensaje = funciones.InsertarExt(p);
+
+            MessageBox.Show(mensaje);
             CargarProductosPaginado();
             LimpiarControles();
         }
@@ -145,24 +141,21 @@ namespace Capa_Presentacion
         {
             if (productoSeleccionado == null)
             {
-                MessageBox.Show("Selecciona un producto para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Selecciona un producto para editar.");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(TxtProducto.Text))
-            {
-                MessageBox.Show("El nombre del producto no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            L_Producto p = funciones.ObtenerProductoPorId(productoSeleccionado.id_producto);
 
-            L_Producto oProducto = new L_Producto()
-            {
-                id_producto = productoSeleccionado.id_producto,
-                nombre = TxtProducto.Text.Trim()
-            };
+            p.nombre = TxtProducto.Text.Trim();
+            // Si tienes comboboxes de categoria/unidad los asignas aquí
+            // p.id_categoria = ...
+            // p.id_unidad = ...
+            // p.ControlStock = ...
 
-            string mensaje = funciones.Editar(oProducto);
-            MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string mensaje = funciones.EditarExt(p);
+
+            MessageBox.Show(mensaje);
             CargarProductosPaginado();
             LimpiarControles();
         }
@@ -210,7 +203,6 @@ namespace Capa_Presentacion
 
                 dgvProducto.DataSource = dt;
 
-           
                 FormatearYResaltarGridDespuesDeBusqueda();
             }
             catch (Exception ex)
@@ -235,21 +227,63 @@ namespace Capa_Presentacion
 
                 foreach (DataGridViewRow row in dgvProducto.Rows)
                 {
-                    int stock = 0;
+                    decimal stock = 0M;
                     int min = 0;
 
                     if (dgvProducto.Columns.Contains("StockActual") && row.Cells["StockActual"].Value != null && row.Cells["StockActual"].Value != DBNull.Value)
-                        int.TryParse(row.Cells["StockActual"].Value.ToString(), out stock);
+                        decimal.TryParse(row.Cells["StockActual"].Value.ToString(), out stock);
 
                     if (dgvProducto.Columns.Contains("StockMinimo") && row.Cells["StockMinimo"].Value != null && row.Cells["StockMinimo"].Value != DBNull.Value)
                         int.TryParse(row.Cells["StockMinimo"].Value.ToString(), out min);
 
-                    row.DefaultCellStyle.BackColor = (stock <= min) ? Color.FromArgb(255, 200, 200) : Color.White;
+                    // Si no existe columna Estado la ignoramos, pero coloreamos
+                    bool desiredEstado = stock > 0M;
+
+                    if (stock <= 0M)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 200, 200);
+                    }
+                    else
+                    {
+                        if (min > 0 && stock <= min)
+                            row.DefaultCellStyle.BackColor = Color.FromArgb(255, 230, 230);
+                        else
+                            row.DefaultCellStyle.BackColor = Color.White;
+                    }
+
+                    // Sincronizar estado en BD solo si hay columna Estado y existe id_producto
+                    if (dgvProducto.Columns.Contains("Estado") && row.Cells["id_producto"].Value != null)
+                    {
+                        bool currentEstado = true;
+                        object cellVal = row.Cells["Estado"].Value;
+                        if (cellVal == null || cellVal == DBNull.Value) currentEstado = true;
+                        else
+                        {
+                            bool.TryParse(cellVal.ToString(), out currentEstado);
+                        }
+
+                        int id = Convert.ToInt32(row.Cells["id_producto"].Value);
+
+                        if (currentEstado != desiredEstado)
+                        {
+                            // hacemos la actualización en BD (solo cambia el flag Estado, no borramos)
+                            try
+                            {
+                                string resp = funciones.ActualizarEstado(id, desiredEstado);
+                                // actualizar celda visual
+                                row.Cells["Estado"].Value = desiredEstado;
+                            }
+                            catch
+                            {
+                                // si falla, lo ignoramos para no romper la interfaz; podrías loguearlo
+                            }
+                        }
+                    }
                 }
             }
             catch
             {
-              
+                // no bloqueante
             }
         }
 
@@ -302,7 +336,6 @@ namespace Capa_Presentacion
         {
             if (abiertoDesdeBtProducto)
             {
-
                 MessageBox.Show("No se puede cerrar porque fue abierto desde BtProducto.");
                 e.Cancel = true;
             }
@@ -328,88 +361,50 @@ namespace Capa_Presentacion
 
         private void dgvProducto_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            try
-            {
-                if (dgvProducto == null) return;
-
-                if (dgvProducto.Columns.Contains("StockActual"))
-                    dgvProducto.Columns["StockActual"].DefaultCellStyle.Format = "N0";
-                if (dgvProducto.Columns.Contains("StockMinimo"))
-                    dgvProducto.Columns["StockMinimo"].DefaultCellStyle.Format = "N0";
-                if (dgvProducto.Columns.Contains("CostoPromedio"))
-                    dgvProducto.Columns["CostoPromedio"].DefaultCellStyle.Format = "N2";
-                if (dgvProducto.Columns.Contains("UltimoCostoFactura"))
-                    dgvProducto.Columns["UltimoCostoFactura"].DefaultCellStyle.Format = "N2";
-
-                foreach (DataGridViewRow row in dgvProducto.Rows)
-                {
-                    int stock = 0;
-                    int min = 0;
-
-                    if (dgvProducto.Columns.Contains("StockActual") && row.Cells["StockActual"].Value != null && row.Cells["StockActual"].Value != DBNull.Value)
-                        int.TryParse(row.Cells["StockActual"].Value.ToString(), out stock);
-
-                    if (dgvProducto.Columns.Contains("StockMinimo") && row.Cells["StockMinimo"].Value != null && row.Cells["StockMinimo"].Value != DBNull.Value)
-                        int.TryParse(row.Cells["StockMinimo"].Value.ToString(), out min);
-
-                    row.DefaultCellStyle.BackColor = (stock <= min) ? Color.FromArgb(255, 200, 200) : Color.White;
-                }
-            }
-            catch
-            {
-                // no bloqueante
-            }
+            FormatearYResaltarGridDespuesDeBusqueda();
 
         }
 
         private void dgvProducto_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow row = dgvProducto.Rows[e.RowIndex];
+            if (row.Cells["id_producto"].Value == null) return;
+
+            int id = Convert.ToInt32(row.Cells["id_producto"].Value);
+            L_Producto p = new L_Producto();
+            p.id_producto = id;
+
+            string col = dgvProducto.Columns[e.ColumnIndex].Name;
+
+            switch (col)
             {
-                if (e.RowIndex < 0) return;
-                DataGridViewRow row = dgvProducto.Rows[e.RowIndex];
+                case "StockMinimo":
+                    if (decimal.TryParse(row.Cells[col].Value?.ToString(), out decimal nuevoMin))
+                        p.StockMinimo = nuevoMin;
+                    break;
 
-                if (row.Cells["id_producto"].Value == null) return;
-                int id = Convert.ToInt32(row.Cells["id_producto"].Value);
+                case "Estado":
+                    if (bool.TryParse(row.Cells[col].Value?.ToString(), out bool nuevoEstado))
+                        p.Estado = nuevoEstado;
+                    break;
 
-                // Si editó StockMinimo
-                if (dgvProducto.Columns[e.ColumnIndex].Name == "StockMinimo")
-                {
-                    int nuevoMin = 0;
-                    if (!int.TryParse(row.Cells["StockMinimo"].Value?.ToString(), out nuevoMin) || nuevoMin < 0)
-                    {
-                        MessageBox.Show("Stock mínimo inválido. Debe ser un número entero mayor o igual a 0.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CargarProductosPaginado();
-                        return;
-                    }
+                case "ControlStock":
+                    if (bool.TryParse(row.Cells[col].Value?.ToString(), out bool controlStockVal))
+                        p.ControlStock = controlStockVal;
+                    break;
 
-                    L_Producto p = new L_Producto { id_producto = id, StockMinimo = nuevoMin };
-                    string mensaje = funciones.EditarExt(p);
-                    MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    // refrescar
-                    CargarProductosPaginado();
-                    return;
-                }
-
-                // Si editó Estado (checkbox)
-                if (dgvProducto.Columns[e.ColumnIndex].Name == "Estado")
-                {
-                    bool nuevoEstado = false;
-                    if (bool.TryParse(row.Cells["Estado"].Value?.ToString(), out nuevoEstado))
-                    {
-                        L_Producto p = new L_Producto { id_producto = id, Estado = nuevoEstado };
-                        string mensaje = funciones.EditarExt(p);
-                        MessageBox.Show(mensaje, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CargarProductosPaginado();
-                        return;
-                    }
-                }
+                case "NombreCategoria":
+                case "id_categoria":
+                    if (int.TryParse(row.Cells["id_categoria"].Value?.ToString(), out int idcat))
+                        p.id_categoria = idcat;
+                    break;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al guardar cambios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                CargarProductosPaginado();
-            }
+
+            string mensaje = funciones.EditarExt(p);
+            MessageBox.Show(mensaje);
+            CargarProductosPaginado();
         }
 
         private void dgvProducto_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -423,8 +418,8 @@ namespace Capa_Presentacion
                 id_producto = Convert.ToInt32(row.Cells["id_producto"].Value),
                 nombre = row.Cells["nombre"].Value?.ToString() ?? "",
                 Descripcion = row.Cells["Descripcion"].Value?.ToString() ?? "",
-                StockActual = row.Cells["StockActual"].Value == DBNull.Value ? 0 : Convert.ToInt32(row.Cells["StockActual"].Value),
-                StockMinimo = row.Cells["StockMinimo"].Value == DBNull.Value ? 0 : Convert.ToInt32(row.Cells["StockMinimo"].Value),
+                StockActual = row.Cells["StockActual"].Value == DBNull.Value ? 0 : Convert.ToDecimal(row.Cells["StockActual"].Value),
+                StockMinimo = row.Cells["StockMinimo"].Value == DBNull.Value ? 0 : Convert.ToDecimal(row.Cells["StockMinimo"].Value),
                 Estado = row.Cells["Estado"].Value == DBNull.Value ? true : Convert.ToBoolean(row.Cells["Estado"].Value)
             };
 
