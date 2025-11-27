@@ -34,6 +34,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.cbactividad = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.BTCancelar = new FontAwesome.Sharp.IconButton();
             this.label8 = new System.Windows.Forms.Label();
             this.BTAgregar = new FontAwesome.Sharp.IconButton();
@@ -57,6 +58,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtcantolvadas = new System.Windows.Forms.TextBox();
+            this.txtobservacion = new System.Windows.Forms.TextBox();
             this.txthoraextras = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TxtTotalPagina = new System.Windows.Forms.TextBox();
@@ -71,8 +73,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.TxtBuscar = new System.Windows.Forms.TextBox();
             this.CmbBuscar = new System.Windows.Forms.ComboBox();
-            this.txtobservacion = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.GroupBoxJustificacion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -158,6 +158,18 @@
             this.label13.TabIndex = 45;
             this.label13.Text = "Actividad";
             // 
+            // label9
+            // 
+            this.label9.AllowDrop = true;
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(1184, 242);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(137, 27);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Observacion";
+            // 
             // BTCancelar
             // 
             this.BTCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -236,7 +248,7 @@
             this.GroupBoxJustificacion.Size = new System.Drawing.Size(365, 169);
             this.GroupBoxJustificacion.TabIndex = 14;
             this.GroupBoxJustificacion.TabStop = false;
-            this.GroupBoxJustificacion.Text = "Justificacion";
+            this.GroupBoxJustificacion.Text = "Justificación";
             // 
             // chekninguno
             // 
@@ -435,6 +447,16 @@
             this.txtcantolvadas.TextChanged += new System.EventHandler(this.txtcantolvadas_TextChanged);
             this.txtcantolvadas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtcantolvadas_KeyPress);
             // 
+            // txtobservacion
+            // 
+            this.txtobservacion.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtobservacion.Location = new System.Drawing.Point(1189, 274);
+            this.txtobservacion.Margin = new System.Windows.Forms.Padding(4);
+            this.txtobservacion.Multiline = true;
+            this.txtobservacion.Name = "txtobservacion";
+            this.txtobservacion.Size = new System.Drawing.Size(259, 32);
+            this.txtobservacion.TabIndex = 2;
+            // 
             // txthoraextras
             // 
             this.txthoraextras.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -614,9 +636,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(8, 391);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(118, 26);
+            this.label10.Size = new System.Drawing.Size(119, 26);
             this.label10.TabIndex = 109;
-            this.label10.Text = "Buscar Por:";
+            this.label10.Text = "Buscar por:";
             // 
             // TxtBuscar
             // 
@@ -639,28 +661,6 @@
             this.CmbBuscar.Name = "CmbBuscar";
             this.CmbBuscar.Size = new System.Drawing.Size(276, 38);
             this.CmbBuscar.TabIndex = 107;
-            // 
-            // txtobservacion
-            // 
-            this.txtobservacion.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtobservacion.Location = new System.Drawing.Point(1189, 274);
-            this.txtobservacion.Margin = new System.Windows.Forms.Padding(4);
-            this.txtobservacion.Multiline = true;
-            this.txtobservacion.Name = "txtobservacion";
-            this.txtobservacion.Size = new System.Drawing.Size(259, 32);
-            this.txtobservacion.TabIndex = 2;
-            // 
-            // label9
-            // 
-            this.label9.AllowDrop = true;
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(1184, 242);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(137, 27);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "Observacion";
             // 
             // FrmAsistencia
             // 

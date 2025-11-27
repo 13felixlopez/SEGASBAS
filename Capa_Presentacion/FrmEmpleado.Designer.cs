@@ -238,7 +238,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 24);
             this.label4.TabIndex = 35;
-            this.label4.Text = "Telefono:";
+            this.label4.Text = "Teléfono:";
             // 
             // TxtTelefono
             // 
@@ -259,7 +259,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(95, 24);
             this.label3.TabIndex = 33;
-            this.label3.Text = "Direccion:";
+            this.label3.Text = "Dirección:";
             // 
             // TxtDireccion
             // 
@@ -320,9 +320,9 @@
             this.LBSalario.Font = new System.Drawing.Font("Microsoft YaHei", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LBSalario.Location = new System.Drawing.Point(313, 238);
             this.LBSalario.Name = "LBSalario";
-            this.LBSalario.Size = new System.Drawing.Size(126, 24);
+            this.LBSalario.Size = new System.Drawing.Size(139, 24);
             this.LBSalario.TabIndex = 20;
-            this.LBSalario.Text = "Salario X/Dia:";
+            this.LBSalario.Text = "Salario por día:";
             // 
             // LbCedula
             // 
@@ -332,7 +332,7 @@
             this.LbCedula.Name = "LbCedula";
             this.LbCedula.Size = new System.Drawing.Size(74, 24);
             this.LbCedula.TabIndex = 19;
-            this.LbCedula.Text = "Cedula:";
+            this.LbCedula.Text = "Cédula:";
             // 
             // checCatorcenal
             // 
@@ -421,7 +421,7 @@
             this.LbObservacion.Name = "LbObservacion";
             this.LbObservacion.Size = new System.Drawing.Size(121, 24);
             this.LbObservacion.TabIndex = 21;
-            this.LbObservacion.Text = "Observacion:";
+            this.LbObservacion.Text = "Observación:";
             // 
             // GBTipobeneficio
             // 
@@ -736,9 +736,9 @@
             this.label7.Font = new System.Drawing.Font("Microsoft YaHei", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(15, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(104, 24);
+            this.label7.Size = new System.Drawing.Size(105, 24);
             this.label7.TabIndex = 51;
-            this.label7.Text = "Buscar Por:";
+            this.label7.Text = "Buscar por:";
             // 
             // FrmEmpleado
             // 

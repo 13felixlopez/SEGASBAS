@@ -6,17 +6,18 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Capa_Presentacion
 {
     public partial class FrmAsistencia : Form
     {
-
         //private CN_Asistencia objNegocio = new CN_Asistencia();
         private L_Asistencia asistenciaSeleccionada;
         private int paginaActual = 1;
         private int tamanoPagina = 10;
         private int totalRegistros = 0;
+
         public FrmAsistencia()
         {
             InitializeComponent();
@@ -25,17 +26,30 @@ namespace Capa_Presentacion
             Cb_estado.DropDownStyle = ComboBoxStyle.DropDownList;
             cbactividad.SelectedIndexChanged += new EventHandler(cbactividad_SelectedIndexChanged);
             txtcantolvadas.Enabled = false;
+            foreach (var cb in GroupBoxJustificacion.Controls.OfType<CheckBox>())
+            {
+                cb.CheckedChanged += CheckBoxJustificacion_Exclusive_CheckedChanged;
+            }
+
+            CbCargo.Enabled = true;
+            Cb_estado.SelectedIndexChanged += Cb_estado_SelectedIndexChanged;
+         
+          
 
         }
-
-
-
+       
         private void FrmAsistencia_Load(object sender, EventArgs e)
         {
             LlenarComboBoxes();
             ConfigurarDataGridView();
             CargarAsistencias();
             LimpiarControles();
+            txtobservacion.Visible = false;
+            label9.Visible= false;
+            ConfiguracionVisual.CargarModoDesdeBD(); 
+
+
+
         }
 
         private void LlenarComboBoxes()
@@ -142,6 +156,7 @@ namespace Capa_Presentacion
             BTEditar.Enabled = false;
             BTEliminar.Enabled = false;
             Cb_Nombre.Enabled = true;
+            CbCargo.Enabled = true;
 
             ActualizarHabilitacionControles();
         }
@@ -156,7 +171,12 @@ namespace Capa_Presentacion
         }
         private void Cb_estado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool esAusente = Cb_estado.SelectedItem?.ToString() == "Ausente";
+            bool esAusente = string.Equals(Cb_estado.SelectedItem?.ToString(), "Ausente", StringComparison.OrdinalIgnoreCase);
+            CbCargo.Enabled = !esAusente;
+            cbactividad.Enabled = !esAusente;
+            CMBLote.Enabled = !esAusente;
+            txthoraextras.Enabled = !esAusente;
+
             GroupBoxJustificacion.Enabled = esAusente;
             txtobservacion.Enabled = esAusente;
 
@@ -168,35 +188,43 @@ namespace Capa_Presentacion
                 }
                 txtobservacion.Clear();
             }
-
-
-            cbactividad.Enabled = !esAusente;
-            CMBLote.Enabled = !esAusente;
-            txtcantolvadas.Enabled = !esAusente;
-            txthoraextras.Enabled = !esAusente;
-
-
             if (!cbactividad.Enabled) cbactividad.SelectedIndex = -1;
             if (!CMBLote.Enabled) CMBLote.SelectedIndex = -1;
-            if (!txtcantolvadas.Enabled) txtcantolvadas.Clear();
+            if (!CbCargo.Enabled) CbCargo.SelectedIndex = -1;
             if (!txthoraextras.Enabled) txthoraextras.Clear();
+            if (!txtcantolvadas.Enabled) txtcantolvadas.Clear();
 
             ActualizarHabilitacionControles();
         }
+        private void CheckBoxJustificacion_Exclusive_CheckedChanged(object sender, EventArgs e)
+        {
+            var cb = sender as CheckBox;
+            if (cb == null) return;
+            if (cb.Checked)
+            {
+                foreach (var other in GroupBoxJustificacion.Controls.OfType<CheckBox>())
+                {
+                    if (!object.ReferenceEquals(other, cb))
+                    {
+                        other.Checked = false;
+                    }
+                }
+
+            }
+            else
+            {
+                bool algunMarcado = GroupBoxJustificacion.Controls.OfType<CheckBox>().Any(x => x.Checked);
+                txtobservacion.Enabled = !algunMarcado && (Cb_estado.SelectedItem?.ToString() == "Ausente");
+            }
+        }
         private void ActualizarHabilitacionControles()
         {
-            bool esAusente = Cb_estado.SelectedItem?.ToString() == "Ausente";
+            bool esAusente = string.Equals(Cb_estado.SelectedItem?.ToString(), "Ausente", StringComparison.OrdinalIgnoreCase);
 
             GroupBoxJustificacion.Enabled = esAusente;
-            txtobservacion.Enabled = esAusente;
-
+            txtobservacion.Enabled = esAusente && !GroupBoxJustificacion.Controls.OfType<CheckBox>().Any(cb => cb.Checked);
             if (esAusente)
             {
-                foreach (CheckBox cb in GroupBoxJustificacion.Controls.OfType<CheckBox>())
-                {
-                    cb.Checked = false;
-                }
-                txtobservacion.Clear();
                 cbactividad.SelectedIndex = -1;
                 CMBLote.SelectedIndex = -1;
                 txtcantolvadas.Clear();
@@ -205,22 +233,19 @@ namespace Capa_Presentacion
                 cbactividad.Enabled = false;
                 CMBLote.Enabled = false;
                 txthoraextras.Enabled = false;
-                txtcantolvadas.Enabled = false; 
+                txtcantolvadas.Enabled = false;
+                CbCargo.Enabled = false;
 
                 return;
             }
 
-
-
-
             cbactividad.Enabled = true;
             CMBLote.Enabled = true;
             txthoraextras.Enabled = true;
+            CbCargo.Enabled = true;
 
-  
             bool habilitarTolvadas = EsActividadDeCosecha();
-
-            txtcantolvadas.Enabled = habilitarTolvadas; 
+            txtcantolvadas.Enabled = habilitarTolvadas;
 
             if (!habilitarTolvadas)
             {
@@ -234,7 +259,6 @@ namespace Capa_Presentacion
                 return false;
             }
 
-            
             string nombreActividad = cbactividad.Text;
 
             if (string.IsNullOrEmpty(nombreActividad))
@@ -244,7 +268,6 @@ namespace Capa_Presentacion
 
             string actividad = nombreActividad.ToLower();
 
-           
             return actividad.Contains("corte") ||
                    actividad.Contains("cortando") ||
                    actividad.Contains("cosechando");
@@ -272,39 +295,38 @@ namespace Capa_Presentacion
                 return;
             }
 
-     
             if (estado == "Ausente")
             {
-               
-                justificacion = string.Join(", ", GroupBoxJustificacion.Controls.OfType<CheckBox>().Where(cb => cb.Checked).Select(cb => cb.Text));
+                bool algunaJustificacionMarcada = GroupBoxJustificacion.Controls
+                    .OfType<CheckBox>()
+                    .Any(cb => cb.Checked);
 
+                bool tieneObservacionTexto = !string.IsNullOrWhiteSpace(txtobservacion.Text);
 
-                if (string.IsNullOrEmpty(justificacion))
+                if (!algunaJustificacionMarcada && !tieneObservacionTexto)
                 {
-                    justificacion = txtobservacion.Text.Trim();
+                    MessageBox.Show("Debe seleccionar una justificación  cuando el estado es 'Ausente'.",
+                        "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    return; 
                 }
             }
-
 
             L_Asistencia oAsistencia = new L_Asistencia()
             {
                 IDEmpleado = (int)Cb_Nombre.SelectedValue,
-             
                 IDActividad = estado != "Ausente" && cbactividad.SelectedValue != null ? (int?)cbactividad.SelectedValue : null,
                 IDLote = CMBLote.SelectedValue != null ? (int?)CMBLote.SelectedValue : null,
                 IDCargo = CbCargo.SelectedValue != null ? (int?)CbCargo.SelectedValue : null,
                 Estado = estado,
                 Justificacion = justificacion,
-               
                 Tolvadas = string.IsNullOrEmpty(txtcantolvadas.Text) ? (decimal?)null : Convert.ToDecimal(txtcantolvadas.Text),
                 HorasExtras = string.IsNullOrEmpty(txthoraextras.Text) ? (decimal?)null : Convert.ToDecimal(txthoraextras.Text),
-               
                 Fecha = dateTimePicker1.Value.Date
             };
 
             if (asistenciaSeleccionada == null)
             {
-                
                 if (funciones.VerificarDobleAsistencia(oAsistencia.IDEmpleado, oAsistencia.Fecha))
                 {
                     MessageBox.Show("¡Error! El empleado **" + Cb_Nombre.Text + "** ya tiene registrada una asistencia para la fecha: **" + oAsistencia.Fecha.ToShortDateString() + "**.",
@@ -312,7 +334,6 @@ namespace Capa_Presentacion
                     return;
                 }
 
-       
                 if (funciones.InsertarAsistencia(oAsistencia, out mensaje))
                 {
                     MessageBox.Show("Asistencia guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -324,11 +345,10 @@ namespace Capa_Presentacion
                     MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else 
+            else
             {
                 oAsistencia.IDAsistencia = asistenciaSeleccionada.IDAsistencia;
 
-                
                 if (funciones.EditarAsistencia(oAsistencia, out mensaje))
                 {
                     MessageBox.Show("Asistencia actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -349,7 +369,6 @@ namespace Capa_Presentacion
 
         private void BTEliminar_Click(object sender, EventArgs e)
         {
-
             if (asistenciaSeleccionada != null)
             {
                 if (MessageBox.Show("¿Está seguro de que desea eliminar esta asistencia?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -368,6 +387,7 @@ namespace Capa_Presentacion
                     }
                 }
             }
+        
         }
 
         private void DatagreedAsistencia_CellContentClick(object sender, DataGridViewCellEventArgs e)

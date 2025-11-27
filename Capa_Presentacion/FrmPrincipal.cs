@@ -41,13 +41,13 @@ namespace Capa_Presentacion
         {
 
             PanelCatalogo.Visible = !PanelCatalogo.Visible;
-            if (BT_Catalogo.Text == "Catalogo 🔽")
+            if (BT_Catalogo.Text == "Catálogo  🔽")
             {
-                BT_Catalogo.Text = "Catalogo 🔼";
+                BT_Catalogo.Text = "Catálogo 🔼";
             }
             else
             {
-                BT_Catalogo.Text = "Catalogo 🔽";
+                BT_Catalogo.Text = "Catálogo 🔽";
             }
         }
 

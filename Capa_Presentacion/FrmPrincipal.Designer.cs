@@ -111,6 +111,8 @@
             this.iconButton3.Size = new System.Drawing.Size(240, 41);
             this.iconButton3.TabIndex = 34;
             this.iconButton3.Text = "Salidas";
+            this.iconButton3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.iconButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.iconButton3.UseVisualStyleBackColor = true;
             this.iconButton3.Click += new System.EventHandler(this.iconButton3_Click);
             // 
@@ -132,6 +134,8 @@
             this.Bt_Compra.Size = new System.Drawing.Size(240, 41);
             this.Bt_Compra.TabIndex = 33;
             this.Bt_Compra.Text = "Compras";
+            this.Bt_Compra.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Bt_Compra.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Bt_Compra.UseVisualStyleBackColor = true;
             this.Bt_Compra.Click += new System.EventHandler(this.Bt_Compra_Click);
             // 
@@ -153,6 +157,8 @@
             this.BtUsuario.Size = new System.Drawing.Size(240, 41);
             this.BtUsuario.TabIndex = 32;
             this.BtUsuario.Text = "Usuarios";
+            this.BtUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtUsuario.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BtUsuario.UseVisualStyleBackColor = true;
             this.BtUsuario.Click += new System.EventHandler(this.BtUsuario_Click);
             // 
@@ -174,6 +180,8 @@
             this.BtReporte.Size = new System.Drawing.Size(240, 53);
             this.BtReporte.TabIndex = 31;
             this.BtReporte.Text = "Reportes";
+            this.BtReporte.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtReporte.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BtReporte.UseVisualStyleBackColor = true;
             this.BtReporte.Click += new System.EventHandler(this.BtReporte_Click);
             // 
@@ -195,6 +203,8 @@
             this.BtPlanilla.Size = new System.Drawing.Size(240, 53);
             this.BtPlanilla.TabIndex = 30;
             this.BtPlanilla.Text = "Planilla";
+            this.BtPlanilla.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtPlanilla.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BtPlanilla.UseVisualStyleBackColor = true;
             this.BtPlanilla.Click += new System.EventHandler(this.BtPlanilla_Click);
             // 
@@ -228,12 +238,14 @@
             this.BtProveedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtProveedor.IconSize = 40;
             this.BtProveedor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtProveedor.Location = new System.Drawing.Point(19, 379);
+            this.BtProveedor.Location = new System.Drawing.Point(24, 177);
             this.BtProveedor.Margin = new System.Windows.Forms.Padding(4);
             this.BtProveedor.Name = "BtProveedor";
             this.BtProveedor.Size = new System.Drawing.Size(216, 44);
             this.BtProveedor.TabIndex = 13;
             this.BtProveedor.Text = "Proveedor";
+            this.BtProveedor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtProveedor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BtProveedor.UseVisualStyleBackColor = true;
             this.BtProveedor.Click += new System.EventHandler(this.BtProveedor_Click);
             // 
@@ -248,12 +260,14 @@
             this.btcargo.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btcargo.IconSize = 40;
             this.btcargo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btcargo.Location = new System.Drawing.Point(19, 233);
+            this.btcargo.Location = new System.Drawing.Point(24, 331);
             this.btcargo.Margin = new System.Windows.Forms.Padding(4);
             this.btcargo.Name = "btcargo";
-            this.btcargo.Size = new System.Drawing.Size(213, 44);
+            this.btcargo.Size = new System.Drawing.Size(205, 44);
             this.btcargo.TabIndex = 11;
             this.btcargo.Text = "Cargos";
+            this.btcargo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btcargo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btcargo.UseVisualStyleBackColor = true;
             this.btcargo.Click += new System.EventHandler(this.btcargo_Click);
             // 
@@ -274,6 +288,7 @@
             this.btActividades.Size = new System.Drawing.Size(219, 50);
             this.btActividades.TabIndex = 10;
             this.btActividades.Text = "Actividades";
+            this.btActividades.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btActividades.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btActividades.UseVisualStyleBackColor = true;
             this.btActividades.Click += new System.EventHandler(this.btActividades_Click);
@@ -289,12 +304,14 @@
             this.BtUnidaddemedida.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtUnidaddemedida.IconSize = 40;
             this.BtUnidaddemedida.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtUnidaddemedida.Location = new System.Drawing.Point(16, 284);
+            this.BtUnidaddemedida.Location = new System.Drawing.Point(19, 64);
             this.BtUnidaddemedida.Margin = new System.Windows.Forms.Padding(4);
             this.BtUnidaddemedida.Name = "BtUnidaddemedida";
             this.BtUnidaddemedida.Size = new System.Drawing.Size(216, 44);
             this.BtUnidaddemedida.TabIndex = 9;
             this.BtUnidaddemedida.Text = "U/Medida";
+            this.BtUnidaddemedida.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtUnidaddemedida.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BtUnidaddemedida.UseVisualStyleBackColor = true;
             this.BtUnidaddemedida.Click += new System.EventHandler(this.BtUnidaddemedida_Click);
             // 
@@ -309,10 +326,10 @@
             this.BtProducto.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtProducto.IconSize = 40;
             this.BtProducto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtProducto.Location = new System.Drawing.Point(16, 65);
+            this.BtProducto.Location = new System.Drawing.Point(24, 116);
             this.BtProducto.Margin = new System.Windows.Forms.Padding(4);
             this.BtProducto.Name = "BtProducto";
-            this.BtProducto.Size = new System.Drawing.Size(216, 53);
+            this.BtProducto.Size = new System.Drawing.Size(214, 53);
             this.BtProducto.TabIndex = 7;
             this.BtProducto.Text = "Productos";
             this.BtProducto.UseVisualStyleBackColor = true;
@@ -329,12 +346,14 @@
             this.BtCiclos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtCiclos.IconSize = 40;
             this.BtCiclos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtCiclos.Location = new System.Drawing.Point(19, 336);
+            this.BtCiclos.Location = new System.Drawing.Point(24, 383);
             this.BtCiclos.Margin = new System.Windows.Forms.Padding(4);
             this.BtCiclos.Name = "BtCiclos";
-            this.BtCiclos.Size = new System.Drawing.Size(219, 46);
+            this.BtCiclos.Size = new System.Drawing.Size(214, 46);
             this.BtCiclos.TabIndex = 8;
             this.BtCiclos.Text = "Ciclo";
+            this.BtCiclos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtCiclos.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BtCiclos.UseVisualStyleBackColor = true;
             this.BtCiclos.Click += new System.EventHandler(this.BtCiclos_Click);
             // 
@@ -349,12 +368,12 @@
             this.BtCategoria.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtCategoria.IconSize = 40;
             this.BtCategoria.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtCategoria.Location = new System.Drawing.Point(16, 126);
+            this.BtCategoria.Location = new System.Drawing.Point(19, 229);
             this.BtCategoria.Margin = new System.Windows.Forms.Padding(4);
             this.BtCategoria.Name = "BtCategoria";
             this.BtCategoria.Size = new System.Drawing.Size(216, 44);
             this.BtCategoria.TabIndex = 6;
-            this.BtCategoria.Text = "Categoria";
+            this.BtCategoria.Text = "categoría";
             this.BtCategoria.UseVisualStyleBackColor = true;
             this.BtCategoria.Click += new System.EventHandler(this.BtCategoria_Click);
             // 
@@ -369,12 +388,14 @@
             this.BtMarcas.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BtMarcas.IconSize = 40;
             this.BtMarcas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtMarcas.Location = new System.Drawing.Point(13, 177);
+            this.BtMarcas.Location = new System.Drawing.Point(24, 281);
             this.BtMarcas.Margin = new System.Windows.Forms.Padding(4);
             this.BtMarcas.Name = "BtMarcas";
-            this.BtMarcas.Size = new System.Drawing.Size(225, 42);
+            this.BtMarcas.Size = new System.Drawing.Size(214, 42);
             this.BtMarcas.TabIndex = 5;
             this.BtMarcas.Text = "Marcas";
+            this.BtMarcas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtMarcas.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BtMarcas.UseVisualStyleBackColor = true;
             this.BtMarcas.Click += new System.EventHandler(this.BtMarcas_Click);
             // 
@@ -395,7 +416,7 @@
             this.BT_Catalogo.Name = "BT_Catalogo";
             this.BT_Catalogo.Size = new System.Drawing.Size(240, 52);
             this.BT_Catalogo.TabIndex = 26;
-            this.BT_Catalogo.Text = "Catalogo 🔽";
+            this.BT_Catalogo.Text = "Catálogo  🔽";
             this.BT_Catalogo.UseVisualStyleBackColor = true;
             this.BT_Catalogo.Click += new System.EventHandler(this.BT_Catalogo_Click);
             // 
@@ -417,6 +438,8 @@
             this.BtLotes.Size = new System.Drawing.Size(240, 54);
             this.BtLotes.TabIndex = 22;
             this.BtLotes.Text = "Lotes";
+            this.BtLotes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtLotes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BtLotes.UseVisualStyleBackColor = true;
             this.BtLotes.Click += new System.EventHandler(this.BtLotes_Click);
             // 
@@ -438,6 +461,7 @@
             this.BT_Empleado.Size = new System.Drawing.Size(240, 62);
             this.BT_Empleado.TabIndex = 21;
             this.BT_Empleado.Text = "Empleados";
+            this.BT_Empleado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BT_Empleado.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.BT_Empleado.UseVisualStyleBackColor = true;
             this.BT_Empleado.Click += new System.EventHandler(this.BT_Empleado_Click);
@@ -622,7 +646,7 @@
             this.BtInformacion.Name = "BtInformacion";
             this.BtInformacion.Size = new System.Drawing.Size(181, 43);
             this.BtInformacion.TabIndex = 1;
-            this.BtInformacion.Text = "Informacion";
+            this.BtInformacion.Text = " Información";
             this.BtInformacion.UseVisualStyleBackColor = true;
             this.BtInformacion.Click += new System.EventHandler(this.BtInformacion_Click);
             // 
@@ -635,7 +659,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(181, 43);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Respalado";
+            this.button1.Text = "Respaldo";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
