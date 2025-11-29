@@ -173,7 +173,7 @@
             // BTCancelar
             // 
             this.BTCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTCancelar.BackColor = System.Drawing.Color.Orange;
+            this.BTCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.BTCancelar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTCancelar.ForeColor = System.Drawing.Color.White;
             this.BTCancelar.IconChar = FontAwesome.Sharp.IconChar.CircleXmark;
@@ -573,14 +573,14 @@
             // BTEditar
             // 
             this.BTEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTEditar.BackColor = System.Drawing.Color.MediumBlue;
+            this.BTEditar.BackColor = System.Drawing.Color.Green;
             this.BTEditar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTEditar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BTEditar.IconChar = FontAwesome.Sharp.IconChar.Pencil;
             this.BTEditar.IconColor = System.Drawing.Color.White;
             this.BTEditar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BTEditar.IconSize = 30;
-            this.BTEditar.Location = new System.Drawing.Point(1139, 752);
+            this.BTEditar.Location = new System.Drawing.Point(1143, 752);
             this.BTEditar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTEditar.Name = "BTEditar";
             this.BTEditar.Size = new System.Drawing.Size(153, 46);
@@ -600,7 +600,7 @@
             this.BTEliminar.IconColor = System.Drawing.Color.White;
             this.BTEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.BTEliminar.IconSize = 30;
-            this.BTEliminar.Location = new System.Drawing.Point(1297, 751);
+            this.BTEliminar.Location = new System.Drawing.Point(1302, 752);
             this.BTEliminar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTEliminar.Name = "BTEliminar";
             this.BTEliminar.Size = new System.Drawing.Size(156, 46);
@@ -650,6 +650,7 @@
             this.TxtBuscar.Size = new System.Drawing.Size(288, 34);
             this.TxtBuscar.TabIndex = 108;
             this.TxtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
+            this.TxtBuscar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtBuscar_KeyDown);
             this.TxtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBuscar_KeyPress);
             // 
             // CmbBuscar
@@ -661,6 +662,7 @@
             this.CmbBuscar.Name = "CmbBuscar";
             this.CmbBuscar.Size = new System.Drawing.Size(276, 38);
             this.CmbBuscar.TabIndex = 107;
+            this.CmbBuscar.SelectedIndexChanged += new System.EventHandler(this.CmbBuscar_SelectedIndexChanged);
             // 
             // FrmAsistencia
             // 

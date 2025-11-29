@@ -4,9 +4,10 @@ using Datos;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace Capa_Presentacion
 {
@@ -46,8 +47,23 @@ namespace Capa_Presentacion
             LimpiarControles();
             txtobservacion.Visible = false;
             label9.Visible= false;
-            ConfiguracionVisual.CargarModoDesdeBD(); 
+            ConfiguracionVisual.CargarModoDesdeBD();
+            CmbBuscar.Items.Clear();
+            CmbBuscar.Items.Add("Todo");
+            CmbBuscar.Items.Add("Empleado");
+            CmbBuscar.Items.Add("Cedula");
+            CmbBuscar.Items.Add("Actividad");
+            CmbBuscar.Items.Add("Lote");
+            CmbBuscar.Items.Add("Cargo");
+            CmbBuscar.Items.Add("Estado");
+            CmbBuscar.Items.Add("Fecha");
+            CmbBuscar.SelectedIndex = 0; 
 
+            TxtBuscar.TextChanged += TxtBuscar_TextChanged;
+            CmbBuscar.SelectedIndexChanged += CmbBuscar_SelectedIndexChanged;
+
+        
+            BuscarAsistencia();
 
 
         }
@@ -492,9 +508,17 @@ namespace Capa_Presentacion
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(TxtBuscar.Text))
+            string campo = (CmbBuscar.SelectedItem != null) ? CmbBuscar.SelectedItem.ToString() : "Todo";
+
+            if (campo.Equals("Fecha", StringComparison.OrdinalIgnoreCase))
             {
-                CargarAsistencias();
+              
+                BuscarAsistencia(false);
+            }
+            else
+            {
+         
+                BuscarAsistencia(false);
             }
         }
 
@@ -551,6 +575,93 @@ namespace Capa_Presentacion
             {
                
                 LimpiarControles();
+            }
+        }
+        private void BuscarAsistencia(bool mostrarErrores = true)
+        {
+            string campo = (CmbBuscar.SelectedItem != null) ? CmbBuscar.SelectedItem.ToString() : "Todo";
+            string texto = TxtBuscar.Text.Trim();
+
+            if (campo.Equals("Fecha", StringComparison.OrdinalIgnoreCase) && string.IsNullOrWhiteSpace(texto))
+            {
+                return;
+            }
+
+
+            if (campo.Equals("Fecha", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(texto))
+            {
+
+                var regex = new System.Text.RegularExpressions.Regex(@"^\s*\d{1,4}[/\-]\d{1,2}[/\-]\d{1,4}\s*$");
+                bool tieneFormatoBasico = regex.IsMatch(texto);
+
+           
+                if (!tieneFormatoBasico && !mostrarErrores)
+                    return;
+
+                DateTime fecha;
+                bool ok = DateTime.TryParseExact(texto,
+                                                 new[] { "dd/MM/yyyy", "d/M/yyyy", "yyyy-MM-dd", "yyyy-M-d" },
+                                                 System.Globalization.CultureInfo.InvariantCulture,
+                                                 System.Globalization.DateTimeStyles.None,
+                                                 out fecha);
+                if (!ok)
+                {
+                    ok = DateTime.TryParse(texto, out fecha);
+                }
+
+                if (!ok)
+                {
+                    if (mostrarErrores)
+                        MessageBox.Show("Formato de fecha inválido. Usa dd/MM/yyyy (ej. 29/11/2025) o yyyy-MM-dd.",
+                                        "Fecha inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                texto = fecha.ToString("yyyy-MM-dd");
+            }
+
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.conexion))
+                using (SqlCommand cmd = new SqlCommand("dbo.sp_BuscarAsistencia", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                
+                    cmd.Parameters.AddWithValue("@Campo", campo);
+                    cmd.Parameters.AddWithValue("@Texto", texto);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+
+                DatagreedAsistencia.DataSource = dt;
+                DatagreedAsistencia.AutoResizeColumns();
+            }
+            catch (Exception ex)
+            {
+                if (mostrarErrores)
+                    MessageBox.Show("Error al buscar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+
+        private void CmbBuscar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BuscarAsistencia();
+        }
+
+        private void TxtBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                
+                e.SuppressKeyPress = true;
+                BuscarAsistencia();
             }
         }
     }

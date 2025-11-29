@@ -628,7 +628,7 @@
             // Panelrespaldo
             // 
             this.Panelrespaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Panelrespaldo.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.Panelrespaldo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.Panelrespaldo.Controls.Add(this.BtInformacion);
             this.Panelrespaldo.Controls.Add(this.button1);
             this.Panelrespaldo.Location = new System.Drawing.Point(992, 3);
@@ -726,6 +726,7 @@
             this.Name = "FrmPrincipal";
             this.Text = "Principal";
             this.Load += new System.EventHandler(this.FrmPrincipal_Load);
+            this.Resize += new System.EventHandler(this.FrmPrincipal_Resize);
             this.PanelBotonesdemenu.ResumeLayout(false);
             this.PanelCatalogo.ResumeLayout(false);
             this.PanelNombreSistema.ResumeLayout(false);

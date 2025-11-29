@@ -13,16 +13,34 @@ namespace Capa_Presentacion
         }
         private void AbrirFormularioEnPanel(Form formulario)
         {
-            pictureBoxFoto.Visible = false;
+            try
+            {
+                if (pictureBoxFoto != null) pictureBoxFoto.Visible = false;
 
-            Panelcontenedorprincipal.Controls.Clear();
+                Panelcontenedorprincipal.Controls.Clear();
 
+                formulario.TopLevel = false;
+                formulario.FormBorderStyle = FormBorderStyle.None;
+                formulario.Dock = DockStyle.Fill;
+                Panelcontenedorprincipal.Controls.Add(formulario);
+                Panelcontenedorprincipal.Tag = formulario;
+                formulario.Show();
 
-            formulario.TopLevel = false;
-            formulario.Dock = DockStyle.Fill;
-            Panelcontenedorprincipal.Controls.Add(formulario);
-            Panelcontenedorprincipal.Tag = formulario;
-            formulario.Show();
+                if (Panelrespaldo.Parent != this)
+                {
+                    this.Controls.Add(Panelrespaldo);
+                }
+                Panelrespaldo.BringToFront();
+                if (PanelCatalogo.Parent != this)
+                {
+                    this.Controls.Add(PanelCatalogo);
+                }
+                PanelCatalogo.BringToFront();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir formulario: " + ex.Message);
+            }
         }
 
         private void PanelCatalogo_Paint(object sender, PaintEventArgs e)
@@ -30,11 +48,94 @@ namespace Capa_Presentacion
 
         }
 
+        private void AjustarPanelRespaldo()
+        {
+            try
+            {
+                int panelWidth = 200;
+                Panelrespaldo.Width = panelWidth;
+                Panelrespaldo.AutoSize = false;
+                Panelrespaldo.AutoScroll = true;
+
+                var screenPt = BTConfiguracion.PointToScreen(new System.Drawing.Point(0, 0));
+                var clientPt = this.PointToClient(screenPt);
+
+                int offsetY = 4;
+                int x = clientPt.X + BTConfiguracion.Width - Panelrespaldo.Width;
+                int y = clientPt.Y + BTConfiguracion.Height + offsetY;
+
+       
+                if (x < 4) x = 4;
+                if (x + Panelrespaldo.Width > this.ClientSize.Width - 4)
+                    x = this.ClientSize.Width - Panelrespaldo.Width - 4;
+
+             
+                int espacioDisponibleAbajo = this.ClientSize.Height - y - 8;
+                int alturaMaxima = Math.Max(100, espacioDisponibleAbajo); 
+                int alturaDeseada = Panelrespaldo.PreferredSize.Height; 
+
+                int alturaFinal = Math.Min(alturaDeseada, alturaMaxima);
+            
+                if (alturaFinal < 80) alturaFinal = Math.Min(80, alturaMaxima);
+
+                Panelrespaldo.Height = alturaFinal;
+                Panelrespaldo.Location = new System.Drawing.Point(x, y);
+
+                if (Panelrespaldo.Parent != this)
+                {
+                    this.Controls.Add(Panelrespaldo);
+                }
+
+                Panelrespaldo.BringToFront();
+                BTConfiguracion.BringToFront();
+            }
+            catch
+            {
+                // no hacemos nada si falla el cálculo
+            }
+        }
+        private void FrmPrincipal_ClickCerrarPanel(object sender, EventArgs e)
+        {
+            // Solo cerramos si está visible
+            if (Panelrespaldo.Visible)
+            {
+             
+                var me = Control.MousePosition;
+                var pos = this.PointToClient(me);
+
+                if (Panelrespaldo.Bounds.Contains(pos) || BTConfiguracion.Bounds.Contains(pos))
+                {
+                    return;
+                }
+
+                Panelrespaldo.Visible = false;
+
+                // remover handlers
+                this.Click -= FrmPrincipal_ClickCerrarPanel;
+                Panelcontenedorprincipal.Click -= FrmPrincipal_ClickCerrarPanel;
+            }
+        }
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
             Panelrespaldo.Visible = false;
             PanelCatalogo.Visible = false;
             LblUser.Text = FrmLogin.NombreA;
+            if (Panelrespaldo.Parent != this)
+            {
+                this.Controls.Add(Panelrespaldo);
+            }
+            Panelrespaldo.BringToFront();
+            if (PanelCatalogo.Parent != this)
+            {
+                this.Controls.Add(PanelCatalogo);
+            }
+            PanelCatalogo.BringToFront();
+            BTConfiguracion.Enabled = true;
+            BTConfiguracion.Visible = true;
+            BTConfiguracion.BringToFront();
+
+            BTConfiguracion.Click -= BTConfiguracion_Click;
+            BTConfiguracion.Click += BTConfiguracion_Click;
         }
 
         private void BT_Catalogo_Click(object sender, EventArgs e)
@@ -55,16 +156,18 @@ namespace Capa_Presentacion
         {
             Panelcontenedorprincipal.Controls.Clear();
 
-
             pictureBoxFoto.Dock = DockStyle.Fill;
             pictureBoxFoto.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxFoto.Visible = true;
             BtModoOscuro_Claro.Visible = true;
             BTInformacio.Visible = false;
 
-
-
             Panelcontenedorprincipal.Controls.Add(pictureBoxFoto);
+
+      
+            BTConfiguracion.BringToFront();
+            Panelrespaldo.BringToFront();
+            PanelCatalogo.BringToFront();
         }
 
         private void btcargo_Click(object sender, EventArgs e)
@@ -151,8 +254,22 @@ namespace Capa_Presentacion
 
         private void BTConfiguracion_Click(object sender, EventArgs e)
         {
-          
+            AjustarPanelRespaldo(); // recalcula tamaño y posición antes de mostrar
             Panelrespaldo.Visible = !Panelrespaldo.Visible;
+
+            if (Panelrespaldo.Visible)
+            {
+           
+                this.Click -= FrmPrincipal_ClickCerrarPanel;
+                this.Click += FrmPrincipal_ClickCerrarPanel;
+                Panelcontenedorprincipal.Click -= FrmPrincipal_ClickCerrarPanel;
+                Panelcontenedorprincipal.Click += FrmPrincipal_ClickCerrarPanel;
+            }
+            else
+            {
+                this.Click -= FrmPrincipal_ClickCerrarPanel;
+                Panelcontenedorprincipal.Click -= FrmPrincipal_ClickCerrarPanel;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -170,6 +287,11 @@ namespace Capa_Presentacion
         {
             Frm_Informacion frm = new Frm_Informacion();
             frm.ShowDialog();
+        }
+
+        private void FrmPrincipal_Resize(object sender, EventArgs e)
+        {
+            AjustarPanelRespaldo();
         }
     }
 }

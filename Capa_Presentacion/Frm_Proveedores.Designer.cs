@@ -228,7 +228,7 @@
             // BTCancelar
             // 
             this.BTCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTCancelar.BackColor = System.Drawing.Color.Orange;
+            this.BTCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.BTCancelar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTCancelar.ForeColor = System.Drawing.Color.White;
             this.BTCancelar.IconChar = FontAwesome.Sharp.IconChar.CircleXmark;
