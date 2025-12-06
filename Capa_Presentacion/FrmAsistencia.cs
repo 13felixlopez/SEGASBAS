@@ -413,77 +413,106 @@ namespace Capa_Presentacion
 
         private void DatagreedAsistencia_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            var row = DatagreedAsistencia.Rows[e.RowIndex];
+            var data = row.DataBoundItem;
+
+            // 1) Si viene de List<L_Asistencia>
+            if (data is L_Asistencia la)
             {
-                asistenciaSeleccionada = (L_Asistencia)DatagreedAsistencia.Rows[e.RowIndex].DataBoundItem;
+                asistenciaSeleccionada = la;
+            }
+            // 2) Si viene de un DataTable (DataRowView)
+            else if (data is DataRowView drv)
+            {
+                Func<string, bool> HasCol = col =>
+                    drv.Row.Table.Columns.Contains(col) && drv[col] != DBNull.Value;
 
-  
-                Cb_Nombre.SelectedValue = asistenciaSeleccionada.IDEmpleado;
-                Cb_estado.SelectedItem = asistenciaSeleccionada.Estado;
+                asistenciaSeleccionada = new L_Asistencia
+                {
+                    IDAsistencia = HasCol("Id_asistencia") ? Convert.ToInt32(drv["Id_asistencia"]) :
+                                    HasCol("IDAsistencia") ? Convert.ToInt32(drv["IDAsistencia"]) : 0,
 
-         
-                if (asistenciaSeleccionada.IDActividad.HasValue)
-                {
-                    cbactividad.SelectedValue = asistenciaSeleccionada.IDActividad.Value;
-                }
-                else
-                {
-                    cbactividad.SelectedIndex = -1; 
-                }
+                    Fecha = HasCol("Fecha") ? Convert.ToDateTime(drv["Fecha"]) : DateTime.Today,
+                    HoraRegistro = HasCol("Hora_registro")
+                                    ? (TimeSpan)drv["Hora_registro"]
+                                    : TimeSpan.Zero,
 
-                if (asistenciaSeleccionada.IDLote.HasValue)
-                {
-                    CMBLote.SelectedValue = asistenciaSeleccionada.IDLote.Value;
-                }
-                else
-                {
-                    CMBLote.SelectedIndex = -1; 
-                }
+                    IDEmpleado = HasCol("Id_empleado") ? Convert.ToInt32(drv["Id_empleado"]) : 0,
+                    IDActividad = HasCol("Id_actividad") ? (int?)Convert.ToInt32(drv["Id_actividad"]) : null,
+                    IDLote = HasCol("Id_lote") ? (int?)Convert.ToInt32(drv["Id_lote"]) : null,
+                    IDCargo = HasCol("Id_cargo") ? (int?)Convert.ToInt32(drv["Id_cargo"]) : null,
 
-                if (asistenciaSeleccionada.IDCargo.HasValue)
-                {
-                    CbCargo.SelectedValue = asistenciaSeleccionada.IDCargo.Value;
-                }
-                else
-                {
-                    CbCargo.SelectedIndex = -1; 
-                }
+                    NombreCompletoEmpleado = HasCol("NombreCompletoEmpleado") ? drv["NombreCompletoEmpleado"].ToString() : "",
+                    NombreActividad = HasCol("NombreActividad") ? drv["NombreActividad"].ToString() : "",
+                    NombreLote = HasCol("NombreLote") ? drv["NombreLote"].ToString() : "",
+                    NombreCargo = HasCol("NombreCargo") ? drv["NombreCargo"].ToString() : "",
 
-                dateTimePicker1.Value = asistenciaSeleccionada.Fecha;
-                txtcantolvadas.Text = asistenciaSeleccionada.Tolvadas?.ToString() ?? string.Empty;
-                txthoraextras.Text = asistenciaSeleccionada.HorasExtras?.ToString() ?? string.Empty;
-                txtobservacion.Text = asistenciaSeleccionada.Justificacion;
+                    Estado = HasCol("Estado") ? drv["Estado"].ToString() : "",
+                    Justificacion = HasCol("Justificacion") ? drv["Justificacion"].ToString() : "",
+                    Tolvadas = HasCol("Tolvadas") ? (decimal?)Convert.ToDecimal(drv["Tolvadas"]) : null,
+                    HorasExtras = HasCol("HorasExtras") ? (decimal?)Convert.ToDecimal(drv["HorasExtras"]) : null
+                };
+            }
+            else
+            {
+                // Por seguridad
+                asistenciaSeleccionada = null;
+                return;
+            }
 
-         
+            // ==== De aquí hacia abajo puedes dejar tu código tal como lo tenías ====
+
+            Cb_Nombre.SelectedValue = asistenciaSeleccionada.IDEmpleado;
+            Cb_estado.SelectedItem = asistenciaSeleccionada.Estado;
+
+            if (asistenciaSeleccionada.IDActividad.HasValue)
+                cbactividad.SelectedValue = asistenciaSeleccionada.IDActividad.Value;
+            else
+                cbactividad.SelectedIndex = -1;
+
+            if (asistenciaSeleccionada.IDLote.HasValue)
+                CMBLote.SelectedValue = asistenciaSeleccionada.IDLote.Value;
+            else
+                CMBLote.SelectedIndex = -1;
+
+            if (asistenciaSeleccionada.IDCargo.HasValue)
+                CbCargo.SelectedValue = asistenciaSeleccionada.IDCargo.Value;
+            else
+                CbCargo.SelectedIndex = -1;
+
+            dateTimePicker1.Value = asistenciaSeleccionada.Fecha;
+            txtcantolvadas.Text = asistenciaSeleccionada.Tolvadas?.ToString() ?? string.Empty;
+            txthoraextras.Text = asistenciaSeleccionada.HorasExtras?.ToString() ?? string.Empty;
+            txtobservacion.Text = asistenciaSeleccionada.Justificacion;
+
+            // Limpiar y volver a marcar justificaciones
+            foreach (CheckBox cb in GroupBoxJustificacion.Controls.OfType<CheckBox>())
+                cb.Checked = false;
+
+            if (asistenciaSeleccionada.Estado == "Ausente" &&
+                !string.IsNullOrEmpty(asistenciaSeleccionada.Justificacion))
+            {
+                string[] justificaciones = asistenciaSeleccionada.Justificacion
+                                           .Split(new string[] { ", " }, StringSplitOptions.None);
+
                 foreach (CheckBox cb in GroupBoxJustificacion.Controls.OfType<CheckBox>())
                 {
-                    cb.Checked = false;
+                    if (justificaciones.Contains(cb.Text))
+                        cb.Checked = true;
                 }
-                if (asistenciaSeleccionada.Estado == "Ausente" && !string.IsNullOrEmpty(asistenciaSeleccionada.Justificacion))
-                {
-                    string[] justificaciones = asistenciaSeleccionada.Justificacion.Split(new string[] { ", " }, StringSplitOptions.None);
-                    foreach (CheckBox cb in GroupBoxJustificacion.Controls.OfType<CheckBox>())
-                    {
-                        if (justificaciones.Contains(cb.Text))
-                        {
-                            cb.Checked = true;
-                        }
-                    }
-                }
-
-               
-
-                Cb_Nombre.Enabled = false;  
-
-        
-
-                BTAgregar.Text = "Actualizar";
-                BTEditar.Enabled = true;
-                BTEliminar.Enabled = true;
-
-                ActualizarHabilitacionControles();
             }
+
+            Cb_Nombre.Enabled = false;
+
+            BTAgregar.Text = "Actualizar";
+            BTEditar.Enabled = true;
+            BTEliminar.Enabled = true;
+
+            ActualizarHabilitacionControles();
         }
+        
         
 
 

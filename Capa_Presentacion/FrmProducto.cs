@@ -80,10 +80,26 @@ namespace Capa_Presentacion
                 List<L_Producto> lista = funciones.ListarPaginado(paginaActual, tamañoPagina, out totalRegistros);
                 if (dgvProducto != null)
                 {
+                    dgvProducto.AutoGenerateColumns = true;
                     dgvProducto.DataSource = lista;
-                    // ocultar columna id si existe
+
+                    // Ocultar IDs
                     if (dgvProducto.Columns.Contains("id_producto"))
                         dgvProducto.Columns["id_producto"].Visible = false;
+                    if (dgvProducto.Columns.Contains("id_unidad"))
+                        dgvProducto.Columns["id_unidad"].Visible = false;
+                    if (dgvProducto.Columns.Contains("id_marca"))
+                        dgvProducto.Columns["id_marca"].Visible = false;
+                    if (dgvProducto.Columns.Contains("id_categoria"))
+                        dgvProducto.Columns["id_categoria"].Visible = false;
+
+                    // Encabezados bonitos
+                    if (dgvProducto.Columns.Contains("NombreUnidad"))
+                        dgvProducto.Columns["NombreUnidad"].HeaderText = "Unidad de Medida";
+                    if (dgvProducto.Columns.Contains("NombreCategoria"))
+                        dgvProducto.Columns["NombreCategoria"].HeaderText = "Categoría";
+                    if (dgvProducto.Columns.Contains("ControlStock"))
+                        dgvProducto.Columns["ControlStock"].HeaderText = "Control Stock";
                 }
                 ActualizarEstadoPaginacion();
             }
@@ -214,16 +230,21 @@ namespace Capa_Presentacion
         {
             try
             {
-                if (dgvProducto == null) return;
+                if (dgvProducto.Columns.Contains("id_producto"))
+                    dgvProducto.Columns["id_producto"].Visible = false;
+                if (dgvProducto.Columns.Contains("id_unidad"))
+                    dgvProducto.Columns["id_unidad"].Visible = false;
+                if (dgvProducto.Columns.Contains("id_marca"))
+                    dgvProducto.Columns["id_marca"].Visible = false;
+                if (dgvProducto.Columns.Contains("id_categoria"))
+                    dgvProducto.Columns["id_categoria"].Visible = false;
 
-                if (dgvProducto.Columns.Contains("StockActual"))
-                    dgvProducto.Columns["StockActual"].DefaultCellStyle.Format = "N0";
-                if (dgvProducto.Columns.Contains("StockMinimo"))
-                    dgvProducto.Columns["StockMinimo"].DefaultCellStyle.Format = "N0";
-                if (dgvProducto.Columns.Contains("CostoPromedio"))
-                    dgvProducto.Columns["CostoPromedio"].DefaultCellStyle.Format = "N2";
-                if (dgvProducto.Columns.Contains("UltimoCostoFactura"))
-                    dgvProducto.Columns["UltimoCostoFactura"].DefaultCellStyle.Format = "N2";
+                if (dgvProducto.Columns.Contains("NombreUnidad"))
+                    dgvProducto.Columns["NombreUnidad"].HeaderText = "Unidad de Medida";
+                if (dgvProducto.Columns.Contains("NombreCategoria"))
+                    dgvProducto.Columns["NombreCategoria"].HeaderText = "Categoría";
+                if (dgvProducto.Columns.Contains("ControlStock"))
+                    dgvProducto.Columns["ControlStock"].HeaderText = "Control Stock";
 
                 foreach (DataGridViewRow row in dgvProducto.Rows)
                 {

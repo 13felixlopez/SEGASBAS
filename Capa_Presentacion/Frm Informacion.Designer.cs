@@ -52,6 +52,7 @@
             this.Name = "Frm_Informacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Frm_Informacion";
+            this.Load += new System.EventHandler(this.Frm_Informacion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

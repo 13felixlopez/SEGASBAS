@@ -2,6 +2,7 @@
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,14 +11,30 @@ namespace Capa_Presentacion
     public partial class FrmRespaldo : Form
     {
         private readonly string databaseName = "Sega#1";
-        private readonly string connectionStringName = "Conexión";
+        private readonly string carpetaBackup = @"C:\SQLBackups"; 
         public FrmRespaldo()
         {
             InitializeComponent();
-            textBox1.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Backups");
-            Directory.CreateDirectory(textBox1.Text);
+            textBox1.Text = carpetaBackup;
+            if (!Directory.Exists(carpetaBackup))
+                Directory.CreateDirectory(carpetaBackup);
             progressBar1.Visible = false;
             label1.Text = "";
+
+
+            this.MinimizeBox = false;
+
+            this.MaximizeBox = false;
+
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+
+            this.MaximumSize = this.Size;
+            this.MinimumSize = this.Size;
+
+            this.ControlBox = true;
+
+            this.StartPosition = FormStartPosition.CenterParent;
+            textBox1.ReadOnly = true;
         }
 
         private void FrmRespaldo_Load(object sender, EventArgs e)
@@ -27,44 +44,48 @@ namespace Capa_Presentacion
 
         private void Btexaminar_Click(object sender, EventArgs e)
         {
-            using (var dlg = new FolderBrowserDialog())
-            {
-                dlg.Description = "Seleccione la carpeta para guardar backups";
-                dlg.SelectedPath = textBox1.Text;
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    textBox1.Text = dlg.SelectedPath;
-                    Directory.CreateDirectory(textBox1.Text);
-                }
-            }
+          
         }
-
+        private string SanitizeFileName(string name)
+        {
+            foreach (char c in Path.GetInvalidFileNameChars())
+                name = name.Replace(c, '_');
+            return name;
+        }
         private async void btbakups_Click(object sender, EventArgs e)
         {
             btbakups.Enabled = false;
-            Btexaminar.Enabled = false;
             label1.Text = "Realizando respaldo...";
             progressBar1.Visible = true;
 
-
             try
             {
-                string folder = textBox1.Text;
-                if (!Directory.Exists(folder))
-                    Directory.CreateDirectory(folder);
+                // Asegurar carpeta
+                if (!Directory.Exists(carpetaBackup))
+                    Directory.CreateDirectory(carpetaBackup);
 
+                // Crear nombre del archivo
+                string fileName = $"{SanitizeFileName(databaseName)}_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
+                string fullPath = Path.Combine(carpetaBackup, fileName);
 
-                string fileName = $"{databaseName}_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
-                string fullPath = Path.Combine(folder, fileName);
-
-
+                // Ejecutar backup en un hilo secundario
                 bool ok = await Task.Run(() => EjecutarBackup(fullPath));
-
 
                 if (ok)
                 {
                     label1.Text = "Respaldo completado ✔️";
-                    MessageBox.Show($"Respaldo creado:\n{fullPath}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Respaldo creado en:\n{fullPath}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Abrir carpeta
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo()
+                        {
+                            FileName = carpetaBackup,
+                            UseShellExecute = true
+                        });
+                    }
+                    catch { }
                 }
                 else
                 {
@@ -73,28 +94,26 @@ namespace Capa_Presentacion
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear backup: " + ex.Message);
+                MessageBox.Show("Error al crear backup:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 label1.Text = "Error ❌";
             }
             finally
             {
                 progressBar1.Visible = false;
                 btbakups.Enabled = true;
-                Btexaminar.Enabled = true;
             }
         }
-         private bool EjecutarBackup(string destino)
-         {
+        private bool EjecutarBackup(string destino)
+        {
             try
             {
-                // Usar tu cadena fija
                 string connStr = Conexion.conexion;
 
                 string sql = $@"
-            BACKUP DATABASE [Sega#1]
-            TO DISK = N'{destino.Replace("'", "''")}'
-            WITH INIT, NAME = N'Respaldo Sega', STATS = 10;
-        ";
+                    BACKUP DATABASE [{databaseName}]
+                    TO DISK = N'{destino.Replace("'", "''")}'
+                    WITH INIT, NAME = N'Respaldo {databaseName}', STATS = 10;
+                    ";
 
                 using (SqlConnection cn = new SqlConnection(connStr))
                 {
@@ -110,10 +129,9 @@ namespace Capa_Presentacion
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al ejecutar backup: " + ex.Message + "\n\n" + ex.ToString());
+                MessageBox.Show("Error en BACKUP:\n" + ex.Message, "SQL Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-
         }
     }
 }

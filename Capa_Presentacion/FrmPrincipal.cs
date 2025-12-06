@@ -5,11 +5,16 @@ namespace Capa_Presentacion
 {
     public partial class FrmPrincipal : Form
     {
+        private Timer timerInactividad = new Timer();
+        private int segundosInactivo = 0;
         public FrmPrincipal()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized; this.WindowState = FormWindowState.Maximized;
-
+            this.MouseClick += ResetInactividad;
+            Panelcontenedorprincipal.MouseClick += ResetInactividad;
+            PanelBotonesdemenu.MouseClick += ResetInactividad;
+            PanelCatalogo.MouseClick += ResetInactividad;
         }
         private void AbrirFormularioEnPanel(Form formulario)
         {
@@ -31,11 +36,7 @@ namespace Capa_Presentacion
                     this.Controls.Add(Panelrespaldo);
                 }
                 Panelrespaldo.BringToFront();
-                if (PanelCatalogo.Parent != this)
-                {
-                    this.Controls.Add(PanelCatalogo);
-                }
-                PanelCatalogo.BringToFront();
+
             }
             catch (Exception ex)
             {
@@ -91,65 +92,87 @@ namespace Capa_Presentacion
             }
             catch
             {
-                // no hacemos nada si falla el cálculo
             }
         }
         private void FrmPrincipal_ClickCerrarPanel(object sender, EventArgs e)
         {
-            // Solo cerramos si está visible
-            if (Panelrespaldo.Visible)
-            {
-             
-                var me = Control.MousePosition;
-                var pos = this.PointToClient(me);
+            var me = Control.MousePosition;
+            var pos = this.PointToClient(me);
 
-                if (Panelrespaldo.Bounds.Contains(pos) || BTConfiguracion.Bounds.Contains(pos))
-                {
-                    return;
-                }
+            if (Panelrespaldo.Visible && (Panelrespaldo.Bounds.Contains(pos) || BTConfiguracion.Bounds.Contains(pos)))
+                return;
 
-                Panelrespaldo.Visible = false;
+            if (PanelCatalogo.Visible && (PanelCatalogo.Bounds.Contains(pos) || BT_Catalogo.Bounds.Contains(pos)))
+                return;
+            if (Panelrespaldo.Visible) Panelrespaldo.Visible = false;
+            if (PanelCatalogo.Visible) PanelCatalogo.Visible = false;
 
-                // remover handlers
-                this.Click -= FrmPrincipal_ClickCerrarPanel;
-                Panelcontenedorprincipal.Click -= FrmPrincipal_ClickCerrarPanel;
-            }
+            this.Click -= FrmPrincipal_ClickCerrarPanel;
+            Panelcontenedorprincipal.Click -= FrmPrincipal_ClickCerrarPanel;
         }
+
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
+
+            if (PanelBotonesdemenu != null && PanelCatalogo != null)
+            {
+                PanelCatalogo.Dock = DockStyle.Top;
+                PanelCatalogo.AutoScroll = true;
+                PanelCatalogo.Visible = false;
+                PanelCatalogo.BackColor = PanelBotonesdemenu.BackColor;
+
+                foreach (Control c in PanelCatalogo.Controls)
+                    c.Dock = DockStyle.Top;
+            }
+
+
             Panelrespaldo.Visible = false;
-            PanelCatalogo.Visible = false;
             LblUser.Text = FrmLogin.NombreA;
-            if (Panelrespaldo.Parent != this)
-            {
-                this.Controls.Add(Panelrespaldo);
-            }
-            Panelrespaldo.BringToFront();
-            if (PanelCatalogo.Parent != this)
-            {
-                this.Controls.Add(PanelCatalogo);
-            }
-            PanelCatalogo.BringToFront();
             BTConfiguracion.Enabled = true;
             BTConfiguracion.Visible = true;
             BTConfiguracion.BringToFront();
 
-            BTConfiguracion.Click -= BTConfiguracion_Click;
-            BTConfiguracion.Click += BTConfiguracion_Click;
+            timerInactividad.Interval = 1000;
+            timerInactividad.Tick += TimerInactividad_Tick;
+            timerInactividad.Start();
         }
 
+        private void TimerInactividad_Tick(object sender, EventArgs e)
+        {
+            segundosInactivo++;
+
+            // cuando pasan 10 segundos sin actividad
+            if (segundosInactivo >= 10)
+            {
+                if (PanelCatalogo.Visible)
+                {
+                    PanelCatalogo.Visible = false;
+                    BT_Catalogo.Text = "Catálogo  🔽";
+                }
+                if (Panelrespaldo.Visible)
+                {
+                    Panelrespaldo.Visible = false;
+                }
+
+                segundosInactivo = 0; // Reiniciar contador
+            }
+        }
+        private void ResetInactividad(object sender, MouseEventArgs e)
+        {
+            segundosInactivo = 0;
+        }
         private void BT_Catalogo_Click(object sender, EventArgs e)
         {
-
             PanelCatalogo.Visible = !PanelCatalogo.Visible;
-            if (BT_Catalogo.Text == "Catálogo  🔽")
-            {
-                BT_Catalogo.Text = "Catálogo 🔼";
-            }
+
+            // Obtener texto base (sin flechas)
+            string textoBase = "Catálogo";
+
+            // Asignar la flecha correcta según si está abierto o cerrado
+            if (PanelCatalogo.Visible)
+                BT_Catalogo.Text = textoBase + "  🔼";   // flecha hacia arriba
             else
-            {
-                BT_Catalogo.Text = "Catálogo 🔽";
-            }
+                BT_Catalogo.Text = textoBase + "  🔽";   // flecha hacia abajo
         }
 
         private void BT_INICIO_Click(object sender, EventArgs e)
@@ -164,12 +187,52 @@ namespace Capa_Presentacion
 
             Panelcontenedorprincipal.Controls.Add(pictureBoxFoto);
 
-      
             BTConfiguracion.BringToFront();
             Panelrespaldo.BringToFront();
-            PanelCatalogo.BringToFront();
         }
+        //private void AjustarPanelCatalogo()
+        //{
+        //    try
+        //    {
+        //        // Tamaño fijo/limite (ajusta ancho/alto según tu diseño)
+        //        int ancho = 220; // ancho del panel catálogo
+        //        int maxAltura = Math.Max(120, this.ClientSize.Height - 120); // evita ocupar toda la pantalla
 
+        //        PanelCatalogo.Width = ancho;
+        //        PanelCatalogo.AutoSize = false;
+        //        PanelCatalogo.AutoScroll = true;
+
+        //        // Obtener posición del botón BT_Catalogo en coordenadas del formulario
+        //        var screenPt = BT_Catalogo.PointToScreen(new System.Drawing.Point(0, 0));
+        //        var clientPt = this.PointToClient(screenPt);
+
+        //        // Posicionar debajo del botón
+        //        int offsetY = 4;
+        //        int x = clientPt.X;
+        //        int y = clientPt.Y + BT_Catalogo.Height + offsetY;
+
+        //        // Ajustes para que no salga de la ventana
+        //        if (x < 4) x = 4;
+        //        if (x + PanelCatalogo.Width > this.ClientSize.Width - 4)
+        //            x = this.ClientSize.Width - PanelCatalogo.Width - 4;
+
+        //        // Altura deseada (según contenido) limitada por pantalla
+        //        int alturaDeseada = PanelCatalogo.PreferredSize.Height;
+        //        int alturaFinal = Math.Min(alturaDeseada, maxAltura);
+        //        if (alturaFinal < 80) alturaFinal = Math.Min(80, maxAltura);
+
+        //        PanelCatalogo.Size = new System.Drawing.Size(PanelCatalogo.Width, alturaFinal);
+        //        PanelCatalogo.Location = new System.Drawing.Point(x, y);
+
+        //        // Asegurarnos que esté en el formulario y al frente
+        //        if (PanelCatalogo.Parent != this) this.Controls.Add(PanelCatalogo);
+        //        PanelCatalogo.BringToFront();
+        //    }
+        //    catch
+        //    {
+        //        // no hacer nada si falla el cálculo
+        //    }
+        //}
         private void btcargo_Click(object sender, EventArgs e)
         {
             AbrirFormularioEnPanel(new FrmCargo());
@@ -292,6 +355,27 @@ namespace Capa_Presentacion
         private void FrmPrincipal_Resize(object sender, EventArgs e)
         {
             AjustarPanelRespaldo();
+        }
+
+        private void FrmPrincipal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+       
+        }
+
+        private void FrmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+
+            this.Hide();
+
+            FrmLogin login = new FrmLogin();
+            login.Show();
+        }
+
+        private void BtRestaurar_Click(object sender, EventArgs e)
+        {
+            FrmRestaurarBD frm = new FrmRestaurarBD();
+            frm.ShowDialog();
         }
     }
 }

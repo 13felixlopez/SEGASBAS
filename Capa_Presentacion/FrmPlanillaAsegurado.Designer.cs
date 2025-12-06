@@ -77,6 +77,7 @@
             this.BTEditar = new FontAwesome.Sharp.IconButton();
             this.BTEliminar = new FontAwesome.Sharp.IconButton();
             this.btguardar = new FontAwesome.Sharp.IconButton();
+            this.label14 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Datagreedplanilla)).BeginInit();
@@ -86,6 +87,7 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.label14);
             this.panel1.Controls.Add(this.Totalhe);
             this.panel1.Controls.Add(this.label18);
             this.panel1.Controls.Add(this.txtpagoneto);
@@ -206,6 +208,7 @@
             this.txtIR.Size = new System.Drawing.Size(202, 34);
             this.txtIR.TabIndex = 63;
             this.txtIR.TextChanged += new System.EventHandler(this.txtIR_TextChanged);
+            this.txtIR.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtIR_KeyPress);
             // 
             // txtins
             // 
@@ -234,6 +237,7 @@
             this.textvacaciones.Name = "textvacaciones";
             this.textvacaciones.Size = new System.Drawing.Size(202, 32);
             this.textvacaciones.TabIndex = 58;
+            this.textvacaciones.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textvacaciones_KeyPress);
             // 
             // label12
             // 
@@ -276,6 +280,7 @@
             this.txtinsentivo.Name = "txtinsentivo";
             this.txtinsentivo.Size = new System.Drawing.Size(202, 32);
             this.txtinsentivo.TabIndex = 54;
+            this.txtinsentivo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtinsentivo_KeyPress);
             // 
             // Txtdiastrabajados
             // 
@@ -345,7 +350,7 @@
             // BTCancelar
             // 
             this.BTCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTCancelar.BackColor = System.Drawing.Color.Orange;
+            this.BTCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.BTCancelar.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTCancelar.ForeColor = System.Drawing.Color.White;
             this.BTCancelar.IconChar = FontAwesome.Sharp.IconChar.CircleXmark;
@@ -481,6 +486,7 @@
             this.Cb_Nombre.Name = "Cb_Nombre";
             this.Cb_Nombre.Size = new System.Drawing.Size(250, 35);
             this.Cb_Nombre.TabIndex = 5;
+            this.Cb_Nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Cb_Nombre_KeyPress);
             // 
             // label2
             // 
@@ -712,6 +718,18 @@
             this.btguardar.UseVisualStyleBackColor = false;
             this.btguardar.Click += new System.EventHandler(this.btguardar_Click);
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.White;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label14.Location = new System.Drawing.Point(588, 46);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(25, 32);
+            this.label14.TabIndex = 70;
+            this.label14.Text = "*";
+            // 
             // FrmPlanillaAsegurado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -791,5 +809,6 @@
         private FontAwesome.Sharp.IconButton BTEliminar;
         private FontAwesome.Sharp.IconButton btguardar;
         private System.Windows.Forms.Label Totalhe;
+        private System.Windows.Forms.Label label14;
     }
 }

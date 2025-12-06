@@ -15,6 +15,23 @@ namespace Capa_Presentacion
         public Frm_Informacion()
         {
             InitializeComponent();
+       
+            this.MinimizeBox = false;
+
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+
+            this.MaximumSize = this.Size;
+            this.MinimumSize = this.Size;
+
+            this.ControlBox = true;
+            this.StartPosition = FormStartPosition.CenterParent;
+
+        }
+
+        private void Frm_Informacion_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

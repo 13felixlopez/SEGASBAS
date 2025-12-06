@@ -61,6 +61,7 @@
             this.BTInformacio = new FontAwesome.Sharp.IconButton();
             this.BtModoOscuro_Claro = new FontAwesome.Sharp.IconButton();
             this.pictureBoxFoto = new System.Windows.Forms.PictureBox();
+            this.BtRestaurar = new System.Windows.Forms.Button();
             this.PanelBotonesdemenu.SuspendLayout();
             this.PanelCatalogo.SuspendLayout();
             this.PanelNombreSistema.SuspendLayout();
@@ -629,11 +630,12 @@
             // 
             this.Panelrespaldo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Panelrespaldo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Panelrespaldo.Controls.Add(this.BtRestaurar);
             this.Panelrespaldo.Controls.Add(this.BtInformacion);
             this.Panelrespaldo.Controls.Add(this.button1);
             this.Panelrespaldo.Location = new System.Drawing.Point(992, 3);
             this.Panelrespaldo.Name = "Panelrespaldo";
-            this.Panelrespaldo.Size = new System.Drawing.Size(200, 100);
+            this.Panelrespaldo.Size = new System.Drawing.Size(200, 159);
             this.Panelrespaldo.TabIndex = 9;
             this.Panelrespaldo.Paint += new System.Windows.Forms.PaintEventHandler(this.Panelrespaldo_Paint);
             // 
@@ -642,7 +644,7 @@
             this.BtInformacion.FlatAppearance.BorderSize = 0;
             this.BtInformacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtInformacion.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtInformacion.Location = new System.Drawing.Point(14, 57);
+            this.BtInformacion.Location = new System.Drawing.Point(14, 93);
             this.BtInformacion.Name = "BtInformacion";
             this.BtInformacion.Size = new System.Drawing.Size(181, 43);
             this.BtInformacion.TabIndex = 1;
@@ -713,6 +715,19 @@
             this.pictureBoxFoto.TabIndex = 1;
             this.pictureBoxFoto.TabStop = false;
             // 
+            // BtRestaurar
+            // 
+            this.BtRestaurar.FlatAppearance.BorderSize = 0;
+            this.BtRestaurar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtRestaurar.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtRestaurar.Location = new System.Drawing.Point(14, 44);
+            this.BtRestaurar.Name = "BtRestaurar";
+            this.BtRestaurar.Size = new System.Drawing.Size(181, 43);
+            this.BtRestaurar.TabIndex = 2;
+            this.BtRestaurar.Text = "Restaurar";
+            this.BtRestaurar.UseVisualStyleBackColor = true;
+            this.BtRestaurar.Click += new System.EventHandler(this.BtRestaurar_Click);
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -725,6 +740,8 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmPrincipal";
             this.Text = "Principal";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmPrincipal_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.FrmPrincipal_Load);
             this.Resize += new System.EventHandler(this.FrmPrincipal_Resize);
             this.PanelBotonesdemenu.ResumeLayout(false);
@@ -776,6 +793,7 @@
         private System.Windows.Forms.Panel Panelrespaldo;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button BtInformacion;
+        private System.Windows.Forms.Button BtRestaurar;
     }
 }
 

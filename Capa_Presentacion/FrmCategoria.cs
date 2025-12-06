@@ -20,6 +20,7 @@ namespace Capa_Presentacion
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             dgvcategoria.AutoGenerateColumns = true;
+            dgvcategoria.ReadOnly = true;
 
         }
 
@@ -208,6 +209,17 @@ namespace Capa_Presentacion
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void TxtCategoria_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            if (!char.IsLetter(e.KeyChar) &&
+          !char.IsWhiteSpace(e.KeyChar) &&
+          e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

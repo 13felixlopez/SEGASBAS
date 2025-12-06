@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.Btexaminar = new System.Windows.Forms.Button();
             this.btbakups = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,24 +39,13 @@
             this.textBox1.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(12, 32);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(334, 34);
+            this.textBox1.Size = new System.Drawing.Size(467, 34);
             this.textBox1.TabIndex = 0;
-            // 
-            // Btexaminar
-            // 
-            this.Btexaminar.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btexaminar.Location = new System.Drawing.Point(352, 32);
-            this.Btexaminar.Name = "Btexaminar";
-            this.Btexaminar.Size = new System.Drawing.Size(125, 33);
-            this.Btexaminar.TabIndex = 1;
-            this.Btexaminar.Text = "Examinar";
-            this.Btexaminar.UseVisualStyleBackColor = true;
-            this.Btexaminar.Click += new System.EventHandler(this.Btexaminar_Click);
             // 
             // btbakups
             // 
             this.btbakups.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btbakups.Location = new System.Drawing.Point(120, 100);
+            this.btbakups.Location = new System.Drawing.Point(173, 96);
             this.btbakups.Name = "btbakups";
             this.btbakups.Size = new System.Drawing.Size(117, 43);
             this.btbakups.TabIndex = 2;
@@ -67,7 +55,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(31, 170);
+            this.progressBar1.Location = new System.Drawing.Point(61, 156);
             this.progressBar1.MarqueeAnimationSpeed = 30;
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(334, 23);
@@ -77,7 +65,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(157, 217);
+            this.label1.Location = new System.Drawing.Point(185, 191);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 16);
             this.label1.TabIndex = 4;
@@ -92,7 +80,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btbakups);
-            this.Controls.Add(this.Btexaminar);
             this.Controls.Add(this.textBox1);
             this.Name = "FrmRespaldo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -106,7 +93,6 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button Btexaminar;
         private System.Windows.Forms.Button btbakups;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label1;

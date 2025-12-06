@@ -252,7 +252,37 @@ namespace Capa_Presentacion.Datos
                 Conexion.cerrar();
             }
         }
+        public void ReporteAsistenciaEmpleado(
+             int idEmpleado,
+                 DateTime fechaDesde,
+              DateTime fechaHasta,
+         ref DataTable dt)
+        {
+            try
+            {
+                Conexion.abrir();
+                using (SqlDataAdapter da = new SqlDataAdapter("sp_ReporteAsistenciaEmpleado", Conexion.conectar))
+                {
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.SelectCommand.Parameters.AddWithValue("@Id_empleado", idEmpleado);
+                    da.SelectCommand.Parameters.AddWithValue("@FechaDesde", fechaDesde.Date);
+                    da.SelectCommand.Parameters.AddWithValue("@FechaHasta", fechaHasta.Date);
 
+                    da.Fill(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar el reporte de asistencia: " + ex.Message,
+                    "Error ReporteAsistenciaEmpleado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+        }
         public void ReporteAsis(ref DataTable dt)
         {
             try
@@ -274,5 +304,39 @@ namespace Capa_Presentacion.Datos
                 Conexion.cerrar();
             }
         }
+        public DataTable ReporteHorasExtras(DateTime fechaInicio, DateTime fechaFin)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                Conexion.abrir();
+
+                using (SqlCommand cmd = new SqlCommand("sp_ReporteHorasExtras", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio.Date);
+                    cmd.Parameters.AddWithValue("@FechaFin", fechaFin.Date);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar reporte de horas extras: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+
+            return dt;
+        }
+
     }
 }

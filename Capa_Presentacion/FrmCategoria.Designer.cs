@@ -224,6 +224,7 @@
             this.TxtCategoria.Name = "TxtCategoria";
             this.TxtCategoria.Size = new System.Drawing.Size(217, 32);
             this.TxtCategoria.TabIndex = 100;
+            this.TxtCategoria.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCategoria_KeyPress);
             // 
             // pictureBox1
             // 

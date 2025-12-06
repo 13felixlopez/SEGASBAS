@@ -39,14 +39,17 @@ namespace Capa_Presentacion
         }
         private void LlenarComboEmpleados()
         {
-         
+
             var empleados = objPlanillaDatos.ObtenerEmpleadosIdYNombre();
 
             Cb_Nombre.DataSource = empleados;
             Cb_Nombre.DisplayMember = "Value";
             Cb_Nombre.ValueMember = "Key";
-
             Cb_Nombre.SelectedIndex = -1;
+
+            // 🔥 Activar autocompletado
+            Cb_Nombre.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            Cb_Nombre.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
         private void label7_Click(object sender, EventArgs e)
         {
@@ -489,6 +492,39 @@ namespace Capa_Presentacion
             else
             {
                 MessageBox.Show("No se pudo cargar el registro. Revise el log de errores de BD.", "Error de Carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void textvacaciones_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true; 
+            }
+        }
+
+        private void txtIR_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtinsentivo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Cb_Nombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            if (char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; 
             }
         }
     }

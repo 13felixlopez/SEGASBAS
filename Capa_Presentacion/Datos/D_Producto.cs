@@ -205,7 +205,10 @@ namespace Capa_Presentacion.Datos
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@paginaActual", paginaActual);
                     cmd.Parameters.AddWithValue("@tamanoPagina", tamanoPagina);
-                    SqlParameter outParam = new SqlParameter("@totalRegistros", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    SqlParameter outParam = new SqlParameter("@totalRegistros", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
                     cmd.Parameters.Add(outParam);
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -224,22 +227,33 @@ namespace Capa_Presentacion.Datos
                                 Estado = TieneColumna(dr, "Estado") && dr["Estado"] != DBNull.Value ? Convert.ToBoolean(dr["Estado"]) : true,
                                 id_unidad = TieneColumna(dr, "id_unidad") && dr["id_unidad"] != DBNull.Value ? Convert.ToInt32(dr["id_unidad"]) : 0,
                                 id_marca = TieneColumna(dr, "id_marca") && dr["id_marca"] != DBNull.Value ? Convert.ToInt32(dr["id_marca"]) : 0,
-                                id_categoria = TieneColumna(dr, "id_categoria") && dr["id_categoria"] != DBNull.Value ? Convert.ToInt32(dr["id_categoria"]) : 0
+                                id_categoria = TieneColumna(dr, "id_categoria") && dr["id_categoria"] != DBNull.Value ? Convert.ToInt32(dr["id_categoria"]) : 0,
+
+                                // NUEVO: que venga desde BD
+                                ControlStock = TieneColumna(dr, "ControlStock") && dr["ControlStock"] != DBNull.Value ? Convert.ToBoolean(dr["ControlStock"]) : true,
+                                NombreUnidad = TieneColumna(dr, "NombreUnidad") && dr["NombreUnidad"] != DBNull.Value ? dr["NombreUnidad"].ToString() : "",
+                                NombreCategoria = TieneColumna(dr, "NombreCategoria") && dr["NombreCategoria"] != DBNull.Value ? dr["NombreCategoria"].ToString() : ""
                             };
 
                             lista.Add(prod);
                         }
                     }
 
-                    // Los parámetros de salida están disponibles después de cerrar/dispose del reader
-                    totalRegistros = outParam.Value != DBNull.Value && outParam.Value != null ? Convert.ToInt32(outParam.Value) : 0;
+                    totalRegistros = outParam.Value != DBNull.Value && outParam.Value != null
+                                     ? Convert.ToInt32(outParam.Value)
+                                     : 0;
                 }
             }
-            catch (Exception ex) { throw new Exception("Error al obtener los productos paginados: " + ex.Message, ex); }
-            finally { Conexion.cerrar(); }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener los productos paginados: " + ex.Message, ex);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
             return lista;
         }
-
         // Búsqueda con opción para incluir inactivos (requiere que el SP acepte @incluirInactivos)
         public DataTable Buscar(string textoBusqueda, bool incluirInactivos = false)
         {
@@ -309,9 +323,9 @@ namespace Capa_Presentacion.Datos
                                 id_unidad = TieneColumna(dr, "id_unidad") && dr["id_unidad"] != DBNull.Value ? Convert.ToInt32(dr["id_unidad"]) : 0,
                                 id_marca = TieneColumna(dr, "id_marca") && dr["id_marca"] != DBNull.Value ? Convert.ToInt32(dr["id_marca"]) : 0,
                                 id_categoria = TieneColumna(dr, "id_categoria") && dr["id_categoria"] != DBNull.Value ? Convert.ToInt32(dr["id_categoria"]) : 0,
-                                // opcionales: nombres relacionados si el SP los retorna
                                 NombreUnidad = TieneColumna(dr, "NombreUnidad") && dr["NombreUnidad"] != DBNull.Value ? dr["NombreUnidad"].ToString() : "",
-                                NombreCategoria = TieneColumna(dr, "NombreCategoria") && dr["NombreCategoria"] != DBNull.Value ? dr["NombreCategoria"].ToString() : ""
+                                NombreCategoria = TieneColumna(dr, "NombreCategoria") && dr["NombreCategoria"] != DBNull.Value ? dr["NombreCategoria"].ToString() : "",
+                                ControlStock = TieneColumna(dr, "ControlStock") && dr["ControlStock"] != DBNull.Value ? Convert.ToBoolean(dr["ControlStock"]) : true
                             };
                         }
                     }
@@ -462,6 +476,63 @@ namespace Capa_Presentacion.Datos
             }
             return mensaje;
         }
+        // Lista de productos activos para llenar combo
+        public DataTable ObtenerProductosCatalogo()
+        {
+            DataTable dt = new DataTable();
+            Conexion.abrir();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_ObtenerTodosProductosCatalogo", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+            return dt;
+        }
+
+        // Kardex de movimientos por producto y rango de fechas
+        public DataTable ObtenerKardex(int idProducto, DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            DataTable dt = new DataTable();
+            Conexion.abrir();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_ReporteKardex", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id_producto", idProducto);
+
+                    var pInicio = new SqlParameter("@fechaInicio", SqlDbType.Date);
+                    var pFin = new SqlParameter("@fechaFin", SqlDbType.Date);
+
+                    pInicio.Value = fechaInicio.HasValue ? (object)fechaInicio.Value.Date : DBNull.Value;
+                    pFin.Value = fechaFin.HasValue ? (object)fechaFin.Value.Date : DBNull.Value;
+
+                    cmd.Parameters.Add(pInicio);
+                    cmd.Parameters.Add(pFin);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+            return dt;
+        }
+
     }
 
 }

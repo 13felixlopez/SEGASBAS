@@ -31,6 +31,7 @@ namespace Capa_Presentacion
 
         private void BT_Aceptar_Click(object sender, EventArgs e)
         {
+          
             Logueo();
         }
 

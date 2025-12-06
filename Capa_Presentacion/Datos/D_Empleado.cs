@@ -294,5 +294,35 @@ namespace Capa_Presentacion.Datos
                 Conexion.cerrar();
             }
         }
+
+        public DataTable ObtenerTodosEmpleados()
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                Conexion.abrir();
+                using (SqlCommand cmd = new SqlCommand("sp_ObtenerTodosEmpleados", Conexion.conectar))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener empleados: " + ex.Message,
+                    "Error en ObtenerTodosEmpleados", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Conexion.cerrar();
+            }
+
+            return dt;
+        }
     }
 }
